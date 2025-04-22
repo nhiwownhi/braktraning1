@@ -853,7 +853,7 @@ x = 2/3`,
       },
       {
         category: "equation",
-        question: "Lös ekvationen: x/2 - 3 = 5/4 och svara i bråkform.",
+        question: "Lös ekvationen: x/2 - 3 = 5/4 och svara i bråkform",
         answer: "17/2",
         tips: ["För att lösa ekvationen: börja med att få x-termen ensam på ena sidan.",
   "Lägg till 3 på båda sidor först för att bli av med -3.",
@@ -915,27 +915,43 @@ x = 2/3`,
 
       {
         category: "equation",
-        question: "Lös ekvationen: 13x = 52",
-        answer: "4",
+        question: "Lös ekvationen: 13x/2 = 52",
+        answer: "8",
         tips: [
-          {
-            condition: (input) => input.trim() === "5" || input.trim() === "39",
-            text: "Kom ihåg att multiplikations motsats är division. För att bli av med 13, dividera båda sidor med 13."
-          },
-          {
-            condition: (input) => input.trim() === "27",
-            text: "Tänk på att 𝑥 är ett tal som, när det delas med 3, ger 27. Så för att hitta 𝑥, måste du göra motsatsen till divisionen."
-          },
-          {
-            condition: () => true,
-            text: "Vi vill hitta vad 𝑥 är. För att göra det måste vi ta bort 13 genom att dela båda sidor med 13."
-          }
-        ],
-        specificTips: {
-          "39": "Du verkar ha substraherat 13 istället för att dividera. Försök igen!",
-          "65": "Du verkar ha adderat 13 istället för att dividera. Försök igen!",
-        },
-        explanation: "x = 52 / 13 = 4."
+        {
+    condition: (input) => input.trim() === "5" || input.trim() === "39",
+    text: "Tänk på att om du har 13x/2 = 52 så vill du först bli av med nämnaren (2) genom att multiplicera båda sidor med 2. Sen delar du med 13 för att lösa ut x."
+  },
+  {
+    condition: (input) => input.trim() === "27",
+    text: "Dubbelkolla stegen! Multiplicera först båda sidor med 2, sedan dela med 13."
+  },
+  {
+    condition: () => true,
+    text: "För att lösa ut x i 13x/2 = 52: börja med att multiplicera båda sidor med 2, sedan dividera med 13."
+  }
+],
+
+specificTips: {
+  "39": "Det ser ut som att du subtraherat 13 från 52, men det är inte det vi ska göra här. För att lösa ekvationen behöver du först multiplicera båda sidor med 2 för att få bort nämnaren.",
+  
+  "65": "Du verkar ha lagt till 13 till 52, men vi ska inte addera här. Tänk på att du har en division i vänsterledet (13x/2), så börja med att multiplicera båda sidor med 2.",
+  
+  "2": "Du kanske delade 52 med 26? Kom ihåg att du först måste multiplicera båda sidor med 2 för att bli av med nämnaren.",
+  
+  "4": "Halvvägs där! Kom ihåg att 13x/2 = 52 → multiplicera med 2 så får du 13x = 104, sen delar du 104 med 13.",
+  
+  "104": "Du har gjort rätt steg att multiplicera 52 med 2, men glöm inte att sedan dela med 13 för att lösa ut x.",
+},
+
+explanation: [
+  "Vi har ekvationen: <b>(13x) / 2 = 52</b><br><br>"+
+  "Steh 1: För att få bort nämnaren, multiplicera båda sidor med 2:<br>"+
+  "(13x) = 52 × 2 = 104<br><br>"+
+  "Steg 2: Dela båda sidor med 13 för att lösa ut x:<br>"+
+  "x = 104 ÷ 13 = <b>8</b><br><br>"+
+  "<b>Slutsats:</b> x = <b>8</b>"
+]
       },
 
 
@@ -1017,7 +1033,7 @@ x = 2/3`,
     
       {
         category: "compare_order",
-        question: "På ett kalas får du välja en tårtbiten från fyra olika bitar. Vilken bit är störst? 5/10, 3/8 eller 7/12. Vilken bit skulle du välja?",
+        question: "På ett kalas får du välja en tårtbiten från fyra olika bitar. Vilken bit är störst 5/10, 3/8 eller 7/12 ?",
         answer: "7/12",
         tips: [
           "För att avgöra vilken bit som är störst, kan vi jämföra bråken genom att göra om dem till gemensamma nämnare eller jämföra deras decimalvärden.",
@@ -1092,7 +1108,7 @@ explanation: [
       {
         category: "compare_order",
         question: "Ordna följande bråk i storleksordning, börja med det minsta: 3/4, 2/3, 5/6, 1/2",
-        answer: "1/2, 2/3, 3/4, 5/6",
+        answer: ["1/2, 2/3, 3/4, 5/6", "1/2 2/3 3/4 5/6"],
         tips: [
           "För att kunna jämföra bråken behöver de ha samma nämnare.",
           "Tänk på att hitta den minsta gemensamma nämnaren (MGN) för alla nämnarna (4, 3, 6 och 2).",
@@ -1240,7 +1256,7 @@ explanation: [
 
       
   const q = filteredQuestions[currentQuestion];
-  const questionText = q.question.replace(/\b(\d+)\/(\d+)\b/g, (match, num, den) => createFraction(num, den));
+  const questionText = formatFractionsInText(q.question);
 
   document.getElementById("taskNumber").innerText = `Uppgift ${currentQuestion + 1}/${totalQuestions}`;
 
@@ -1345,6 +1361,15 @@ function launchConfetti() {
   }, 2000);
 }
 
+function isCorrectAnswer(userInput, correctAnswer) {
+  userInput = userInput.trim().toLowerCase();
+  if (Array.isArray(correctAnswer)) {
+    return correctAnswer.some(ans => userInput === ans.trim().toLowerCase());
+  } else {
+    return userInput === correctAnswer.trim().toLowerCase();
+  }
+}
+
 
 function checkAnswer() {
   const userAnswer = document.getElementById("answerInput").value.trim();
@@ -1364,7 +1389,7 @@ function checkAnswer() {
     ];
     correct = acceptedAnswers.includes(userAnswer.toLowerCase());
   } else {
-    correct = normalizeAnswer(userAnswer) === normalizeAnswer(q.answer);
+    correct = isCorrectAnswer(userAnswer, q.answer);
   }
 
   if (correct) {
@@ -1710,6 +1735,15 @@ function startSelfTest() {
 }
 
 function startFinalTest() {
+  // Rensa gammalt diagram om det finns
+  const oldChart = Chart.getChart("chart");
+  if (oldChart) {
+    oldChart.destroy();
+  }
+  const chartEl = document.getElementById("chart");
+  chartEl.style.display = "none";
+  chartEl.getContext("2d").clearRect(0, 0, chartEl.width, chartEl.height);
+
   // Rensa gammal statistik
   firstTryStats = {};
   filteredQuestions = [...questions];
@@ -1843,18 +1877,23 @@ function showTip() {
   if (!q || !tipBox) return;
 
   if (q.tips && q.tips.length > 0) {
-    tipBox.innerText = "💡 " + q.tips[0];
+    const rawTip = "💡 " + q.tips[0];
+    const formattedTip = formatFractionsInText(rawTip);
+    tipBox.innerHTML = formattedTip;
   } else {
-    tipBox.innerText = "💡 Denna fråga har inget tips.";
+    tipBox.innerHTML = "💡 Denna fråga har inget tips.";
   }
 }
+
 function beginCategoryExercise() {
   // 🧼 Rensa gammalt diagram
   const oldChart = Chart.getChart("chart");
-  if (oldChart) {
-    oldChart.destroy();
-  }
-  document.getElementById("chart").getContext("2d").clearRect(0, 0, 400, 400);
+if (oldChart) {
+  oldChart.destroy();
+}
+const chartEl = document.getElementById("chart");
+chartEl.style.display = "none";  // 👈
+chartEl.getContext("2d").clearRect(0, 0, 400, 400);
 
   // 🎯 Hämta rätt frågor beroende på vald kategori
   originalQuestions = selectedCategory === "all"
@@ -2105,7 +2144,40 @@ function makeDraggable(dragTarget, dragHandle) {
 
 
 
+function toggleCalculator() {
+  const calc = document.getElementById("calculator");
+  calc.style.display = (calc.style.display === "block") ? "none" : "block";
+}
+
+function calcInput(value) {
+  const display = document.getElementById("calcDisplay");
+  display.value += value;
+}
+
+function calculate() {
+  const display = document.getElementById("calcDisplay");
+  try {
+    const result = eval(display.value);
+    display.value = result;
+  } catch (e) {
+    display.value = "Fel!";
+  }
+}
+
+function clearCalc() {
+  document.getElementById("calcDisplay").value = "";
+}
+
+function formatFractionsInText(text) {
+  return text.replace(/(?<![a-zA-Z0-9)])(\(?[a-zA-Z0-9+\- ]+\)?)\s*\/\s*(\(?[a-zA-Z0-9]+\)?)(?![a-zA-Z0-9(])/g, (match, top, bottom) => {
+    return `<span class="fraction"><span class="top">${top.trim()}</span><span class="bottom">${bottom.trim()}</span></span>`;
+  });
+}
+
+
 </script>
+
+
 
   
 </body>

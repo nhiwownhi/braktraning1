@@ -964,3 +964,20 @@ nav {
   padding: 0 0.2em;
 }
 
+
+.fraction {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 90%;
+}
+.fraction .top {
+  display: block;
+  border-bottom: 1px solid black;
+  padding: 0 0.2em;
+}
+.fraction .bottom {
+  display: block;
+  padding: 0 0.2em;
+}
+
