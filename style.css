@@ -1,0 +1,966 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-image: url('bakgrund3.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #333;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 1.6;
+}
+
+
+
+
+  h1 {
+    color: #42a4ff;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .question {
+    background-color: #ffffff;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  
+  button {
+    background-color: #66ccf4;
+    color: white;
+    padding: 10px 15px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #9ec8ff;
+  }
+  
+  .feedback {
+    font-weight: bold;
+    margin-top: 15px;
+  }
+  
+  .explanation {
+    margin-top: 10px;
+    font-style: italic;
+    color: #1565c0;
+  }
+  
+  canvas {
+    display: block;
+    margin: 30px auto;
+    max-width: 300px;
+  }
+
+.category-intro {
+  background-color: #e3f2fd;
+  padding: 15px 20px;
+  border-left: 6px solid #2196f3;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-style: italic;
+}
+
+.category-intro {
+    background-color: #e3f2fd;
+    padding: 15px 20px;
+    border-left: 6px solid #2196f3;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-style: italic;
+  }
+  
+  .nav-button:hover {
+    background-color: #1976d2;
+  }
+  
+  .navbar {
+    background-color: #0a4bff;
+    padding: 15px 20px;
+    color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .nav-title {
+    font-size: 1.3em;
+    font-weight: bold;
+  }
+  
+  .nav-links button {
+    background-color: white;
+    color: #07a2ef;
+    margin-left: 10px;
+    border-radius: 20px;
+    padding: 8px 16px;
+    border: none;
+    font-weight: bold;
+  }
+  
+  .nav-links button:hover {
+    background-color: #c8e6c9;
+  }
+  
+  #introSection {
+    text-align: center;
+    margin-top: 40px;
+  }
+  
+  #introSection button {
+    margin: 10px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 1.1em;
+  }
+
+  .info-block {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 15px 0;
+    border-left: 6px solid #0485f6;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  #introSection {
+    background-color: #e3f2fd;
+    padding: 60px 20px;
+    text-align: center;
+    border-radius: 12px;
+    margin-top: 20px;
+  }
+  
+  .image-below-intro {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .image-below-intro img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  #introImage {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  #introImage img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  
+  .category-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .category-buttons button {
+    background-color: #1565c0;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+  }
+  
+  .category-buttons button:hover {
+    background-color: #0d47a1;
+  }
+  
+
+  .task-number {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;  /* Skapa lite avstånd mellan numreringen och själva frågan */
+    color: #333; /* Välj en färg som gör det tydligt */
+  }
+  
+  .fraction {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0 2px;
+  }
+  
+  .fraction .numerator {
+    display: block;
+    font-size: 18px;
+    line-height: 1;
+  }
+  
+  .fraction .denominator {
+    display: block;
+    font-size: 16px;
+    border-top: 1px solid #000;
+    padding-top: 2px;
+    line-height: 1;
+  }
+
+  section {
+    transition: all 0.5s ease-in-out;
+  }
+
+
+  .fade-in {
+    animation: fadeIn 0.6s ease-in;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+    
+  #loginBox {
+  width: 300px;
+  margin: 100px auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #aaa;
+  text-align: center;
+  background-color: white;
+}
+
+#welcomeBox {
+  max-width: 350px;
+  text-align: left;
+}
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+
+/* Grundlayout för inloggning + välkomstruta */
+#loginSection {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Begränsa bredden på textblocket */
+#welcomeBox {
+  max-width: 400px;
+  flex: 1 1 300px;
+  text-align: left;
+}
+
+/* Gör login-boxen lite kompakt */
+#loginBox {
+  flex: 0 1 250px;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* Responsivt: stapla kolumner på smal skärm */
+@media (max-width: 600px) {
+  #loginSection {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #welcomeBox,
+  #loginBox {
+    flex: none;
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+}
+
+
+
+/* Intro‑sektionen: två kolumner på bred skärm */
+#introSection {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Välkomsttexten begränsad */
+#welcomeBox {
+  max-width: 400px;
+  flex: 1 1 300px;
+  text-align: left;
+}
+
+/* Responsivt: stapla på smal skärm */
+@media (max-width: 600px) {
+  #introSection {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #welcomeBox {
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+}
+
+
+.header {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    padding: 25px 12.5%;
+    background: #000000;
+  }
+  
+
+  button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #2b4eff;
+    color: white;
+    border: none;
+    font-weight: bold;
+    transition: 0.2s;
+  }
+  button:hover {
+    background-color: #0e52ff;
+  }
+
+  .question:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+  }
+
+  .progress-container {
+    background-color: #ddd;
+    height: 10px;
+    border-radius: 5px;
+    margin: 20px 0;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #0382f0;
+    border-radius: 5px;
+    transition: width 0.3s ease-in-out;
+  }
+
+  h1 {
+    animation: slideIn 0.6s ease-in-out;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .success-popup {
+    background-color: #d4edda;
+    border-left: 6px solid #0062ff;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    color: #0873ff;
+    font-weight: bold;
+  }
+
+  input, .question, button {
+    transition: all 0.2s ease;
+  }
+  
+
+
+  #categoryIntroSection {
+    animation: fadeIn 0.5s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  
+  /* Stil för hela navbaren */
+.navbar {
+    background-color: #2d7b32;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    width: 100%;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+}
+
+/* Stil för vänster sektion */
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Stil för knapparna */
+.nav-button {
+    background-color: white;
+    color: #2965ff;
+    border: none;
+    border-radius: 20px;
+    padding: 0.6rem 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: #e6f4ea;
+}
+
+/* Stil för "inloggad som"-texten */
+.user-info {
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 1 rem;
+}
+
+.navbar div:first-child {
+  padding-left: 50px;
+}
+
+.navbar-status {
+  margin-right: 60px; /* ändra till t.ex. 40px för ännu längre in */
+  color: white;
+  font-weight: 500;
+}
+
+
+
+/* 🧭 Navigationsfält */
+.navbar {
+  background-color: #6eb1d2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+
+/* 📱 Responsivt */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-left {
+    flex-wrap: wrap;
+  }
+
+  .nav-button {
+    margin-bottom: 8px;
+  }
+
+  section {
+    margin: 20px 10px;
+    padding: 15px;
+  }
+}
+
+
+/* 🧱 Gör att hela sidan täcker bredden */
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 🧭 Se till att navbar och övriga sektioner inte begränsas */
+.navbar,
+section,
+header,
+main,
+footer,
+.content,
+.wrapper {
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 auto;
+  padding-left: 0;
+  padding-right: 0;
+  box-sizing: border-box;
+}
+
+section {
+  padding: 2rem;
+}
+
+
+nav {
+  width: 100vw;         /* full viewport width */
+  background-color: #2e7d32; /* eller din gröna färg */
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hero {
+  background-image: url('bakgrund2.jpg'); /* Ändra till din bilds sökväg */
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+}
+
+.bubbles {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  bottom: -70px;
+}
+
+.bubbles img {
+  width: 50px;
+  animation: bubble 7s linear infinite;
+}
+
+@keyframes bubble {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-80vh);
+    opacity: 0;
+  }
+}
+
+.bubbles img:nth-child(1) {
+  animation-delay: 2s;
+  width: 25px;
+}
+.bubbles img:nth-child(2) {
+  animation-delay: 1s;
+}
+.bubbles img:nth-child(3) {
+  animation-delay: 3s;
+  width: 25px;
+}
+.bubbles img:nth-child(4) {
+  animation-delay: 4.5s;
+}
+.bubbles img:nth-child(5) {
+  animation-delay: 3s;
+}
+.bubbles img:nth-child(6) {
+  width: 20px;
+  animation-delay: 6s;
+}
+.bubbles img:nth-child(7) {
+  width: 35px;
+  animation-delay: 7;
+}
+
+
+#bubbleWrapper {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  bottom: -70px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+#bubbleWrapper img {
+  width: 50px;
+  animation: bubble 7s linear infinite;
+}
+
+
+#bubbleWrapper img:nth-child(1) {
+  animation-delay: 0s;
+}
+#bubbleWrapper img:nth-child(2) {
+  animation-delay: 1s;
+}
+#bubbleWrapper img:nth-child(3) {
+  animation-delay: 2s;
+}
+#bubbleWrapper img:nth-child(4) {
+  animation-delay: 3s;
+}
+#bubbleWrapper img:nth-child(5) {
+  animation-delay: 4s;
+}
+#bubbleWrapper img:nth-child(6) {
+  animation-delay: 2.5s;
+}
+#bubbleWrapper img:nth-child(7) {
+  animation-delay: 1.5s;
+}
+
+#bubbleWrapper img:nth-child(odd) {
+  width: 40px;
+}
+#bubbleWrapper img:nth-child(even) {
+  width: 60px;
+}
+
+
+#answerInput {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+
+
+
+
+#confetti-canvas {
+  pointer-events: none;
+}
+
+
+.fraction {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  margin: 0 2px;
+  font-size: 1em;
+  line-height: 1;
+}
+
+.fraction .top {
+  display: block;
+  border-bottom: 1px solid #000;
+  padding: 0 4px;
+}
+
+.fraction .bottom {
+  display: block;
+  padding: 0 4px;
+}
+
+
+.fraction-diagram {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin: 30px 0;
+}
+
+.fraction-diagram .fraction-circle {
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.fraction-diagram svg {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  background-color: #f5f5f5;
+}
+
+.fraction-diagram h4 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+
+
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.card {
+  transition: transform 0.3s ease, filter 0.3s ease;
+  transform-origin: center;
+}
+
+.card:hover {
+  transform: scale(1.15) translateZ(0);
+  z-index: 2;
+}
+
+.card-grid:hover > .card:not(:hover) {
+  transform: scale(0.9);
+}
+
+.card-grid:hover > .card:not(:hover) button {
+  filter: brightness(0.5) saturate(0) contrast(1.2) blur(1px);
+  transition: filter 0.3s ease;
+}
+
+
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.card {
+  transition: transform 0.3s ease, filter 0.3s ease;
+  transform-origin: center;
+}
+
+.card:hover {
+  transform: scale(1.15) translateZ(0);
+  z-index: 2;
+}
+
+.card-grid:hover > .card:not(:hover) {
+  transform: scale(0.9);
+}
+
+.card-grid:hover > .card:not(:hover) button {
+  filter: brightness(0.5) saturate(0) contrast(1.2) blur(1px);
+  transition: filter 0.3s ease;
+}
+
+
+.explanation {
+  display: none; /* visas av JS */
+  background: linear-gradient(to bottom, #ffffff 28px, #dceeff 29px);
+  background-size: 100% 30px;
+  line-height: 30px;
+  padding: 1.8rem;
+  border-radius: 12px;
+  margin-top: 1.5rem;
+  border: 1px solid #bcdff6;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+  font-size: 1.15rem;
+  white-space: pre-wrap;
+  position: relative;
+  transition: all 0.4s ease-in-out;
+  animation: fadeInBox 0.4s ease-out;
+}
+
+/* 🖍️ Dekorativ vänsterlinje, som en skrivbok */
+.explanation::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 40px;
+  width: 2px;
+  background-color: #95caff;
+  opacity: 0.7;
+}
+
+/* 🌀 Fade in animation */
+@keyframes fadeInBox {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+#feedback {
+  background-color: #fff8e1; /* mjukt gul för tips */
+  border-left: 5px solid #fbc02d; /* varm gul linje */
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  position: relative;
+  display: none; /* visas bara när det finns feedback */
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+#feedback {
+  display: none; /* Viktigt! */
+}
+
+/* Talbubblans lilla "triangel" */
+#feedback::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  border-width: 0 10px 10px 10px;
+  border-style: solid;
+  border-color: transparent transparent #e6f4ff transparent;
+}
+
+/* Fade-in effekt */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.calculator {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  width: 240px;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  user-select: none;
+}
+
+.calculator-header {
+  padding: 8px 10px;
+  background: #32b4ec;
+  font-weight: bold;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  cursor: move;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calculator-close {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.calculator-body {
+  padding: 10px;
+}
+
+
+
+.calculator-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+
+
+
+.clear-button {
+  grid-column: span 4;
+  background: #f44336;
+  color: rgb(44, 114, 252);
+}
+
+.calculator-grid button {
+  padding: 10px;
+  font-size: 1.2em;
+  border: 1px solid #1f66ff;
+  background: #ffffff;
+  color: #000000;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.calculator-grid button:hover {
+  background: #e0e0e0;
+}
+
+.calculator-display {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #ccc;
+}
+
+
+.fraction {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  margin: 0 0.2em;
+}
+.fraction .top {
+  display: block;
+  border-bottom: 1px solid black;
+  padding: 0 0.2em;
+}
+.fraction .bottom {
+  display: block;
+  padding: 0 0.2em;
+}
+
