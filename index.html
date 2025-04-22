@@ -1,0 +1,2111 @@
+<!DOCTYPE html>
+<html lang="sv">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<head>
+  
+  <meta charset="UTF-8">
+  <title>Bråkuppgifter</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Favicon-länkar -->
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ 
+</head>
+<body>
+  <div class=""hero"></div>
+<!-- Navigation -->
+<nav class="navbar">
+  <div class="nav-title"> Bråkträning</div>
+  <div class="nav-links">
+    <button onclick="showIntro()">Start</button>
+    <button onclick="startExercises()">Bråkövningar</button>
+    <button onclick="showSelfTest()">Testa dig själv</button>
+    <button onclick="showMyResults()">📊 Mina resultat</button>
+    <button id="logoutBtn" onclick="logout()" style="display: none;">🚪 Logga ut</button>
+  </div>
+  <div id="loginIndicator" style="margin-left: 1rem; font-weight: bold;"></div>
+</nav>
+
+<div id="bubbleWrapper" class="bubbles">
+  <img src="bubble.png">
+  <img src="bubble.png">
+  <img src="bubble.png">
+  <img src="bubble.png">
+  <img src="bubble.png">
+  <img src="bubble.png">
+  <img src="bubble.png">
+  <img src="bubble.png">
+</div>
+
+
+
+<!-- INLOGGNING -->
+<section id="loginSection">
+  <div class="login-wrapper">
+    <div class="login-content">
+      <h2>Välkommen till bråkträning!</h2>
+      <p>Logga in för att komma åt övningar och tester.</p>
+
+      <div id="loginBox">
+        <h2>Logga in</h2>
+        <input type="text" id="username" placeholder="Användarnamn">
+        <button onclick="login()">Logga in</button>
+        <p id="loginStatus"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  
+
+<!-- VÄLKOMST & NAVIGATION -->
+<section id="introSection" style="display: none;">
+  <div id="welcomeBox">
+    <h2>Välkommen till bråkträning!</h2>
+    <p>Här kan du välja mellan att få en kort genomgång av olika typer av bråkräkning eller öva direkt med interaktiva uppgifter.</p>
+    <button onclick="showInfo()">🔎 Genomgång</button>
+    <button onclick="startExercises()">📝 Bråkövningar</button>
+    <button onclick="showSelfTest()">🚀 Testa dig själv</button>
+    <button onclick="showMyResults()">📊 Mina resultat</button>
+  </div>
+</section>
+
+
+<!-- Behåller div för layoutfunktioner, men tar bort bilden -->
+<div id="introImage"></div>
+
+
+
+<!-- Kategoriväljare -->
+<section id="categorySection" style="display: none;">
+  <h2>🎯 Välj kategori att öva på</h2>
+  <!-- 📘 Exempelkort -->
+  <div class="info-block" id="categoryExample" style="display: none;">
+    <h3>Exempel:</h3>
+    <p id="exampleText">Här visas ett exempel beroende på vald kategori</p>
+  </div>
+  <div class="category-buttons card-grid">
+  <div class="card">
+    <button onclick="startCategory('fraction')">➕ Addition</button>
+  </div>
+  <div class="card">
+    <button onclick="startCategory('subtraction')">➖ Subtraktion</button>
+  </div>
+  <div class="card">
+    <button onclick="startCategory('multiplication')">✖️ Multiplikation</button>
+  </div>
+  <div class="card">
+    <button onclick="startCategory('division')">➗ Division</button>
+  </div>
+  <div class="card">
+    <button onclick="startCategory('compare_order')">📊 Jämförelse & Ordning</button>
+  </div>
+  <div class="card">
+    <button onclick="startCategory('equation')">🧩 Ekvationer</button>
+  </div>
+  <div class="card">
+    <button onclick="startCategory('word problem')">📘 Textuppgifter</button>
+  </div>
+  <div class="card">
+    <button onclick="startCategory('all')">📚 Alla uppgifter</button>
+  </div>
+</div>
+
+
+  </div>
+</section>
+
+<!-- 🔰 Intro för kategori -->
+<section id="categoryIntroSection" style="display: none;">
+  <div class="info-block">
+    <h2 id="categoryIntroTitle">🔍 Kategori-intro</h2>
+    <p id="categoryIntroText"></p>
+    <div style="text-align: center; margin-top: 20px;">
+      <button onclick="beginCategoryExercise()"> Börja övningen</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- Genomgångssektion -->
+<!-- Genomgångssektion -->
+<section id="infoSection" style="display: none;">
+  <h2>📚 Genomgång av bråkräkning</h2>
+
+ 
+
+  <!-- Kategoriknappar som cards -->
+  <div class="card-grid">
+    <div class="card"><button onclick="showTopic('intro')">📌 Introduktion till bråk</button></div>
+    <div class="card"><button onclick="showTopic('add')">➕ Addition av bråk</button></div>
+    <div class="card"><button onclick="showTopic('sub')">➖ Subtraktion av bråk</button></div>
+    <div class="card"><button onclick="showTopic('mult')">✖️ Multiplikation av bråk</button></div>
+    <div class="card"><button onclick="showTopic('div')">➗ Division av bråk</button></div>
+  </div>
+
+  <!-- Dynamiskt innehåll visas här -->
+  <div id="topicContent" class="info-block" style="margin-top: 20px;"></div>
+
+  <button onclick="showIntro()">Tillbaka</button>
+</section>
+
+<!-- Övningssektion -->
+<section id="exerciseSection" style="display: none;">
+  <h1>Bråkträning</h1>
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>  
+  <div id="categoryIntro" class="category-intro"></div>
+  <div id="taskNumber" class="task-number"></div> <!-- Här visas uppgiftsnumret -->
+  <div class="question" id="question"></div> <!-- Här visas själva frågan -->
+
+
+  <!-- 💡 NY Tips-knapp här -->
+<div style="margin: 10px 0;">
+  <button onclick="showTip()">💡 Tips</button>
+</div>
+<div id="tipBox" class="tip-box"></div>
+
+
+  <div id="questionImageWrapper" style="text-align: center; margin-top: 20px;">
+  <img id="questionImage" src="" alt="Bild för uppgiften" style="max-width: 800px; display: none;">  
+
+<input type="text" id="answerInput" placeholder="Skriv ditt svar här">
+
+<!-- 🧮 Miniräknare-knapp -->
+<button onclick="toggleCalculator()">🧮 Miniräknare</button>
+
+
+<!-- 🧮 Flyttbar miniräknare -->
+<div id="calculator" class="calculator">
+  <div id="calcHeader" class="calculator-header">
+    Miniräknare
+    <button onclick="toggleCalculator()" class="calculator-close">❌</button>
+  </div>
+
+  <div class="calculator-body">
+    <input type="text" id="calcDisplay" class="calculator-display" readonly>
+    <div class="calculator-grid">
+      <button onclick="calcInput('7')">7</button>
+      <button onclick="calcInput('8')">8</button>
+      <button onclick="calcInput('9')">9</button>
+      <button onclick="calcInput('/')">/</button>
+      <button onclick="calcInput('4')">4</button>
+      <button onclick="calcInput('5')">5</button>
+      <button onclick="calcInput('6')">6</button>
+      <button onclick="calcInput('*')">×</button>
+      <button onclick="calcInput('1')">1</button>
+      <button onclick="calcInput('2')">2</button>
+      <button onclick="calcInput('3')">3</button>
+      <button onclick="calcInput('-')">−</button>
+      <button onclick="calcInput('0')">0</button>
+      <button onclick="calcInput('.')">.</button>
+      <button onclick="calculate()">=</button>
+      <button onclick="calcInput('+')">+</button>
+      <button onclick="clearCalc()" class="clear-button">Rensa</button>
+    </div>
+  </div>
+</div>
+
+<!-- Resterande svarsknappar och innehåll -->
+<button onclick="checkAnswer()">Svara</button>
+<button id="nextBtn" onclick="skipToNext()">Nästa fråga</button>
+<button id="prevBtn" onclick="goToPrevious()" style="display:none;">Föregående fråga</button>
+
+<div class="feedback" id="feedback"></div>
+<div class="explanation" id="explanation"></div>
+<canvas id="chart" style="display: none;"></canvas>
+<button onclick="goBackToCategory()">Tillbaka</button>
+
+  
+
+  <canvas id="confetti-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;"></canvas>
+
+</section>
+
+<!-- Testa dig själv-sektion -->
+<section id="selfTestSection" style="display: none;">
+  <h2>🧠 Testa dig själv!</h2>
+  <p>Välj vilka kategorier du vill testa dig på:</p>
+  <div id="selfTestOptions" class="category-buttons">
+    <label><input type="checkbox" value="fraction"> Addition</label>
+    <label><input type="checkbox" value="subtraction"> Subtraktion</label>
+    <label><input type="checkbox" value="multiplication"> Multiplikation</label>
+    <label><input type="checkbox" value="division"> Division</label>
+    <label><input type="checkbox" value="compare_order"> Jämförelse & Ordning</label>
+    <label><input type="checkbox" value="equation"> Ekvationer</label>
+    <label><input type="checkbox" value="word problem"> Textuppgifter</label>
+  </div>
+  <button onclick="startSelfTest()">🚀 Starta test</button>
+  <button onclick="startFinalTest()">🏁 Sluttest (Alla kategorier)</button>
+  <button onclick="showIntro()">Tillbaka</button>
+</section>
+
+<section id="myResultsSection" style="display: none;">
+  <h2>📊 Mina tidigare resultat</h2>
+  <div id="myResultsOutput"></div>
+  <button onclick="showIntro()">Tillbaka</button>
+</section>
+
+  <script>
+
+  let firstTryStats = {}; // { 'fraction': { correct: 2, total: 3 }, ... }
+  let selfTestResults = []; 
+  let selectedCategory = "";
+
+  
+// Låsa upp frågorna
+let questionsToShow = 3;
+  let unlockExtraQuestions = false;
+  let originalQuestions;    // sätts i beginCategoryExercise()
+  let filteredQuestions = []; 
+
+
+  let currentQuestion = 0;               // Vilken fråga är vi på?
+  let attempts = 0;                      // Hur många försök på denna fråga?
+  let correctFirstTry = 0;               // Antal rätt på första försök
+  let totalQuestions = 0;   
+
+
+  function showCategorySelector() {
+  document.getElementById("introSection").style.display = "none";
+  document.getElementById("categorySection").style.display = "block";
+  document.getElementById("infoSection").style.display = "none";
+  document.getElementById("exerciseSection").style.display = "none"; // ✅ DÖLJ DENNA
+  document.getElementById("introImage").style.display = "none";
+  document.getElementById("categorySection").classList.add("fade-in");
+
+  // 🔧 Göm och rensa tidigare resultat
+  const chart = document.getElementById("chart");
+  const explanation = document.getElementById("explanation");
+  if (chart) {
+    chart.style.display = "none";
+    const chartInstance = Chart.getChart("chart");
+    if (chartInstance) chartInstance.destroy();
+    chart.getContext("2d").clearRect(0, 0, 400, 400);
+  }
+  if (explanation) explanation.innerHTML = "";
+}
+
+function startCategory(category) {
+  hideBubbles();
+  document.getElementById("categorySection").style.display = "block";
+  selectedCategory = category;
+
+  // Dölj alla andra sektioner
+  document.getElementById("introSection").style.display = "none";
+  document.getElementById("introImage").style.display = "none";
+  document.getElementById("infoSection").style.display = "none";
+  document.getElementById("exerciseSection").style.display = "none";
+  document.getElementById("selfTestSection").style.display = "none";
+  document.getElementById("myResultsSection").style.display = "none";
+  document.getElementById("categorySection").style.display = "none";
+
+  // ✅ Visa introsektionen
+  document.getElementById("categoryIntroSection").style.display = "block";
+
+  // ⬇️ Fyll i rubrik och exempeltext
+  const titleMap = {
+    fraction: "➕ Addition",
+    subtraction: "➖ Subtraktion",
+    multiplication: "✖️ Multiplikation",
+    division: "➗ Division",
+    compare_order: "📊 Jämförelse & Ordning",
+    equation: "Lösa ekvationer",
+    "word problem": "📘 Textuppgifter",
+    all: "📚 Alla uppgifter"
+  };
+
+  document.getElementById("categoryIntroTitle").innerText = titleMap[category];
+
+if (category === "all") {
+  document.getElementById("categoryIntroText").innerHTML = 
+    "Här får du möjlighet att göra alla uppgifter för alla kategorier.";
+} else {
+  const introText = categoryIntroductions[category] || "Kort introduktion till kategorin.";
+  const example = categoryExamples[category] || "Här visas ett exempel.";
+  document.getElementById("categoryIntroText").innerHTML =
+    `<strong>Förklaring:</strong> ${introText}<br><br><strong>Exempel:</strong> ${example}`;
+}
+
+formatFractionsInElement("categoryIntroText");
+
+}
+
+
+
+    const categoryIntroductions = {
+  fraction: "När du adderar bråk, måste du först kontrollera om nämnarna är lika. Om inte, gör dem lika genom att hitta en gemensam nämnare.",
+  subtraction: " När du subtraherar bråk, gäller samma sak: gemensam nämnare är viktigt innan du kan subtrahera täljarna.",
+  division: "Vid division av bråk vänder du det andra bråket och multiplicerar (kallas invertering).",
+  multiplication: "Multiplicera täljare med täljare och nämnare med nämnare. Du behöver inte ha samma nämnare.",
+  compare_order: " Här tränar du på att jämföra och ordna bråk – till exempel avgöra vilket bråk som är störst, eller sortera flera bråk i storleksordning.",
+  equation: "För att lösa ekvationer med bråk, isolera x genom att flytta över termer eller subtrahera bråk.",
+  "word problem": "Läs noga! Försök översätta situationen till en bråkräkning!"
+  
+
+};
+
+const categoryExamples = { 
+  fraction: 
+  "Beräkna 2/3 + 1/2 <br><br>" + 
+  "<strong>Lösning:</strong><br>" +
+  "<strong>1. Hitta minsta gemensamma nämnare (MGN):</strong><br>" +
+  "För att hitta MGN för 3 och 2, letar vi efter <span style=\"color: red;\">det minsta talet</span> som båda nämnarna kan delas med. " + 
+  "Det minsta talet som både 3 och 2 går att dela in i är <span style=\"color: red;\">6</span>.<br><br>" +
+  
+  "<strong>2. Förläng bråken så att de får gemensam nämnare:</strong><br>" +
+  "För att göra 2/3 till ett bråk med nämnaren 6, förlänger vi både täljaren och nämnaren med " +
+  "<span style=\"color: red;\">2</span>:<br><br>" +
+  "(2 × <span style=\"color: red;\">2</span>)/(3 × <span style=\"color: red;\">2</span>) = 4/6<br><br>" +
+  
+  "För att göra 1/2 till ett bråk med nämnaren 6, förlänger vi både täljaren och nämnaren med " +
+  "<span style=\"color: red;\">3</span>:<br><br>" +
+  "(1 × <span style=\"color: red;\">3</span>)/(2 × <span style=\"color: red;\">3</span>) = 3/6<br><br>" +
+
+  "<strong>3. Adderar de två bråken:</strong><br><br>" +
+  "4/6 + 3/6 = (4 + 3)/6 = <span style=\"color: green;\">7/6</span>",
+  
+  subtraction: "5/6 - 1/2 → Minsta gemensamma nämnare är: <span style=\"color: red;\">6</span><br><br>" + 
+"<strong>Lösning:</strong><br>" +
+  "<strong>1. Hitta minsta gemensamma nämnare (MGN):</strong><br>" +
+  "För att hitta MGN för 6 och 2, letar vi efter det minsta talet som båda nämnarna kan delas med. " + 
+  "Det minsta talet som både 6 och 2 går att dela in i är <span style=\"color: red;\">6</span>.<br><br>" +
+
+  "<strong>2. Förläng bråken så att de får gemensam nämnare:</strong><br><br>" +
+  "För att göra 5/6 till ett bråk med nämnaren 6, behöver vi inte förlänga – det är redan 6 i nämnaren.<br><br>" +
+
+  "För att göra 1/2 till ett bråk med nämnaren 6, förlänger vi både täljaren och nämnaren med " +
+  "<span style=\"color: red;\">3</span>:<br><br>" +
+  "(1 × <span style=\"color: red;\">3</span>)/(2 × <span style=\"color: red;\">3</span>) = 3/6<br><br>" +
+
+  "<span style=\"color: red;\">(förlänga med 3 för att få gemensam nämnare)</span><br><br>" +
+
+  "<strong>3. Subtrahera bråken:</strong><br><br>" +
+  "5/6 - 3/6 = (5 - 3)/6 = 2/6 = <span style=\"color: green;\">1/3</span>",
+
+  multiplication: 
+    "2/3 × 3/4<br><br>" +
+    "<strong>Lösning:</strong><br><br>" +
+  "<strong>1. Multiplicera täljare och nämnare:</strong><br>" +
+  "(<span style=\"color: red;\">2</span> × <span style=\"color: red;\">3</span>)/(<span style=\"color: red;\">3</span> × <span style=\"color: red;\">4</span>) = 6/12<br><br>" +
+  "<strong>2. Förkorta bråket genom att dividera både täljare och nämnare med <span style=\"color: red;\">6</span>:</strong><br>" +
+  "(6÷ <span style=\"color: red;\">6</span>)/(<12 ÷ <span style=\"color: red;\">6</span>) = 1/2<br><br>" +
+  "Alltså: 6/12 = <span style=\"color: green;\">1/2</span>",
+
+  division: 
+    "1/2 ÷ 1/4<br><br>" +
+    "<strong>Lösning:</strong><br><br>" +
+    "<strong>1. Byt till multiplikation med det omvända <span style=\"color: red;\">(invertering)</span> :</strong><br>" +
+    "1/2 × <span style=\"color: red;\">4/1</span> <br><br>" +
+    "<strong>2. Multiplicera täljare och nämnare:</strong><br>" +
+    "(<span style=\"color: red;\">1</span> × <span style=\"color: red;\">4</span>)/(<span style=\"color: red;\">2</span> × <span style=\"color: red;\">1</span>) = 4/2<br><br>" +
+    "<strong>3. Förenkla:</strong><br>" +
+    "4/2 = <span style=\"color: green;\">2</span>",
+
+  compare_order: 
+  "<strong>Vilket är störst: 1/3 eller 1/2?</strong><br><br>" +
+  "<strong>Lösning:</strong><br>" +
+    "<strong>1.Hitta minsta gemensamma nämnare (MGN):</strong><br>" +
+    "För 3 och 2 är MGN <span style=\"color: red;\">6</span><br><br>" +
+    "<strong>2. Förläng bråken:</strong><br>" +
+    "1/3 → (1 × <span style=\"color: red;\">2</span>)/(3 × <span style=\"color: red;\">2</span>) = 2/6<br>" +
+    "1/2 → (1 × <span style=\"color: red;\">3</span>)/(2 × <span style=\"color: red;\">3</span>) = 3/6<br><br>" +
+    "<strong>3. Jämför täljarna:</strong><br>" +
+    "2/6 < 3/6 → <span style=\"color: green;\">1/3 < 1/2</span><br><br>" +
+    "<strong>Visualisering:</strong><br>" +
+    "<figure>" +
+    "  <img src=\"brak10.png\" " +
+    "  <figcaption><em>Man kan också tänka på detta som att jämföra pizzabitar: 1/2 av en pizza är större än 1/3.</em></figcaption>" +
+    "</figure><br><br>"+
+
+    "<strong>Exempel 2. Ordna bråk i storleksordning: 1/3, 1/2, 2/3, 3/4</strong><br><br>" +
+    "<strong>Lösning:</strong><br>" +
+    "<strong>Steg 1: Hitta minsta gemensamma nämnare (MGN) för alla bråk:</strong><br>" +
+    "MGN = <span style=\"color: red;\">12</span><br><br>" +
+    "<strong>Steg 2: Förläng bråken till samma nämnare:><br><br><br>" +
+    "1/3 → (1 × <span style=\"color: red;\">4</span>)/(3 × <span style=\"color: red;\">4</span>) = 4/12<br>1/3 → (1 × <span style=\"color: red;\">4</span>)/(3 × <span style=\"color: red;\">4</span>) = 4/12<br><br>" +
+    "1/2 → (1 × <span style=\"color: red;\">6</span>)/(2 × <span style=\"color: red;\">6</span>) = 6/12<br><br>" +
+    "2/3 → (2 × <span style=\"color: red;\">4</span>)/(3 × <span style=\"color: red;\">4</span>) = 8/12<br><br>" +
+    "3/4 → (3 × <span style=\"color: red;\">3</span>)/(4 × <span style=\"color: red;\">3</span>) = 9/12<br><br>" +
+    "<strong>Steg 3. Jämför täljarna:</strong><br>" +
+    "4/12 (1/3) < 6/12 (1/2) < 8/12 (2/3) < 9/12 (3/4)<br><br>" +
+    "Därmed får vi ordningen: <span style=\"color: green;\">1/3 , 1/2 , 2/3, 3/4 </span><br><br>" +
+    "<strong>Visualisering:</strong><br>" +
+    "<figure>" +
+    "  <img src=\"brak11.png\" " +
+    "  <figcaption><em>Man kan också tänka på detta som att jämföra pizzabitar</em></figcaption>" +
+    "</figure><br><br>",
+
+
+
+  equation: 
+  `Beräkna: x + 1/3 = 1<br>
+x = 1 - <span style="color: red;">1/3</span>)<br><br>
+<span style="color: red;">(subtrahera med 1/3 för att x ska stå ensam)</span><br><br>
+x = (1 × <span style="color: red;">3</span>)/(1 × <span style="color: red;">3</span>) - 1/3<br><span style="color: red;">(multiplicera med 3 för att ha gemensamma nämnare)</span><br><br>
+x = 3/3 - 1/3<br><br>
+x = (3 - 1)/3<br><br>
+x = 2/3`,
+  "word problem": "I en stad finns 52 000 invånare. Av dessa är 4/7 barn och av övriga invånarne är två tredjedelar män. Hur många kvinnor bor i staden?<br><br>" +
+  " <strong>Lösning:</strong><br>" +
+  "Tolka uppgiften: Det finns  52 000 invånare och 4/7 är barn. Alltså: 3/7 av invånarna är vuxna.<br><br>" +
+  "Av dessa är 2/3 män, vilket ger att 1/3 av 3/7 är kvinnor, vilket är: <br><br>" +
+  "1/3 × 3/7 = 3/21 = 1/7 av invånarna."+
+  "Beräkna antalet kvinnor: 52 000 × 1/7 ≈ 7 430 invånare<br>",
+};
+
+
+    const questions = [
+      {
+        category: "fraction",
+        question: " Beräkna 1/2 + 1/2 och svara i enklaste form",
+        answer: "1",
+        tips: ["När du adderar bråktal med samma nämnare, behåller du nämnaren och adderar täljarna.",
+          
+          "Vad får du om du adderar täljarna och behåller samma nämnare?"
+        ],
+        specificTips: {
+          "1/8": "Kom ihåg att nämnarna inte adderas. Vad gör du med täljarna? Försök igen.",
+          "2/2": "Bra jobbat! Försök att förkorta bråket för att få det i enklaste form.",
+          "1/4": "Kom ihåg att nämnarna inte adderas när du adderar bråk. Tänk på att täljarna adderas, men nämnarna förblir samma. Vad får du om du adderar täljarna och behåller samma nämnare?",
+          "2/4": "Tänk på att bara addera täljarna när bråken har samma nämnare.",
+          "1/3": "Kom ihåg att nämnarna inte adderas. Vad gör du med täljarna? Försök igen.",
+          "1/5": "Kom ihåg att nämnarna inte adderas. Vad gör du med täljarna? Försök igen.",
+        },
+        explanation: "Lösning: <br><br>"+ "1/2 + 1/2 = (1+1)/2= 2/2 = 1.<br><br>"+
+        "Du adderar täljarna (1+1=2) och behåller nämnaren (2)."
+      },
+      {
+        category: "fraction",
+        question: "Beräkna 2/3 + 1/2 och svara i bråkform",
+        answer: "7/6",
+        tips: [
+          "Hitta gemensamma nämnare för 3 och 2."
+        ],
+        specificTips: {
+          "3/5": "Kom ihåg att när du adderar bråken måste du hitta en gemensam nämnare. Nämnarna adderas inte direkt. Försök hitta en gemensam nämnare för 3 och 5 och addera sedan täljarna. ",
+          "3/6": "När man gör om bråk till samma nämnare, måste man multiplicera både täljaren och nämnaren med samma tal.",
+          "1/2": "När man gör om bråk till samma nämnare, måste man multiplicera både täljaren och nämnaren med samma tal.",
+        },
+        explanation:[
+        "Lösning: <br>"+
+        "För att kunna addera, måste bråken ha samma nämnare.<br>"+
+        "Vi hittar en gemensam nämnare för 3 och 2. Det minsta gemensamma talet är 6.<br>"+
+        "Nu skriver vi om bråken så att båda har nämnaren 6.<br>"+
+        "2/3 = 4/6 (vi multiplicerar både täljaren och nämnaren med 2).<br><br>"+
+        "1/2 = 3/6 (vi multiplicerar både täljaren och nämnaren med 3).<br><br>"+
+        "Nu kan vi addera: 4/6 + 3/6 = 7/6.<br><br>"
+    
+  ]
+  
+      },
+
+      { category: "fraction",
+        question: "Beräkna 3 + 2/7 och svara i bråkform.",
+        answer: "23/7",
+        tips: [
+          "Vad händer om du gör om 3 till sjundedelar?",
+          "Tänk på att 3 är samma sak som 21/7. Vad får du om du adderar?."
+        ],
+        specificTips: {
+          "5/7": "Kom ihåg att 3 är ett heltal och kan skrivas som 3/1. "+
+          "När du adderar bråket 3/1 med 2/7, måste du hitta en gemensam nämnare. Försök igen med rätt gemensam nämnare och lägg ihop täljarna.",
+          "2/7": "Kom ihåg att 3 är samma sak som 21/7. Vad får du om du adderar?",
+          "6/7": "Kom ihåg att du inte ska multiplicera 3 med 2/7. Istället ska du skriva 3 som ett bråk med nämnaren 7 och sedan addera bråken. Försök att hitta en gemensam nämnare och addera täljarna korrekt!",
+          "6/21":"Kom ihåg att du inte ska multiplicera 3 med 2/7. Istället ska du skriva 3 som ett bråk med nämnaren 7, och sedan addera bråken. Försök att hitta en gemensam nämnare och addera täljarna korrekt!",
+        },
+        explanation: [
+        "Lösning: <br>"+
+        "3 + 2/7 = 21/7 + 2/7 = 23/7 <br>"+
+        "Du gör om 3 till sjundedelar (3 = 21/7) och adderar täljarna."
+        ]
+      },
+      
+      { category: "fraction",
+        question: "Beräkna 1/7+ 1 och svara i bråkform.",
+        answer: "8/7",
+        tips: [
+          "Vad händer om du gör om 1 till sjundedelar? Försök igen.",
+          "Tänk på att 1 är samma sak som 7/7. Försök igen!."
+        ],
+        specificTips: {
+          "2/7": "Kom ihåg att du inte kan addera 1 + 1 direkt när du jobbar med bråk. Du måste först skriva om 1 som ett bråk med samma nämnare som 1/7. Försök att skriva 1 som 7/7 och addera sedan täljarna.",
+          "2/8": "Hur kan vi skriva heltalet 1 som ett bråk med samma nämnare som 1/7?. Försök igen!",
+          "1/4": "Hur kan vi skriva heltalet 1 som ett bråk med samma nämnare som 1/7?. Försök igen!",
+          "1/8": "Kom ihåg att du inte kan addera 7 med 1 direkt, eftersom 7 är nämnaren för det ena bråket och 1 är ett heltal. Skriv om 1 som ett bråk med samma nämnare som 1/7 innan du kan addera täljarna. Försök igen!"
+        },
+        explanation: [
+        "Lösning: <br>"+
+        "1/7 + 1 = 1/7 + 7/7 = 8/7 <br>"+
+        "Du gör om 1 till sjundedelar (1 = 7/7) och adderar täljarna."
+        ]
+
+      },
+      
+      
+      { category: "fraction",
+        question: "Beräkna 1/4 + 1/3 och svara i bråkform.",
+        answer: "7/12",
+        tips: [
+          "Vad händer om du gör samma nämnare först?. Försök igen!",
+          "Hitta gemensam nämnare för 4 och 3. Försök igen!"
+        ],
+        specificTips: {
+          "1/7": "Kom ihåg att nämnarna inte adderas. Försök igen.",
+          "2/12":"Du har adderat täljarna och multiplicerat nämnarna, men vid addition av bråk behöver du en gemensam nämnare. Försök igen!",
+          "2/7": "Kom ihåg att vi inte kan lägga ihop bråk med olika nämnare direkt. Vi måste först hitta en gemensam nämnare för 4 och 3 . Försök igen!",
+          "1/12":"Kom ihåg att när du adderar bråk, ska du inte multiplicera nämnarna direkt och behålla 1 som en konstant. För att addera 1/4 och 1/3 måste du hitta en gemensam nämnare. Om du har hittat den gemensamma nämnaren som är 12, är det jättebra! Men nu måste du komma ihåg att täljarna ska adderas, inte multipliceras. Försök nu att addera täljarna på rätt sätt."
+        
+        },
+        explanation: [
+        "Lösning: <br>"+
+        "1/4 + 1/3 → Gemensam nämnare är = 12 <br>"+
+        "1/4 = 3/12 (multiplicera både täljaren och nämnaren med 3)<br><br>"+
+        "1/3 = 4/12 (multiplicera både täljaren och nämnaren med 4)<br>"+
+        "Nu kan vi addera: 3/12 + 4/12 = (3 + 4)/12 = 7/12<br><br>"
+        ]
+      },
+
+
+      //Subtraction
+      {
+        category: "subtraction",
+        question: "Beräkna 2/5 -1/5 och svara i bråkform.",
+        answer: " 1/5",
+        tips: ["När du subtraherar bråktal med samma nämnare, behåller du nämnaren och subtraherar täljarna.",
+            
+            "Vi har redan samma nämnare, så det är bara täljarna som ska subtraheras.",
+        ],
+        specificTips: {
+          "1/0": "Kom ihåg att vi inte kan subtrahera nämnarna. Här har vi redan samma nämnare, så det är bara täljarna som ska subtraheras. Försök igen!",
+          
+        },
+        explanation: [
+        "Lösning: <br>"+
+        "2/5 - 1/5 = 1/5. Eftersom nämnarna är lika, subtraherar vi bara täljarna."
+        ]
+      },
+      {
+        category: "subtraction",
+        question: "Beräkna 2/4 - 1/2" ,
+        answer: "0",
+        tips: ["Har bråken samma nämnare? Om inte, börja där!"],
+        specificTips: {
+          "1/2": "När du subtraherar bråk måste de ha samma nämnare! Försök igen!",
+          "1/4": "När man gör om ett bråk till samma nämnare, måste man multiplicera både täljaren och nämnaren med samma tal. Försök igen."
+        },
+        explanation: [
+        "Lösning: <br>"+
+        "2/4 = 1/2, så 1/2 - 1/2 = 0."
+
+        ]
+      },
+
+      {
+        category: "subtraction",
+        question: "Beräkna 3/6 - 1/3 och svara i bråkform.",
+        answer: "1/6",
+        tips: ["Se till att bråken har samma nämnare innan du subtraherar!",
+          "Vad händer om du gör om 1/3 till sjättedelar?",
+          "Tänk på att 1/3 är samma sak som 2/6. Försök igen!"
+        ],
+        specificTips: {
+          "2/6": "Det verkar som om du bara förlängde nämnaren för 1/3 till 6, men du måste också multiplicera täljaren med 2. Försök igen!",
+          "2/3": "Tänk på att du inte kan subtrahera bråk direkt om de har olika nämnare.<br>"+
+          "Du behöver först hitta en gemensam nämnare, gärna den minsta gemensamma nämnaren, så att båda bråken får samma nämnare.<br>" + 
+          "När nämnarna är lika, drar du bara täljarna från varandra och behåller nämnaren."
+        },
+        explanation: [
+        "Lösning: <br>"+
+        "1/3 = 2/6 → 3/6 - 2/6 = 1/6."
+        ]
+      },
+      {
+        category: "subtraction",
+        question: "Beräkna 1/2 - 1/5 och svara i bråkform.",
+        answer: "3/10",
+        tips: ["Se till att bråken har samma nämnare innan du subtraherar!",
+            
+            "Hitta gemensam nämnare för 2 och 5.",
+        ],
+        specificTips: {
+          "0/-3": "Se till att bråken har samma nämnare innan du subtraherar!",
+          "1/-3": "Kom ihåg att du inte kan subtrahera nämnarna direkt, även om täljaren är densamma. Tänk på att för att subtrahera bråk måste vi få samma nämnare först och sedan subtrahera täljarna. Försök igen!",
+          "1/3": "Kom ihåg att du inte kan subtrahera nämnarna direkt, även om täljaren är densamma. Tänk på att för att subtrahera bråk måste vi få samma nämnare först och sedan subtrahera täljarna. Försök igen!",
+        },
+        explanation: [
+          "Lösning: <br>"+
+        "1/2 - 1/5 = 5/10 - 2/10 = (5-2)/10= 3/10. <br>",
+        ]
+      },
+      {
+        category: "subtraction",
+        question: "Beräkna 16/7 - 2 och svara i bråkform.",
+        answer: "2/7",
+        tips: [
+          "Vad händer om du gör om 2 till sjundedelar?",
+          "Gör båda till bråk med samma nämnare innan du räknar."
+        ],
+        specificTips: {
+          "14/7": "När du subtraherar bråk måste de ha samma nämnare! Försök igen!",
+         },
+         explanation: "16/7 - 2 = 16/7 - 14/7 = 2/7. Du gör om 2 till sjundedelar (2 = 14/7) och subtraherar täljarna."
+      },
+
+
+      // Division
+      {
+        category: "division",
+        question: "Beräkna 1/11 ÷ 1/3 och svara i bråkform.",
+        answer: "3/11",
+        tips: [
+          "När du dividerar med ett bråk, ska du vända på det andra bråket och multiplicera!",
+          "Hur många tredjedelar får plats i en elftedel?"
+        ],
+        specificTips: {
+          "1/33": "Du har multiplicerat de två bråken direkt istället för att dividera.",
+          "33": "Vänd bara på det andra bråket, inte båda!",
+          "14/33": "Kom ihåg att division av bråk inte är samma sak som addition!"
+        },
+        explanation:  [
+        "Lösning: <br>"+  
+        "1/11 ÷ 1/3 = 1/11 * 3/1 = (1*3)/(11*1)=3/11."
+  
+        ]
+
+      },
+      {
+        category: "division",
+        question: "Beräkna 2/3 ÷ 5 och svara i bråkform.",
+        answer: "2/15",
+        tips: [
+          "Kom ihåg att vända på det andra bråket när du dividerar.",
+          "För att dividera bråk, multiplicera det första bråket med det inverterade andra bråket."
+        ],
+        specificTips: {
+          "10/3": "Tänk: om du ska dela 2/3 i 5 lika delar, blir det mer eller mindre än 2/3? Försök igen!",
+          "15/2": "Det verkar som att du har gjort 5 ÷ (2/3) istället för (2/3) ÷ 5. Läs uppgiften en gång till, vad är det som ska delas, 2/3 eller 5?",
+          "17/3":"För att dividera bråk, multiplicera det första bråket med det inverterade andra bråket."
+        },
+        explanation: "1/5 ÷ 2/7 = 1/5 * 7/2 = (1*7)/(5*2)= 7/10."
+      },
+      {
+        category: "division",
+        question: "Vad är 11/0?",
+        answer: ["inte definierat", "undefined", "ej definierat", "det går inte att dela", "går ej", "går inte", "kan ej delas"],
+        tips: [
+          "Tänk på vad det innebär att dela med noll – det är något speciellt som inte fungerar som vanligt.",
+          "Försök att tänka på multiplicering för att förstå varför det inte går att dela med 0."
+        ],
+        specificTips: {
+          "0": "Tänk efter, om svaret vore 0, vad händer om du multiplicerar 0 med 0?\n0 × 0 = 0, inte 11. Så det kan inte stämma!",
+          "11": "Tänk efter, om du tar 11 ÷ 0 och får 11 som svar, vad betyder det?\nDå borde 11 × 0 = 11, men det blir ju 0!",
+          "infinity": "Bra tanke! Det är sant att talen blir jättestora när man delar med små tal nära noll.\nMen att dela med exakt noll går inte, vi säger att det är inte definierat, inte ens oändligt."
+        },
+        explanation: "Att dela med 0 är inte tillåtet i matematiken –. Det finns inget tal du kan multiplicera med 0 för att få 11. Enligt definitionen kan ingen division genom noll ge ett meningsfullt resultat och därför säger vi att det är 'inte definierat'."
+      },
+      {
+        category: "division",
+        question: "Beräkna 2/(1/13)",
+        answer: ["26", "26/1", "26/1"],
+        tips: [
+          "Kom ihåg att vända på det andra bråket när du dividerar.",
+          "För att dividera bråk, multiplicera det första bråket med det inverterade andra bråket."
+        ],
+        specificTips: {
+          "2/13": "Kom ihåg att dividera på rätt sätt, du måste vända på det andra bråket och sedan multiplicera.",
+          "13/2": "Du har tänkt rätt som vände på 1/13 till 13/1. Men man kan inte göra om 2 till 1/2. Istället ska du skriva om 2 som 2/1, eftersom 2 betyder 2 hela – alltså samma sak som 2/1.",
+          "1/26": "Vid division med bråk kan man inte göra om 2 till 1/2 och multiplicera med 1/13. Man ska i stället skriva om 2 som 2/1 och multiplicera med det omvända av 1/13, alltså 13/1. Försök igen!"
+        },
+        explanation: "2/(1/13) = 2 * (13/1) = 26. Du vänder på det andra bråket och multiplicerar."
+      },
+      {
+        category: "division",
+        question: "Beräkna 1/5 ÷ 2/7 och svara i bråkform.",
+        answer: "7/10",
+        tips: [
+          "Kom ihåg att vända på det andra bråket när du dividerar.",
+          "För att dividera bråk, multiplicera det första bråket med det inverterade andra bråket."
+        ],
+        specificTips: {
+          "14/35": "Kom ihåg att dividera på rätt sätt, du måste vända på det andra bråket och sedan multiplicera.",
+          "1/2": "Försök att vända det andra bråket och multiplicera. Försök igen!"
+        },
+        explanation: "1/5 ÷ 2/7 = 1/5 * 7/2 = (1*7)/(5*2)= 7/10."
+      },
+
+//Multiplikation
+      {
+        category: "multiplication",
+        question: "Beräkna 2/3 * 1/5 och svara i bråkform.",
+        answer: "2/15",
+        tips: [
+          "Tänk på att när du multiplicerar bråk behöver du inte hitta gemensam nämnare, och du ska inte invertera något bråk.",
+          "Multiplicera bara täljare med täljare och nämnare med nämnare. a/b*c/d=(a*c)/(b*d)."
+        ],
+        specificTips: {
+          "3/8": "Multiplicera täljare med täljare och nämnare med nämnare, inte addera.",
+          "10/3": "Vid multiplikation av bråk ska du inte vända något bråk.",
+          "15/2": "Det ser ut som att du har vänt på båda bråken innan du multiplicerade. Men när du multiplicerar bråk behöver du inte vända något, du multiplicerar bara täljare med täljare och nämnare med nämnare."
+        },
+        explanation: "2/3 * 1/5 = (2 * 1 )/ (3 * 5) = 2/15."
+      },
+      
+      {
+        category: "multiplication",
+        question: "Beräkna 1/4 * 1/3 och svara i bråkform.",
+        answer: "1/12",
+        tips: [
+          "Multiplicera täljare med täljare och nämnare med nämnare"
+        ],
+        specificTips: {
+          "1/7": "Kom ihåg att multiplicera täljarna med varandra och nämnarna med varandra.",
+          "3/4": "Har du råkat vända ett bråk? Det gör man bara vid division.",
+          "2/12": "Har du blandat ihop siffrorna? Multiplicera täljarna och nämnarna korrekt.",
+          "1/6": "Har du blandat ihop siffrorna? Multiplicera täljarna och nämnarna korrekt.",
+        },
+        explanation: "1/4 * 1/3 = 1/12. Multiplicera 1*1 och 4*3."
+      },
+      
+      
+      {
+        category: "multiplication",
+        question: "Beräkna 1/9 * 2/5 * 3/7 och svara i bråkform.",
+        answer: "6/315", 
+        tips: [
+          "Kom ihåg att multiplicera täljare med täljare och nämnare med nämnare.",
+          "Tänk på att du inte behöver samma nämnare när du multiplicerar bråk."
+        ],
+        specificTips: {
+          "6/21": "Kom ihåg att multiplicera täljare med täljare och nämnare med nämnare, inte addera dem. Försök igen!",
+        
+        },
+        explanation: "1/9 * 2/5 * 3/7 = (1*2*3)/(9*5*7) = 6/315. Multiplicera täljarna och nämnarna."
+      },
+
+      {
+        category: "multiplication",
+        question: "Beräkna 3/4 * 2/7 och svara i bråkform.",
+        answer: "6/28",
+        tips: [
+          "Tänk på att du inte behöver samma nämnare när du multiplicerar bråk.",
+          "Multiplicera täljare med täljare och nämnare med nämnare: 3 * 2 och 4 * 7."
+        ],
+        specificTips: {
+          "5/11": "Kom ihåg att multiplicera täljarna med varandra och nämnarna med varandra.",
+          "21/8": "Har du råkat vända ett bråk? Det gör man bara vid division.",
+          "10/14": "Har du blandat ihop siffrorna? Multiplicera täljarna och nämnarna korrekt.",
+          "28/6": "Det verkar som att du har vänt båda bråken, det ska du inte göra vid multiplikation!"
+        },
+        explanation: "3/4 * 2/7 = 6/28. Multiplicera 3*2 och 4*7."
+      },
+
+      {
+        category: "multiplication",
+        question: "Beräkna  1/2 * 3/4 och svara i bråkform.",
+        answer: "3/8",
+        tips: [
+          "Kom ihåg att multiplicera täljare med täljare och nämnare med nämnare.",
+          "Tänk på att du inte behöver samma nämnare när du multiplicerar bråk."
+        ],
+        specificTips: {
+          "4/6": "Kom ihåg att multiplicera täljarna och nämnarna, inte addera dem.",
+          "2/3": "Du verkar ha blandat ihop addition och multiplikation. Försök igen!",
+          "4/8": "Kom ihåg att multiplicera täljarna och nämnarna, inte addera ihop täljarna. Försök igen."
+        },
+        explanation: "1/2 * 3/4 = 3/8. Multiplicera 1*3 och 2*4."
+      },
+      
+
+// LÖSA EKVATIONER
+      {
+        category: "equation",
+        question: "Lös ekvationen: x + 1/3 = 6",
+        answer: "17/3",
+        tips: [
+          {
+            condition: (input) => input.trim() === "5" || input.trim() === "17",
+            text: "Om du multiplicerar med 3 måste du göra det på alla termer även x."
+          },
+          {
+            condition: (input) => input.trim() === "3",
+            text: "Titta noga på ekvationen igen, står det verkligen 1 delat med x, eller bara x?"
+          },
+          {
+            condition: () => true,
+            text: "Tänk på att du måste ta bort bråket 1/3 från andra sidan."
+          }
+        ],
+        specificTips: {
+          "5/3": "Du vill ta bort en tredjedel från 6. Men för att det ska gå, behöver du skriva 6 som ett bråk med samma nämnare, alltså: 6 är samma som 18/3. Försök igen."
+        },
+        explanation: "x = 6 - 1/3 = 18/3 - 1/3 = 17/3"
+      },
+      {
+        category: "equation",
+        question: "Lös ekvationen: x/2 - 3 = 5/4 och svara i bråkform.",
+        answer: "17/2",
+        tips: ["För att lösa ekvationen: börja med att få x-termen ensam på ena sidan.",
+  "Lägg till 3 på båda sidor först för att bli av med -3.",
+  "När du har x/2 = något, multiplicera båda sidor med 2 för att få x."
+          
+        ],
+        specificTips: {
+        
+          "5/4": "Det ser ut som att du bara kopierade det som redan stod i ekvationen. Kom ihåg att lösa ut x steg för steg!",
+  
+  "11/4": "Du har antagligen glömt att lägga till 3 korrekt. Kom ihåg att 3 = 12/4, så 5/4 + 3 = 17/4 innan du multiplicerar med 2.",
+  
+  "17/4": "Du är nästan klar! Du har räknat rätt fram till x/2 = 17/4, men glömde multiplicera båda sidor med 2 för att få x. Försök igen!",
+  
+  "8.5": "8.5 är rätt som decimal, men uppgiften vill ha svaret i bråkform. Skriv det som 17/2.",
+  
+  "34": "Oj, det ser ut som att du kanske multiplicerat fel. Kom ihåg att när du multiplicerar 2 · (17/4), blir det 34/4 – och det förkortas till 17/2, inte 34."
+},
+         
+        explanation: [
+  "Vi löser ekvationen: <b>x/2 - 3 = 5/4</b><br><br>",
+
+  "Steg 1: Lägg till 3 på båda sidor för att ta bort -3:<br>",
+  "x/2 - 3 + 3 = 5/4 + 3<br><br>",
+  "x/2 = 5/4 + 3<br><br>",
+  "x/2 = 5/4 + 12/4 = 17/4<br><br>",
+
+  "Steg 2: Multiplicera båda sidor med 2 för att få bort nämnaren:<br><br>",
+  "x = 2 · (17/4) = 34/4 = <b>17/2</b><br><br>",
+
+  "<b>Slutsats:</b> x = <b>17/2</b>"
+],
+}, 
+       
+        {
+        category: "equation",
+        question: "Lös ekvationen: x/3 = 27",
+        answer: "81",
+        tips: [
+          {
+            condition: (input) => input.trim() === "5" || input.trim() === "30",
+            text: "Kom ihåg att divisionens motsats är multiplikation. För att bli av med divisionen med 3, multiplicera båda sidor av ekvationen med 3."
+          },
+          {
+            condition: (input) => input.trim() === "27",
+            text: "Tänk på att 𝑥 är ett tal som, när det delas med 3, ger 27. Så för att hitta 𝑥, måste du göra motsatsen till divisionen."
+          },
+          {
+            condition: () => true,
+            text: "x är i täljaren. När du vill bli av med divisionen, måste du multiplicera båda sidor av ekvationen med 3"
+          }
+        ],
+        specificTips: {
+          "24": "Du verkar ha blandat ihop division och multiplikation. Försök igen!",
+          "30": "Du verkar ha adderat 3 istället för att multiplicera. Försök igen!",
+        },
+        explanation: "x = 27 * 3 = 81."
+      },
+
+      {
+        category: "equation",
+        question: "Lös ekvationen: 13x = 52",
+        answer: "4",
+        tips: [
+          {
+            condition: (input) => input.trim() === "5" || input.trim() === "39",
+            text: "Kom ihåg att multiplikations motsats är division. För att bli av med 13, dividera båda sidor med 13."
+          },
+          {
+            condition: (input) => input.trim() === "27",
+            text: "Tänk på att 𝑥 är ett tal som, när det delas med 3, ger 27. Så för att hitta 𝑥, måste du göra motsatsen till divisionen."
+          },
+          {
+            condition: () => true,
+            text: "Vi vill hitta vad 𝑥 är. För att göra det måste vi ta bort 13 genom att dela båda sidor med 13."
+          }
+        ],
+        specificTips: {
+          "39": "Du verkar ha substraherat 13 istället för att dividera. Försök igen!",
+          "65": "Du verkar ha adderat 13 istället för att dividera. Försök igen!",
+        },
+        explanation: "x = 52 / 13 = 4."
+      },
+
+
+      {
+          category: "equation",
+          question: "Lös ekvationen: x-2/3 = 4",
+          answer: "14/3",
+          tips: [
+            {
+              condition: (input) => input.trim() === "5" || input.trim() === "13",
+              text: "Om du multiplicerar med 3 måste du göra det på alla termer även x."
+            },
+            {
+              condition: (input) => input.trim() === "6/3"|| input.trim() === "2",
+              text: "Du har tagit 4 + 2/3! Hur kan du räkna ihop det? OBS! För att kunna addera två bråk måste vi ha samma nämnare."
+            },
+            {
+              condition: (input) => input.trim() === "6/3"|| input.trim() === "11/3",
+              text: "Du har tänkt rätt, men "
+            },
+            {
+              condition: () => true,
+              text: "Vad kan du göra för att få x ensam?"
+            }
+          ],
+          specificTips: {
+            "5": "Kom ihåg att du måste multiplicera båda sidor av ekvationen med samma tal för att få x ensamt."
+          },
+          explanation: "x = 3 * 2 = 6."
+        },
+
+
+
+
+      // Jämföra bråk
+      {
+        category: "compare_order",
+        question: "Vilket bråktal är störst? 3/5 eller 2/3?",
+        answer: "2/3",
+        tips: [
+          "För att avgöra vilken bit som är störst, kan vi jämföra bråken genom att göra om dem till gemensamma nämnare eller jämföra deras decimalvärden.",
+        ],
+
+        specificTips: {
+            "3/5": "Det ser ut som att du har tittat på täljarna (3 och 2). Men för att jämföra bråk måste du ta hänsyn till både täljare och nämnare. Försök igen!"
+          },
+        explanation: "Minsta gemensamma nämnare för 3/5 och 2/3 är 15. \n3/5 = 9/15 och 2/3 = 10/15. \nDärför är 2/3 störst."
+      },
+
+
+      {
+        category: "compare_order",
+        question: "Vilket bråktal är störst? 4 5/6 eller 4/3?",
+        answer: "4 5/6",
+        tips: [
+          "När ett av talen är i blandad form, som 4 5/6, är det bra att först göra om det till ett bråk eller decimaltal. Då blir det lättare att jämföra.",
+  
+        ],
+        specificTips: {
+            "4/3": "Titta noga på vad 4 5/6 betyder, det är ett blandat tal: 4 hela + 5/6. 4/3 är mindre än 2, medan 4 5/6 är nästan 5. Fundera på vilken som är störst då!"
+          },
+        explanation:  [
+  "Lösning: <br>"+
+  "<br>"+
+  "Vi jämför två tal: det blandade talet <b>4 5/6</b> och bråket <b>4/3</b>.<br>"+
+  "<br>"+
+  "Steg 1. Börja med att göra om <b>4 5/6</b> till ett bråk:<br>"+
+  "&nbsp;&nbsp;&nbsp;&nbsp;4 5/6 = (4 × 6 + 5)/6 = 29/6<br>"+
+  "<br>"+
+  "Steg 2. Nu jämför vi <b>29/6</b> och <b>4/3</b>. Vi gör om dem till samma nämnare för att kunna jämföra:<br>"+
+  "&nbsp;&nbsp;&nbsp;&nbsp;4/3 = (4 × 2)/(3 × 2) = 8/6<br>"+
+  "<br>"+
+  "Steg 3. Nu ser vi att:<br>"+
+  "&nbsp;&nbsp;&nbsp;&nbsp;29/6 > 8/6<br>"+
+  "<br>"+
+  "<b>Slutsats:</b> 4 5/6 är större än 4/3.<br>"
+]
+      },
+    
+      {
+        category: "compare_order",
+        question: "På ett kalas får du välja en tårtbiten från fyra olika bitar. Vilken bit är störst? 5/10, 3/8 eller 7/12. Vilken bit skulle du välja?",
+        answer: "7/12",
+        tips: [
+          "För att avgöra vilken bit som är störst, kan vi jämföra bråken genom att göra om dem till gemensamma nämnare eller jämföra deras decimalvärden.",
+          "Tänk på bråken som delar av en tårta: 5/10 = hälften, 3/8 = mindre än hälften, 7/12 = mer än hälften"
+        ],
+        specificTips: {
+  "5/10": "Du valde 5/10, vilket är hälften. Det är ett bra försök, men titta noga på de andra alternativen! Finns det kanske ett bråk som är mer än hälften? Testa att jämföra dem med decimaler eller hitta en gemensam nämnare. Försök igen!",
+  
+  "3/8": "Det ser ut som att du valde 3/8. Kom ihåg att 3/8 är mindre än hälften. Finns det kanske ett alternativ som ger dig en större del av tårtan? Prova att räkna ut ungefär hur mycket varje bråk är i decimalform!",
+
+  "5/12": "Hmm, 5/12 var inte ett av de alternativ som fanns i frågan. Läs gärna uppgiften en gång till – och kika efter 5/10, 3/8 och 7/12!"
+},
+explanation: [
+  "Vi ska ta reda på vilken tårtbit som är störst. Alla bråk visar hur stor del av en hel tårta du får. <br><br>"+
+
+  "<b>Alternativ 1: Jämför som decimaler</b><br>"+
+  "5/10 = 0,5<br>"+
+  "3/8 = 0,375<br>"+
+  "7/12 ≈ 0,583<br>"+
+  "→ <b>7/12</b> är störst.<br><br>"+
+
+  "<b>Alternativ 2: Jämför med gemensam nämnare</b><br>"+
+  "Vi hittar en gemensam nämnare för 10, 8 och 12. Minsta gemensamma nämnare (MGN) är 120.<br><br>"+
+
+  "5/10 = (5 × 12)/(10 × 12) = 60/120<br><br>"+
+  "3/8 = (3 × 15)/(8 × 15) = 45/120<br><br>"+
+  "7/12 = (7 × 10)/(12 × 10) = 70/120<br><br>"+
+
+  "→ Nu ser vi att: 45/120 < 60/120 < 70/120<br><br>"+
+  "→ Alltså är <b>7/12</b> störst.<br><br>"+
+
+  "<b>Slutsats:</b> Oavsett om du jämför med decimaler eller gemensam nämnare, är <b>7/12</b> den största tårtbiten – välj den om du vill ha mest!"
+  ]
+      },
+
+      {
+        category: "compare_order",
+        question: "Vilken pizzabit är störst: 4/8 ; 1/15 ; 2/3 ; 1/4?",
+        answer: "2/3",
+        tips: [
+          "För att avgöra vilken pizzabit som är störst, kan vi jämföra bråken genom att göra om dem till gemensamma nämnare eller jämföra deras decimalvärden.",
+          "Tänk på bråken som delar av en pizza: 4/8 = hälften, 1/15 = väldigt liten bit, 2/3 = mer än hälften, 1/4 = ganska liten"
+        ],
+        specificTips: {
+  "4/8": "Det verkar som att du valde 4/8 eftersom det är en halv och det känns som ganska mycket. Men tänk på att 2/3 är mer än en halv. Prova att jämföra dem som decimaler eller med gemensam nämnare. Försök igen!",
+  "1/4": "Bra försök! 1/4 är en fjärdedel av pizzan, men det är mycket mindre än både 4/8 (en halv) och 2/3. Testa att jämföra som decimaler eller gör om dem till gemensamma nämnare!",
+  "1/15": "Oj, 1/15 är en väldigt liten bit, bara en liten skärva av pizzan. Fundera på vilket bråk som faktiskt ger mest av en hel pizza."
+},
+        explanation:  [
+  "Vi ska ta reda på vilken pizzabit som är störst. Vi har fyra bråk att jämföra: <b>4/8, 1/15, 2/3 och 1/4</b>.<br><br>",
+
+  "<b>Alternativ 1: Jämför som decimaler</b><br>"+
+  "4/8 = 0,5<br>"+
+  "1/15 ≈ 0,067<br>"+
+  "2/3 ≈ 0,666...<br>"+
+  "1/4 = 0,25<br>"+
+  "→ <b>2/3</b> är störst.<br><br>"+
+
+  "<b>Alternativ 2: Jämför med gemensam nämnare</b><br>"+
+  "Minsta gemensamma nämnare (MGN) för 8, 15, 3 och 4 är 120.<br><br>"+
+
+  "4/8 = 60/120<br>"+
+  "1/15 = 8/120<br>"+
+  "2/3 = 80/120<br>"+
+  "1/4 = 30/120<br>"+
+  "→ Alltså är <b>2/3</b> störst.<br><br>"+
+
+  "<b>Slutsats:</b> Välj <b>2/3</b> om du vill ha mest pizza!"
+],
+
+      },
+      {
+        category: "compare_order",
+        question: "Ordna följande bråk i storleksordning, börja med det minsta: 3/4, 2/3, 5/6, 1/2",
+        answer: "1/2, 2/3, 3/4, 5/6",
+        tips: [
+          "För att kunna jämföra bråken behöver de ha samma nämnare.",
+          "Tänk på att hitta den minsta gemensamma nämnaren (MGN) för alla nämnarna (4, 3, 6 och 2).",
+          "För att få samma nämnare, multiplicera både täljare och nämnare i varje bråk så att nämnaren blir 12.",
+          "Kom ihåg att du måste multiplicera både täljaren och nämnaren med samma tal."
+        ],
+        specificTips: {
+  "3/4, 2/3, 5/6, 1/2": "Det verkar som att du råkade börja med 3/4, men tänk efter 1/2 är ju bara halva kakan! Det borde vara minst. Prova att jämföra bråken med decimaler eller gemensam nämnare.",
+
+  "5/6, 3/4, 2/3, 1/2": "Du har skrivit bråken i störst till minst, men frågan bad dig att börja med det minsta. Kan du vända på ordningen?",
+
+  "1/2, 3/4, 2/3, 5/6": "Du har rätt att 1/2 är minst och 5/6 är störst, men i mitten har 3/4 och 2/3 hamnat i fel ordning. Testa att jämföra dem som decimaler: 2/3 ≈ 0,666 och 3/4 = 0,75.",
+
+  "2/3, 1/2, 3/4, 5/6": "Bra försök! Men 1/2 är mindre än 2/3, så det borde komma först. Fundera på vad hälften egentligen betyder i jämförelse med 2/3."
+
+},
+        explanation: [
+  "Vi ska ordna bråken <b>3/4, 2/3, 5/6, 1/2</b> från minst till störst.<br><br>"+
+
+  "<b>Alternativ 1: Jämför som decimaler</b><br>"+
+  "3/4 = 0,75<br>"+
+  "2/3 ≈ 0,666...<br>"+
+  "5/6 ≈ 0,833...<br>"+
+  "1/2 = 0,5<br><br>"+
+  "→ Rätt ordning är: <b>1/2, 2/3, 3/4, 5/6</b><br><br>"+
+
+  "<b>Alternativ 2: Använd gemensam nämnare (t.ex. 12)</b><br>"+
+  "3/4 = 9/12<br>"+
+  "2/3 = 8/12<br>"+
+  "5/6 = 10/12<br>"+
+  "1/2 = 6/12<br><br>"+
+  "→ Då blir ordningen: <b>6/12 (1/2), 8/12 (2/3), 9/12 (3/4), 10/12 (5/6)</b><br><br>"+
+
+  "<b>Slutsats:</b> Rätt ordning från minst till störst är: <b>1/2, 2/3, 3/4, 5/6</b>"
+]
+      },
+      
+
+
+      // NYA ORDPROBLEM ↓↓↓
+
+      {
+        category: "word problem",
+        question: "Beräkna två sjundedelar av fem sjättedelar. Svara i bråkform.",
+        answer: "5/21",
+        specificTips: {
+          "12/35": "Det verkar som att du har delat 2/7 med 5/6 i stället för att multiplicera dem. Kom ihåg: när det står 'av' i ett matematiskt sammanhang betyder det att du ska multiplicera, inte dividera. Försök igen!",
+  
+  "42/10": "Tänk på att när du multiplicerar två bråktal så multiplicerar du täljare med täljare och nämnare med nämnare. Här verkar det som om du kanske multiplicerat fel håll.",
+
+  "47/42": "Det ser ut som att du har adderat 2/7 och 5/6 i stället för att multiplicera dem. Kom ihåg att 'av' betyder multiplikation, inte addition.",
+
+  "10/42": "Du har gjort själva multiplikationen rätt, toppen! Men glöm inte att alltid förkorta bråket om det går. 10/42 kan förkortas till 5/21.",
+
+  "5/13": "Dubbelkolla vad du multiplicerat. 7 × 6 ska bli 42 i nämnaren, inte 13. Gå tillbaka och räkna nämnarna igen.",
+
+  "2/35": "Det verkar som att något gått snett i multiplikationen. Kontrollera att du multiplicerar täljare med täljare (2 × 5) och nämnare med nämnare (7 × 6)."
+        },
+        tips: [
+          "När du ser ordet 'av' i en bråkuppgift, betyder det att du ska multiplicera.",
+  "Multiplicera bråken genom att ta täljare × täljare och nämnare × nämnare.",
+  "Glöm inte att förkorta bråket om det går efter att du multiplicerat!"
+        ],
+        explanation: [
+  "Vi ska räkna ut <b>två sjundedelar av fem sjättedelar</b>. Det betyder att vi multiplicerar bråken:<br><br>",
+  "<b>2/7 × 5/6 = (2 × 5) / (7 × 6) = 10/42</b><br>",
+  "Nu förkortar vi bråket:<br>",
+  "<b>10/42 = 5/21</b> (båda kan delas med 2)<br><br>",
+  "<b>Slutsats:</b> Svaret är <b>5/21</b>."
+],
+      },
+
+      {
+        category: "word problem",
+        question: "Hälften av eleverna på en skola ska gå på en konsert. Eleverna kommer att ta fem bussar. Hur stor andel av eleverna på skolan kommer det att finnas på varje buss?",
+        answer: "1/10",
+        
+        tips: [
+          "Tänk att alla elever på skolan är en hel kaka. Hälften av kakan ska delas mellan 5 bussar. Hur mycket kaka får varje buss?"
+        ],
+        specificTips: {
+          "1/2": "Du verkar ha glömt att dela hälften av eleverna på 5 bussar. Försök igen!",
+          "5/10": "Försök att tänka på att hälften av eleverna ska delas på 5 bussar. Hur mycket får varje buss?",
+          "2/5":"Det verkar som att du har råkat vända på båda talen när du skulle dividera. När man delar 1/2 ​ med 5, så räcker det att man vänder på det andra talet , alltså 5. Försök igen!",
+          "5/2": "Det ser ut som att du har multiplicerat 1/2 * 5 stället för att dela. Men i uppgiften skulle du ta hälften av eleverna och fördela dem på 5 bussar. Försök igen!"
+
+        },
+        explanation: "Hälften av eleverna ska gå → 1/2. De ska delas på 5 bussar → (1/2)/5 = 1/10."
+      },
+      {
+        category: "word problem",
+        question: "Lisa har bakat en paj. Hon äter upp 3/4 av den. Sen vill hon spara hälften av det hon ätit till senare. Hur mycket av hela pajen sparar hon?",
+        answer: "3/8",
+        tips: [
+          "Tänk att du delar tre fjärdedelar i två lika stora delar, hur mycket blir varje del?",
+          "Tänk på att pajen är en hel kaka. Hon äter 3/4 av kakan och sparar hälften av det. Hur mycket blir kvar?",
+        ],
+        specificTips: {
+          "6/4": "Det verkar som att du har glömt att vända på 2 vid division, alltså att invertera 2/1 till 1/2 ​ och i stället har du multiplicerat med 2 direkt. Men i uppgiften ska du ta hälften av 3/4, inte dubbla den. Försök igen!",
+        },
+        explanation: "Hälften av 3/4 får vi genom att dividera bråket med två. Alltså 3/4 ÷ 2 = 3/4 * 1/2 = 3/8."
+      },
+      {
+        category: "word problem",
+        question: "En tredjedel av eleverna på en skola ska vara med i en teaterföreställning. De delas in i 3 lika stora grupper. Hur stor andel av skolans elever är det i varje grupp?",
+        answer: "1/9",
+        tips: [
+          "Tänk att skolan är som en stor kaka. En tredjedel av kakan ska delas mellan 3 barn. Hur mycket kaka får varje barn?"
+        ],
+        explanation: "1/3 av eleverna deltar → delas i 3 grupper: 1/3 ÷ 3 = 1/9."
+      },
+      {
+        category: "word problem",
+        question: "En fjärdedel av eleverna på skolan ska delta i en stafett. De delas in i 2 lika stora lag. Hur stor andel av skolans elever är det i varje lag?",
+        answer: "1/8",
+        tips: [
+          "Föreställ dig att skolan är en stor tårta. En fjärdedel av tårtan delas upp i två delar, hur stor är varje bit?"
+        ],
+        explanation: "1/4 av eleverna deltar → delas i 2 lag: 1/4 ÷ 2 = 1/8."
+      }
+    ];
+
+    
+
+    function gcd(a, b) {
+      return b ? gcd(b, a % b) : a;
+    }
+
+    function simplifyFraction(frac) {
+      if (!frac.includes('/')) return frac.trim();
+      const [num, den] = frac.split('/').map(Number);
+      if (isNaN(num) || isNaN(den)) return frac.trim();
+      const d = gcd(num, den);
+      return `${num / d}/${den / d}`;
+    }
+
+    function normalizeAnswer(input) {
+      return simplifyFraction(input.replace(/\s+/g, '').toLowerCase());
+    }
+
+ 
+
+    function showQuestion() {
+      document.getElementById("tipBox").innerText = "";
+
+      
+  const q = filteredQuestions[currentQuestion];
+  const questionText = q.question.replace(/\b(\d+)\/(\d+)\b/g, (match, num, den) => createFraction(num, den));
+
+  document.getElementById("taskNumber").innerText = `Uppgift ${currentQuestion + 1}/${totalQuestions}`;
+
+  if (currentQuestion === 0 || questions[currentQuestion - 1].category !== q.category) {
+    const intro = categoryIntroductions[q.category] || "";
+    document.getElementById("categoryIntro").innerText = intro;
+  } else {
+    document.getElementById("categoryIntro").innerText = "";
+  }
+
+  // 🔥 Den viktiga ändringen – visa HTML-formatet
+  document.getElementById("question").innerHTML = questionText;
+
+  document.getElementById("feedback").innerText = "";
+  document.getElementById("explanation").innerText = "";
+  document.getElementById("explanation").style.display = "none";
+
+  document.getElementById("answerInput").value = "";
+  document.getElementById("nextBtn").style.display = "none";
+  document.getElementById("prevBtn").style.display = currentQuestion > 0 ? "inline" : "none";
+  attempts = 0;
+  document.getElementById("answerInput").style.display = "inline";
+  document.querySelectorAll("button").forEach(btn => btn.style.display = "inline");
+
+  const category = filteredQuestions[currentQuestion].category;
+if (!firstTryStats[category]) {
+  firstTryStats[category] = { correct: 0, total: 0 };
+}
+firstTryStats[category].total++;
+
+const img = document.getElementById("questionImage");
+if (q.image) {
+  img.src = q.image;
+  img.style.display = "block";
+} else {
+  img.style.display = "none";
+}
+
+updateProgressBar();
+
+}
+
+
+
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const confetti = [];
+  for (let i = 0; i < 150; i++) {
+    confetti.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      r: Math.random() * 6 + 4,
+      d: Math.random() * 40 + 10,
+      color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+      tilt: Math.floor(Math.random() * 10) - 10,
+      tiltAngle: 0,
+      tiltAngleIncrement: Math.random() * 0.07 + 0.05
+    });
+  }
+
+  let animationFrameId;
+
+  function drawConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < confetti.length; i++) {
+      const p = confetti[i];
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, 2 * Math.PI, false);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+      ctx.closePath();
+
+      p.y += Math.cos(p.d) + 1 + p.r / 2;
+      p.x += Math.sin(p.d);
+
+      if (p.x > canvas.width + 20 || p.x < -20 || p.y > canvas.height) {
+        confetti[i] = {
+          x: Math.random() * canvas.width,
+          y: -10,
+          r: Math.random() * 6 + 4,
+          d: Math.random() * 40 + 10,
+          color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+          tilt: Math.floor(Math.random() * 10) - 10,
+          tiltAngle: 0,
+          tiltAngleIncrement: Math.random() * 0.07 + 0.05
+        };
+      }
+    }
+    animationFrameId = requestAnimationFrame(drawConfetti);
+  }
+
+  drawConfetti();
+
+  // Stoppa och rensa efter 1.5 sekunder
+  setTimeout(() => {
+    cancelAnimationFrame(animationFrameId);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }, 2000);
+}
+
+
+function checkAnswer() {
+  const userAnswer = document.getElementById("answerInput").value.trim();
+  const q = filteredQuestions[currentQuestion];
+
+  // Kolla specialfallet 11/0
+  let correct;
+  if (q.question.includes("11/0")) {
+    const acceptedAnswers = [
+      "inte definierat",
+      "undefined",
+      "ej definierat",
+      "det går inte att dela",
+      "går ej",
+      "går inte",
+      "kan ej delas"
+    ];
+    correct = acceptedAnswers.includes(userAnswer.toLowerCase());
+  } else {
+    correct = normalizeAnswer(userAnswer) === normalizeAnswer(q.answer);
+  }
+
+  if (correct) {
+  // 🎉 Rätt svar – kör konfetti och gå vidare
+  launchConfetti();
+
+  if (attempts === 0) {
+    correctFirstTry++;
+
+    const category = q.category;
+    if (firstTryStats[category]) {
+      firstTryStats[category].correct++;
+    }
+  }
+
+  document.getElementById("feedback").innerText = "Rätt!";
+  document.getElementById("feedback").style.display = "none";
+  document.getElementById("explanation").innerText = "";
+
+  currentQuestion++;
+  if (currentQuestion < totalQuestions) {
+    setTimeout(showQuestion, 1000);
+  } else {
+    finishQuiz();
+  }
+
+} else {
+  // ❌ Fel svar – ge tips eller visa "nästa" efter 3 försök
+  attempts++;
+  const normalized = normalizeAnswer(userAnswer);
+  let tip = "Försök igen!";
+
+  // Visa specifikt tips om det finns för användarens svar
+  if (q.specificTips && q.specificTips[normalized]) {
+  tip = q.specificTips[normalized];
+} else if (isMinorCalculationError(userAnswer, q.answer)) {
+  tip = "Det ser ut som att du har använt rätt metod, bra jobbat! Dubbelkolla om du kanske har räknat fel eller råkat skriva fel täljare.";
+} else if (
+  q.category === "multiplication" &&
+  isMultiplicationMethodCorrect(userAnswer, q.answer, q.question)
+) {
+  tip = "Det ser ut som att du har använt rätt metod, bra jobbat! Dubbelkolla om du kanske har räknat fel eller råkat skriva fel nämnare.";
+} else if (Array.isArray(q.tips)) {
+  if (typeof q.tips[0] === "object") {
+    for (let i = 0; i < q.tips.length; i++) {
+      if (q.tips[i].condition(userAnswer)) {
+        tip = q.tips[i].text;
+        break;
+      }
+    }
+  } else if (q.tips[attempts - 1]) {
+    tip = q.tips[attempts - 1];
+    }
+  }
+
+  const feedbackEl = document.getElementById("feedback");
+  feedbackEl.innerHTML = `💡 <strong>Tips:</strong> ${tip}`;
+  feedbackEl.style.display = "block";
+  
+
+  if (attempts >= 3) {
+    document.getElementById("explanation").innerHTML = `
+      <strong>Rätt svar:</strong> ${q.answer}<br>
+      <em>${q.explanation}</em>`;
+    document.getElementById("explanation").style.display = "block";
+    document.getElementById("nextBtn").style.display = "inline";
+    formatFractionsInElement("explanation");
+  }
+
+
+  }
+}
+
+    function skipToNext() {
+      currentQuestion++;
+      if (currentQuestion < totalQuestions) {
+        showQuestion();
+      } else {
+        finishQuiz();
+      }
+    }
+
+
+    function finishQuiz() {
+       // 1) Efter de första 3 frågorna, kontrollera felantalet
+  if (!unlockExtraQuestions && currentQuestion === 3) {
+    // Antal fel = 3 – antal rätt på första försöket bland de 3
+    const wrongCount = 3 - correctFirstTry;
+
+    if (wrongCount >= 2) {
+      // Lås upp två extra uppgifter
+      unlockExtraQuestions = true;
+      questionsToShow = 5;
+      filteredQuestions = originalQuestions.slice(0, 5);
+      totalQuestions = filteredQuestions.length;
+      alert("Du hade " + wrongCount + " fel – här kommer 2 extra uppgifter för träning 💪");
+      showQuestion();
+      return;
+    }
+    // Om wrongCount är 0 eller 1, så avslutar vi direkt efter 3
+  }
+
+  // --- Resten av din befintliga “quiz är klart”-kod nedan ---
+  document.getElementById("chart").style.display = "block";
+
+  const username = localStorage.getItem("loggedInUser");
+  if (username) {
+    const existing = JSON.parse(localStorage.getItem("results_" + username)) || [];
+    existing.push({
+      date: new Date().toLocaleString(),
+      score: `${correctFirstTry} av ${totalQuestions}`,
+      percent: Math.round((correctFirstTry / totalQuestions) * 100)
+    });
+    localStorage.setItem("results_" + username, JSON.stringify(existing));
+  }
+
+  document.getElementById("question").innerText = "Du är klar!";
+  document.getElementById("answerInput").style.display = "none";
+  document.querySelectorAll("#exerciseSection button, #exerciseSection input").forEach(el => {
+    el.style.display = "none";
+  });
+  document.getElementById("feedback").innerText = "";
+  document.getElementById("explanation").innerText = "";
+
+  
+ console.log("Slutför quiz och skapa diagram");
+
+  // Beräkna procent för rätt på första försöket
+  const percentage = Math.round((correctFirstTry / totalQuestions) * 100);
+  console.log("Rätt på första försöket:", correctFirstTry);
+  console.log("Totalt antal frågor:", totalQuestions);
+  console.log("Procent rätt på första försöket:", percentage);
+
+  // Fånga canvasen för diagrammet
+  const ctx = document.getElementById('chart').getContext('2d');
+
+  // Kontrollera om canvas är tillgänglig
+  if (!ctx) {
+    console.error("Kan inte hitta canvas med ID 'chart'.");
+    return;
+  }
+
+  // Skapa diagrammet med Chart.js
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Rätt på första försöket', 'Ej rätt på första'],
+      datasets: [{
+        data: [correctFirstTry, totalQuestions - correctFirstTry],
+        backgroundColor: ['#4caf50', '#f44336'], // Grön och röd färg
+      }]
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: `Du fick ${percentage}% rätt på första försöket`
+        }
+      }
+    }
+  });
+  
+  
+
+ // 🎯 Feedback per kategori
+ let feedbackText = "<h3>📘 Vad du kan träna mer på:</h3><ul>";
+  let somethingToTrain = false;
+
+  for (const [category, stats] of Object.entries(firstTryStats)) {
+    const percent = (stats.correct / stats.total) * 100;
+    if (percent < 80) {
+      somethingToTrain = true;
+      const catName = {
+        fraction: "Addition",
+        subtraction: "Subtraktion",
+        multiplication: "Multiplikation",
+        division: "Division",
+        compare_order: "Jämförelse & ordning",
+        equation: "Ekvationer",
+        "word problem": "Textuppgifter"
+      }[category] || category;
+
+      feedbackText += `<li>🔸 <strong>${catName}</strong> – ${Math.round(percent)}% rätt på första försöket</li>`;
+    }
+  }
+  feedbackText += "</ul>";
+
+  if (!somethingToTrain) {
+    feedbackText = "<h3>🎉 Fantastiskt jobbat!</h3><p>Du klarade alla kategorier med minst 80% rätt på första försöket. Fortsätt så!</p>";
+  }
+
+  // Visa feedbacken under diagrammet
+  document.getElementById("explanation").innerHTML = feedbackText;
+  formatFractionsInElement("explanation");
+  formatFractionsInElement("feedback");
+  formatFractionsInElement("question");
+  
+
+}
+
+document.getElementById("chart").style.display = "block";
+
+    showQuestion();
+
+    function showIntro() {
+  filteredQuestions = []; // 🧼 rensa frågor
+  document.getElementById("bubbleWrapper").style.display = "flex"; // ✅ Visa bubblor
+  document.getElementById("introSection").style.display = "block";
+  document.getElementById("exerciseSection").style.display = "none";
+  document.getElementById("infoSection").style.display = "none";
+  document.getElementById("categorySection").style.display = "none";
+  document.getElementById("introImage").style.display = "block";
+  document.getElementById("myResultsSection").style.display = "none";
+  document.getElementById("selfTestSection").style.display = "none";
+  document.getElementById("categoryIntroSection").style.display = "none"; 
+}
+
+function hideBubbles() {
+  const bubbles = document.getElementById("bubbleWrapper");
+  if (bubbles) bubbles.style.display = "none";
+}
+
+function startExercises() {
+  const user = localStorage.getItem("loggedInUser");
+  if (!user) {
+    alert("Du måste logga in för att använda Bråkövningar.");
+    return;
+  }
+
+  // Rensa statistik och göm andra sektioner
+  filteredQuestions = [];
+  firstTryStats = {};
+
+  document.getElementById("introSection").style.display = "none";
+  document.getElementById("introImage").style.display = "none";
+  document.getElementById("infoSection").style.display = "none";
+  document.getElementById("exerciseSection").style.display = "none";
+  document.getElementById("categoryIntroSection").style.display = "none";
+  document.getElementById("selfTestSection").style.display = "none";
+  document.getElementById("myResultsSection").style.display = "none";
+
+  // ✅ Visa kategoriväljaren korrekt
+  document.getElementById("categorySection").style.display = "block";
+}
+
+
+function showInfo() {
+  document.getElementById("introSection").style.display = "none";
+  document.getElementById("exerciseSection").style.display = "none";
+  document.getElementById("infoSection").style.display = "block";
+  document.getElementById("categorySection").style.display = "none"; // ✅ VIKTIG
+  document.getElementById("introImage").style.display = "none"; // Dölj bilden
+  document.getElementById("myResultsSection").style.display = "none";
+  formatFractionsInElement("infoSection");
+
+
+}
+
+function goBackToCategory() {
+  document.getElementById("categoryIntroSection").style.display = "none";
+  document.getElementById("exerciseSection").style.display = "none";
+  document.getElementById("categorySection").style.display = "block";
+  document.getElementById("feedback").innerText = "";
+  document.getElementById("explanation").innerText = "";
+  document.getElementById("answerInput").value = "";
+
+  // Återställ canvas och eventuell grafik
+  const oldChart = Chart.getChart("chart");
+  if (oldChart) {
+    oldChart.destroy();
+  }
+  document.getElementById("chart").getContext("2d").clearRect(0, 0, 400, 400);
+}
+
+function createFraction(numerator, denominator) {
+  return `<span class="fraction">
+            <span class="numerator">${numerator}</span>
+            <span class="denominator">${denominator}</span>
+          </span>`;
+}
+
+function goToPrevious() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+  }
+}
+
+function showSelfTest() {
+  hideBubbles();
+  document.getElementById("selfTestSection").style.display = "block";
+
+  const user = localStorage.getItem("loggedInUser");
+  if (!user) {
+    alert("Du måste logga in för att använda Testa dig själv.");
+    return;
+  }
+
+ // 🧼 Dölj kategori-intro om det är öppet
+ document.getElementById("categoryIntroSection").style.display = "none";
+document.getElementById("introSection").style.display = "none";
+document.getElementById("categorySection").style.display = "none";
+document.getElementById("exerciseSection").style.display = "none";
+document.getElementById("infoSection").style.display = "none";
+document.getElementById("selfTestSection").style.display = "block";
+document.getElementById("introImage").style.display = "none";
+document.getElementById("myResultsSection").style.display = "none";
+}
+
+function startSelfTest() {
+  document.getElementById("categoryIntroSection").style.display = "none";
+
+ // Rensa gammalt diagram (lägg in här!)
+ const oldChart = Chart.getChart("chart");
+  if (oldChart) {
+    oldChart.destroy();
+  }
+  document.getElementById("chart").getContext("2d").clearRect(0, 0, 400, 400);
+
+
+  //  Rensa gammal statistik
+  firstTryStats = {};
+  filteredQuestions = []; // 🔄 Viktigt!
+  const checkboxes = document.querySelectorAll('#selfTestOptions input[type="checkbox"]:checked');
+  const selected = Array.from(checkboxes).map(cb => cb.value);
+
+  if (selected.length === 0) {
+    alert("Välj minst en kategori för att starta testet.");
+    return;
+  }
+
+  const selectedQuestions = questions.filter(q => selected.includes(q.category));
+  filteredQuestions = [...selectedQuestions];
+  shuffleArray(filteredQuestions);
+  currentQuestion = 0;
+  totalQuestions = filteredQuestions.length;
+  correctFirstTry = 0;
+
+  document.getElementById("selfTestSection").style.display = "none";
+  document.getElementById("exerciseSection").style.display = "block";
+  
+  showQuestion();
+}
+
+function startFinalTest() {
+  // Rensa gammal statistik
+  firstTryStats = {};
+  filteredQuestions = [...questions];
+  shuffleArray(filteredQuestions);
+  currentQuestion = 0;
+  totalQuestions = filteredQuestions.length;
+  correctFirstTry = 0;
+
+  document.getElementById("selfTestSection").style.display = "none";
+  document.getElementById("exerciseSection").style.display = "block";
+  showQuestion();
+}
+
+// Enkel array-blandning (Fisher-Yates)
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+function login() {
+  const username = document.getElementById("username").value.trim();
+  if (!username) {
+    document.getElementById("loginStatus").innerText = "Skriv ett namn!";
+    return;
+  }
+
+  localStorage.setItem("loggedInUser", username);
+
+  // 🛠 Viktigt att spara innan vi anropar indikatorn
+  updateLoginIndicator(); // ✅ Se till att detta kommer efter att du sparat användarnamnet
+
+  if (!localStorage.getItem("results_" + username)) {
+    localStorage.setItem("results_" + username, JSON.stringify([]));
+  }
+
+  document.getElementById("loginSection").style.display = "none";
+  document.getElementById("introSection").style.display = "block";
+}
+
+window.onload = function () {
+  const user = localStorage.getItem("loggedInUser");
+  if (user) {
+    document.getElementById("loginSection").style.display = "none";
+    document.getElementById("introSection").style.display = "flex";
+  } else {
+    document.getElementById("loginSection").style.display = "flex";
+    document.getElementById("introSection").style.display = "none";
+  }
+  updateLoginIndicator();
+};
+
+
+function showMyResults() {
+  hideBubbles();
+  document.getElementById("myResultsSection").style.display = "block";
+
+  const user = localStorage.getItem("loggedInUser");
+  if (!user) {
+    alert("Du måste vara inloggad.");
+    return;
+  }
+
+  const resultData = JSON.parse(localStorage.getItem("results_" + user)) || [];
+  console.log("Visar resultat för", user, resultData);
+
+  if (resultData.length === 0) {
+    document.getElementById("myResultsOutput").innerHTML = "<p>Inga resultat sparade ännu.</p>";
+  } else {
+    let html = "<ul>";
+    resultData.forEach(res => {
+      html += `<li>${res.date} – ${res.score} (${res.percent}%)</li>`;
+    });
+    html += "</ul>";
+    document.getElementById("myResultsOutput").innerHTML = html;
+  }
+
+  document.getElementById("introSection").style.display = "none";
+  document.getElementById("myResultsSection").style.display = "block";
+  document.getElementById("selfTestSection").style.display = "none";
+  document.getElementById("exerciseSection").style.display = "none";
+  document.getElementById("categorySection").style.display = "none";
+  document.getElementById("infoSection").style.display = "none";
+  document.getElementById("categoryIntroSection").style.display = "none";
+
+}
+
+function logout() {
+  localStorage.removeItem("loggedInUser");
+  document.getElementById("loginSection").style.display = "block";
+  document.getElementById("introSection").style.display = "none";
+  document.getElementById("selfTestSection").style.display = "none";
+  document.getElementById("exerciseSection").style.display = "none";
+  document.getElementById("categorySection").style.display = "none";
+  document.getElementById("myResultsSection").style.display = "none";
+  document.getElementById("infoSection").style.display = "none";
+  updateLoginIndicator();
+  document.getElementById("logoutBtn").style.display = "none";
+}
+
+function updateLoginIndicator() {
+  const user = localStorage.getItem("loggedInUser");
+  console.log("🔍 Inloggningsindikator körs – användare:", user); // 👈 Logg
+
+  const indicator = document.getElementById("loginIndicator");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (indicator) {
+    if (user) {
+      indicator.innerText = `🔓 Inloggad som: ${user}`;
+      if (logoutBtn) logoutBtn.style.display = "inline";
+    } else {
+      indicator.innerText = `🔒 Inte inloggad`;
+      if (logoutBtn) logoutBtn.style.display = "none";
+    }
+  } else {
+    console.warn("🚫 Hittar inte loginIndicator-elementet!");
+  }
+}
+
+function updateProgressBar() {
+  const progress = ((currentQuestion + 1) / totalQuestions) * 100;
+  document.getElementById("progressBar").style.width = progress + "%";
+}
+
+function showTip() {
+  const q = filteredQuestions[currentQuestion];
+  const tipBox = document.getElementById("tipBox");
+
+  if (!q || !tipBox) return;
+
+  if (q.tips && q.tips.length > 0) {
+    tipBox.innerText = "💡 " + q.tips[0];
+  } else {
+    tipBox.innerText = "💡 Denna fråga har inget tips.";
+  }
+}
+function beginCategoryExercise() {
+  // 🧼 Rensa gammalt diagram
+  const oldChart = Chart.getChart("chart");
+  if (oldChart) {
+    oldChart.destroy();
+  }
+  document.getElementById("chart").getContext("2d").clearRect(0, 0, 400, 400);
+
+  // 🎯 Hämta rätt frågor beroende på vald kategori
+  originalQuestions = selectedCategory === "all"
+    ? [...questions]
+    : questions.filter(q => q.category === selectedCategory);
+
+  if (originalQuestions.length === 0) {
+    alert("Inga frågor hittades för denna kategori.");
+    return;
+  }
+
+  // 🎲 Starta med endast 3 frågor först
+  questionsToShow = 3;
+  unlockExtraQuestions = false;
+  filteredQuestions = originalQuestions.slice(0, questionsToShow);
+
+  // 🔢 Nollställ statistik
+  firstTryStats = {};
+  currentQuestion = 0;
+  totalQuestions = filteredQuestions.length;
+  correctFirstTry = 0;
+  attempts = 0;
+
+  // 🧼 Rensa gränssnittet
+  document.getElementById("categoryIntroSection").style.display = "none";
+  document.getElementById("exerciseSection").style.display = "block";
+  document.getElementById("feedback").innerText = "";
+  document.getElementById("explanation").innerText = "";
+  document.getElementById("answerInput").value = "";
+  document.getElementById("nextBtn").style.display = "none";
+
+  // 🚀 Visa första frågan
+  showQuestion();
+}
+
+
+// Visualisera bråk i HTML
+function formatFractionsInElement(elementId) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+
+  el.innerHTML = el.innerHTML.replace(/(\([^()]+\)|\d+(?:[+\-*]\d+)*?)\/(\([^()]+\)|\d+(?:[+\-*]\d+)*?)/g, (match, num, den) => {
+    return `<span class="fraction"><span class="numerator">${num}</span><span class="denominator">${den}</span></span>`;
+  });
+}
+
+
+
+function showTopic(topic) {
+  const content = {
+    intro: `
+      <h3>📌 Introduktion till bråk</h3>
+       <h4><strong>Vad är ett bråktal?</strong></h4>
+      <p>Ett bråk består av en täljare (överst) och en nämnare (nederst). Bråktalet visar hur många delar du har av en hel.</p>
+      <img src="brak1.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+       <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
+      <p>Exempel: Tänk dig att vi har en tårta och delar upp den i fyra stycken lika stora bitar. Varje del av tårtan utgör då en fjärdedel av hela tårtan. Vi kan skriva en fjärdedel så här: <strong>1/4</strong>.</p>
+      <h4><strong>Bråktal i enklaste form</strong></h4>
+      <p>När vi anger bråk som svar i en uppgift, vill vi ofta ange svaret i enklaste form. Det man då menar är att man vill att bråket ska bestå av så små heltal som möjligt. Detta får vi genom att förkorta täljaren och nämnaren med största möjliga tal med egenskapen att det ger resultatet att täljaren och nämnaren är heltal.
+            <img src="brak.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+                   <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
+                    <h4><strong>Blandad form</strong></h4>
+      <p>Om vi skriver ett bråktal på blandad form så skriver man hur många hela bråket motsvarar följt av resten av andelarna.</p>
+            <img src="brak12.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+                   <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
+  <p>Detta läser du som ”två hela och tre femtedelar”. Tvåan kallas för heltalsdel och tre femtedelar kallas för bråkdel.</p>
+  <p> Innebörden av de två hela är att de representerar 5/10 och vi har alltså att:</p>
+   <img src="brak13.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+                   <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
+  
+
+
+
+    `,
+    add: `
+      <h3>➕ Addition av bråk</h3>
+      <h4><strong>Addition med samma nämnare</strong></h4>
+      <p>För att addera bråk med samma nämnare, lägg ihop täljarna och behåll nämnaren.</p>
+       <img src="brak2.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+       <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
+       <h5><strong>Addition med olika nämnare</strong></h5>
+
+      <p>För att kunna addera bråktal med varandra som har olika nämnare så förlängs eller förkortas bråktalen först. Detta för att få samma nämnare. Sedan adderas täljarna med varandra. </p>
+       <img src="brak3.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+       <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Källa: <em>eddler.se</em></p>
+
+    
+    `,
+    sub: `
+      <h3>➖ Subtraktion av bråk</h3>
+      <h4><strong>Subtraktion med samma nämnare</strong></h4>
+      <p>På samma sätt som vi gjorde när vi adderade bråktal som har gemensamma nämnare kan vi göra om vi vill subtrahera.</p>
+       <img src="brak4.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+       <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
+       <h5><strong>Subtraktion med olika nämnare</strong></h5>
+       
+      <p>För att kunna subtrahera bråktal med varandra som har olika nämnare så förlängs eller förkortas bråktalen först. Detta för att få samma nämnare. Sedan subtraheras täljarna med varandra. </p>
+       <p>Exempel:<p> <img src="brak5.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+
+    `,
+    mult: `
+      <h3>✖️ Multiplikation av bråk</h3>
+      <h4><strong>Regel för att multiplicera bråk</strong></h4>
+            <p>Multiplicera täljare med täljare, nämnare med nämnare:</p>
+       <img src="brak8.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+       <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
+       <p>Exempel: Vi börjar med att skriva om bråken på gemensamt bråkstreck, som ett mellansteg innan vi utför multiplikationen.<p> <img src="brak9.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+        
+    `,
+
+
+    div: `
+      <h3>➗ Division av bråk</h3>
+      <h4><strong>Regel för att dividera bråk</strong></h4>
+      <p>Här multipliceras det första bråkets täljare med det andra bråkets nämnare och resultatet (produkten) placeras i täljaren. Sedan multipliceras även det första bråkets nämnare med det andra bråkets täljare och produkten placeras i nämnaren.</p>
+       <img src="brak6.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+       <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
+       <h5><strong>Dividera bråk med heltal</strong></h5>
+       
+      <p>När du delar ett heltal med ett bråk eller att bråk med ett heltal så skriver du först om heltalet till bråkform. Exempelvis: </p>
+       <p>Exempel:<p> <img src="brak7.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+        <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
+
+    
+    `
+  };
+
+  document.getElementById("topicContent").innerHTML = content[topic];
+}
+
+
+    // Omvandlar förklaringen till radbrytningar med hjälp av <br>
+    const explanationText = data.explanation.join('<br>'); // Sätter in <br> mellan varje element
+
+    // Skriver ut förklaringen i HTML med innerHTML
+    document.getElementById("explanation").innerHTML = explanationText;
+
+
+    function isMinorCalculationError(userAnswer, correctAnswer) {
+  if (!userAnswer.includes('/') || !correctAnswer.includes('/')) return false;
+
+  const [userNum, userDen] = userAnswer.split('/').map(Number);
+  const [_, correctDen] = correctAnswer.split('/').map(Number); // Vi bryr oss bara om nämnaren
+
+  if (isNaN(userDen) || isNaN(correctDen)) return false;
+
+  // ✅ Nämnaren är rätt – oavsett vad täljaren är
+  return userDen === correctDen;
+}
+
+function isMultiplicationMethodCorrect(userAnswer, correctAnswer, questionText) {
+  if (!questionText.includes("*") && !questionText.includes("×")) return false;
+
+  const fractions = questionText.match(/\d+\/\d+/g);
+  if (!fractions || fractions.length < 2) return false;
+
+  let userNum, userDen;
+  if (userAnswer.includes("/")) {
+    [userNum, userDen] = userAnswer.split("/").map(Number);
+  } else {
+    userNum = Number(userAnswer);
+    userDen = 1;
+  }
+
+  let correctNumerator = 1;
+  let correctDenominator = 1;
+
+  for (let frac of fractions) {
+    const [num, den] = frac.split("/").map(Number);
+    correctNumerator *= num;
+    correctDenominator *= den;
+  }
+
+  // ✔️ Rätt täljare, ❌ fel nämnare
+  return (
+    userNum === correctNumerator &&
+    userDen !== correctDenominator
+  );
+}
+
+
+function toggleCalculator() {
+  const calc = document.getElementById("calculator");
+  calc.style.display = calc.style.display === "none" ? "block" : "none";
+
+   // Reset position (optional)
+   if (calc.style.display === "block") {
+    calc.style.top = "auto";
+    calc.style.left = "auto";
+    calc.style.bottom = "20px";
+    calc.style.right = "20px";
+  }
+
+}
+
+function calcInput(val) {
+  const display = document.getElementById("calcDisplay");
+  display.value += val;
+}
+
+function calculate() {
+  const display = document.getElementById("calcDisplay");
+  try {
+    display.value = eval(display.value);
+  } catch {
+    display.value = "Fel!";
+  }
+}
+
+function clearCalc() {
+  document.getElementById("calcDisplay").value = "";
+}
+
+makeDraggable(document.getElementById("calculator"), document.getElementById("calcHeader"));
+
+function makeDraggable(dragTarget, dragHandle) {
+  let posX = 0, posY = 0, mouseX = 0, mouseY = 0;
+
+  dragHandle.onmousedown = dragMouseDown;
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    posX = mouseX - e.clientX;
+    posY = mouseY - e.clientY;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dragTarget.style.top = (dragTarget.offsetTop - posY) + "px";
+    dragTarget.style.left = (dragTarget.offsetLeft - posX) + "px";
+    dragTarget.style.bottom = "auto";
+    dragTarget.style.right = "auto";
+  }
+
+  function closeDragElement() {
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+
+
+
+</script>
+
+  
+</body>
+</html>
+
+
