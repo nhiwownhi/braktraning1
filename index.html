@@ -580,7 +580,7 @@ x = 2/3`,
       //Subtraction
       {
         category: "subtraction",
-        question: "Beräkna 2/5 -1/5 och svara i bråkform.",
+        question: "Beräkna 2/5 - 1/5 och svara i bråkform.",
         answer: " 1/5",
         tips: ["När du subtraherar bråktal med samma nämnare, behåller du nämnaren och subtraherar täljarna.",
             
@@ -1200,16 +1200,30 @@ explanation: [
       },
       {
         category: "word problem",
-        question: "Lisa har bakat en paj. Hon äter upp 3/4 av den. Sen vill hon spara hälften av det hon ätit till senare. Hur mycket av hela pajen sparar hon?",
+        question: "Lisa har en paj. Hon åt upp 1/4 av pajen så att det finns bara 3/4 kvar. Hon vill spara hälften av det som finns kvar och ge den andra hälften till en kompis. Hur stor andel av pajen ger hon bort?",
         answer: "3/8",
         tips: [
-          "Tänk att du delar tre fjärdedelar i två lika stora delar, hur mycket blir varje del?",
-          "Tänk på att pajen är en hel kaka. Hon äter 3/4 av kakan och sparar hälften av det. Hur mycket blir kvar?",
+          "Hon vill ge bort hälften av det, alltså ska du räkna ut hälften av 3/4.",
+          "Det som finns kvar är 3/4 av pajen, så vi ska räkna ut hälften av 3/4.",
+          "Tänk att pajen är en stor tårta. Lisa har 3/4 av tårtan kvar och hon vill ge bort hälften av det. Hur mycket är hälften av 3/4?",
+        
         ],
         specificTips: {
-          "6/4": "Det verkar som att du har glömt att vända på 2 vid division, alltså att invertera 2/1 till 1/2 ​ och i stället har du multiplicerat med 2 direkt. Men i uppgiften ska du ta hälften av 3/4, inte dubbla den. Försök igen!",
-        },
-        explanation: "Hälften av 3/4 får vi genom att dividera bråket med två. Alltså 3/4 ÷ 2 = 3/4 * 1/2 = 3/8."
+          "1/2": "Det är hälften av en hel paj, men Lisa har bara 3/4 kvar. Du måste ta hälften av 3/4. Försök igen!",
+    "1/4": "1/4 var det hon åt upp, inte det hon ger bort. Titta på vad som finns kvar. Försök igen!",
+    "3/4": "Det är mängden paj som finns kvar, inte den del hon ger bort. Tänk: Vad är hälften av 3/4?",
+    "1/8": "Dubbelkolla din multiplikation: 1/2 × 3/4 = 3/8, inte 1/8. Försök igen!",
+    "6/4": "Ditt svar är större än en hel paj, vilket inte kan stämma. Fundera: kan man ge bort mer än vad som finns kvar?",
+  "6/8": "Bra försök – men 6/8 förenklas till 3/4. Det är mängden som finns kvar, inte vad hon ger bort. Kom ihåg: vi söker hälften av 3/4. Försök igen!"
+  },
+  explanation: [
+    "Lisa har en hel paj från början."+
+    "Hon äter upp 1/4 av pajen, så 3/4 finns kvar."+
+    "Hon vill spara hälften av det som finns kvar och ge bort den andra hälften."+
+    "Vi ska alltså räkna ut hälften av 3/4."+
+    "3/4 × 1/2 = 3/8."+
+    "Alltså ger Lisa bort 3/8 av hela pajen."
+  ]
       },
       {
         category: "word problem",
@@ -1392,76 +1406,85 @@ function checkAnswer() {
     correct = isCorrectAnswer(userAnswer, q.answer);
   }
 
-  if (correct) {
-  // 🎉 Rätt svar – kör konfetti och gå vidare
-  launchConfetti();
-
-  if (attempts === 0) {
-    correctFirstTry++;
-
-    const category = q.category;
-    if (firstTryStats[category]) {
-      firstTryStats[category].correct++;
-    }
-  }
-
-  document.getElementById("feedback").innerText = "Rätt!";
-  document.getElementById("feedback").style.display = "none";
-  document.getElementById("explanation").innerText = "";
-
-  currentQuestion++;
-  if (currentQuestion < totalQuestions) {
-    setTimeout(showQuestion, 1000);
-  } else {
-    finishQuiz();
-  }
-
-} else {
-  // ❌ Fel svar – ge tips eller visa "nästa" efter 3 försök
-  attempts++;
+  const rawAnswer = userAnswer.trim();
   const normalized = normalizeAnswer(userAnswer);
-  let tip = "Försök igen!";
 
-  // Visa specifikt tips om det finns för användarens svar
-  if (q.specificTips && q.specificTips[normalized]) {
-  tip = q.specificTips[normalized];
-} else if (isMinorCalculationError(userAnswer, q.answer)) {
-  tip = "Det ser ut som att du har använt rätt metod, bra jobbat! Dubbelkolla om du kanske har räknat fel eller råkat skriva fel täljare.";
-} else if (
-  q.category === "multiplication" &&
-  isMultiplicationMethodCorrect(userAnswer, q.answer, q.question)
-) {
-  tip = "Det ser ut som att du har använt rätt metod, bra jobbat! Dubbelkolla om du kanske har räknat fel eller råkat skriva fel nämnare.";
-} else if (Array.isArray(q.tips)) {
-  if (typeof q.tips[0] === "object") {
-    for (let i = 0; i < q.tips.length; i++) {
-      if (q.tips[i].condition(userAnswer)) {
-        tip = q.tips[i].text;
-        break;
+  if (correct) {
+    let feedback = "";
+
+    // Visa specifikt tips om det finns, även vid rätt svar
+    if (q.specificTips && q.specificTips[rawAnswer]) {
+      feedback = q.specificTips[rawAnswer];
+    } else {
+      feedback = "✅ Rätt svar!";
+    }
+
+    const feedbackEl = document.getElementById("feedback");
+    feedbackEl.innerHTML = feedback;
+    feedbackEl.style.display = "block";
+
+    launchConfetti();
+
+    if (attempts === 0) {
+      correctFirstTry++;
+      const category = q.category;
+      if (firstTryStats[category]) {
+        firstTryStats[category].correct++;
       }
     }
-  } else if (q.tips[attempts - 1]) {
-    tip = q.tips[attempts - 1];
+
+    document.getElementById("explanation").innerText = "";
+
+    currentQuestion++;
+    if (currentQuestion < totalQuestions) {
+      setTimeout(showQuestion, 2000);
+    } else {
+      finishQuiz();
+    }
+
+  } else {
+    // ❌ Fel svar – ge tips eller visa "nästa" efter 3 försök
+    attempts++;
+    let tip = "Försök igen!";
+
+    // Visa specifikt tips om det finns för oförenklat svar
+    if (q.specificTips && q.specificTips[rawAnswer]) {
+      tip = q.specificTips[rawAnswer];
+    } else if (isMinorCalculationError(userAnswer, q.answer)) {
+      tip = "Det ser ut som att du har använt rätt metod, bra jobbat! Dubbelkolla om du kanske har räknat fel eller råkat skriva fel täljare.";
+    } else if (
+      q.category === "multiplication" &&
+      isMultiplicationMethodCorrect(userAnswer, q.answer, q.question)
+    ) {
+      tip = "Det ser ut som att du har använt rätt metod, bra jobbat! Dubbelkolla om du kanske har räknat fel eller råkat skriva fel nämnare.";
+    } else if (Array.isArray(q.tips)) {
+      if (typeof q.tips[0] === "object") {
+        for (let i = 0; i < q.tips.length; i++) {
+          if (q.tips[i].condition(userAnswer)) {
+            tip = q.tips[i].text;
+            break;
+          }
+        }
+      } else if (q.tips[attempts - 1]) {
+        tip = q.tips[attempts - 1];
+      }
+    }
+
+    const feedbackEl = document.getElementById("feedback");
+    feedbackEl.innerHTML = `💡 <strong>Tips:</strong> ${tip}`;
+    feedbackEl.style.display = "block";
+
+    if (attempts >= 3) {
+      document.getElementById("explanation").innerHTML = `
+        <strong>Rätt svar:</strong> ${q.answer}<br>
+        <em>${q.explanation}</em>`;
+      document.getElementById("explanation").style.display = "block";
+      document.getElementById("nextBtn").style.display = "inline";
+      formatFractionsInElement("explanation");
     }
   }
-
-  const feedbackEl = document.getElementById("feedback");
-  feedbackEl.innerHTML = `💡 <strong>Tips:</strong> ${tip}`;
-  feedbackEl.style.display = "block";
-  
-
-  if (attempts >= 3) {
-    document.getElementById("explanation").innerHTML = `
-      <strong>Rätt svar:</strong> ${q.answer}<br>
-      <em>${q.explanation}</em>`;
-    document.getElementById("explanation").style.display = "block";
-    document.getElementById("nextBtn").style.display = "inline";
-    formatFractionsInElement("explanation");
-  }
-
-
-  }
 }
+
 
     function skipToNext() {
       currentQuestion++;
