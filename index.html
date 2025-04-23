@@ -465,7 +465,7 @@ x = 2/3`,
     const questions = [
       {
         category: "fraction",
-        question: " Beräkna 1/2 + 1/2 och svara i enklaste form",
+        question: "Beräkna 1/2 +  1/2 och svara i enklaste form",
         answer: "1",
         tips: ["När du adderar bråktal med samma nämnare, behåller du nämnaren och adderar täljarna.",
           
@@ -716,8 +716,8 @@ x = 2/3`,
       },
       {
         category: "division",
-        question: "Beräkna 2/(1/13)",
-        answer: ["26", "26/1", "26/1"],
+        question: "Beräkna 2/ (1/13)",
+        answer: ["26", "26/1"],
         tips: [
           "Kom ihåg att vända på det andra bråket när du dividerar.",
           "För att dividera bråk, multiplicera det första bråket med det inverterade andra bråket."
@@ -1256,7 +1256,7 @@ explanation: [
 
       
   const q = filteredQuestions[currentQuestion];
-  const questionText = formatFractionsInText(q.question);
+const questionText = formatFractionsInText(insertSpaceBeforeFractions(q.question));
 
   document.getElementById("taskNumber").innerText = `Uppgift ${currentQuestion + 1}/${totalQuestions}`;
 
@@ -2168,10 +2168,26 @@ function clearCalc() {
   document.getElementById("calcDisplay").value = "";
 }
 
+function insertSpaceBeforeFractions(text) {
+  // Sätt in mellanslag mellan bokstäver och bråktal, t.ex. "Beräkna2/5" → "Beräkna 2/5"
+  return text.replace(/([a-zA-ZåäöÅÄÖ])(\d+\s*\/\s*\d+)/g, '$1 $2');
+}
+
 function formatFractionsInText(text) {
-  return text.replace(/(?<![a-zA-Z0-9)])(\(?[a-zA-Z0-9+\- ]+\)?)\s*\/\s*(\(?[a-zA-Z0-9]+\)?)(?![a-zA-Z0-9(])/g, (match, top, bottom) => {
-    return `<span class="fraction"><span class="top">${top.trim()}</span><span class="bottom">${bottom.trim()}</span></span>`;
+  // 1. Först, formatera alla enkla bråk (1/2, x/3 osv)
+  text = text.replace(/(?<![\w>])([a-zA-Z0-9]+)\/([a-zA-Z0-9]+)(?![\w<])/g, (match, top, bottom) => {
+    return `<span class="fraction"><span class="top">${top}</span><span class="bottom">${bottom}</span></span>`;
   });
+
+  // 2. Sedan, formatera nästlade bråk: t.ex. 2/(1/13)
+  text = text.replace(
+    /([a-zA-Z0-9]+)\s*\/\s*\(<span class="fraction">([\s\S]+?)<\/span>\)/g,
+    (match, outerTop, innerFraction) => {
+      return `<span class="fraction"><span class="top">${outerTop}</span><span class="bottom">${innerFraction}</span></span>`;
+    }
+  );
+
+  return text;
 }
 
 
