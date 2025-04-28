@@ -345,8 +345,8 @@ formatFractionsInElement("categoryIntroText");
   subtraction: " När du subtraherar bråk, gäller samma sak: gemensam nämnare är viktigt innan du kan subtrahera täljarna.",
   division: "Vid division av bråk vänder du det andra bråket och multiplicerar (kallas invertering).",
   multiplication: "Multiplicera täljare med täljare och nämnare med nämnare. Du behöver inte ha samma nämnare.",
-  compare_order: " Här tränar du på att jämföra och ordna bråk – till exempel avgöra vilket bråk som är störst, eller sortera flera bråk i storleksordning.",
-  equation: "För att lösa ekvationer med bråk, isolera x genom att flytta över termer eller subtrahera bråk.",
+  compare_order: "För att avgöra vilket bråk som är störst, kan du antingen skriva om båda bråken med en gemensam nämnare eller omvandla dem till decimalform och jämföra.",
+  equation: "För att lösa ekvationer med bråk, börja med att få 𝑥-termen ensam på ena sidan av ekvationen. Om det finns termer som är adderade, subtraherade, multiplicerade eller dividerade med 𝑥, flytta över dem till andra sidan av ekvationen genom att använda motsatta operationer (t.ex. subtrahera om det är adderat, multiplicera om det är dividerat)",
   "word problem": "Läs noga! Försök översätta situationen till en bråkräkning!"
   
 
@@ -396,7 +396,7 @@ const categoryExamples = {
   "<strong>1. Multiplicera täljare och nämnare:</strong><br>" +
   "(<span style=\"color: red;\">2</span> × <span style=\"color: red;\">3</span>)/(<span style=\"color: red;\">3</span> × <span style=\"color: red;\">4</span>) = 6/12<br><br>" +
   "<strong>2. Förkorta bråket genom att dividera både täljare och nämnare med <span style=\"color: red;\">6</span>:</strong><br>" +
-  "(6÷ <span style=\"color: red;\">6</span>)/(<12 ÷ <span style=\"color: red;\">6</span>) = 1/2<br><br>" +
+  "(6÷ <span style=\"color: red;\">6</span>)/(12 ÷ <span style=\"color: red;\">6</span>) = 1/2<br><br>" +
   "Alltså: 6/12 = <span style=\"color: green;\">1/2</span>",
 
   division: 
@@ -447,7 +447,7 @@ const categoryExamples = {
 
   equation: 
   `Beräkna: x + 1/3 = 1<br>
-x = 1 - <span style="color: red;">1/3</span>)<br><br>
+x = 1 - <span style="color: red;">1/3</span><br><br>
 <span style="color: red;">(subtrahera med 1/3 för att x ska stå ensam)</span><br><br>
 x = (1 × <span style="color: red;">3</span>)/(1 × <span style="color: red;">3</span>) - 1/3<br><span style="color: red;">(multiplicera med 3 för att ha gemensamma nämnare)</span><br><br>
 x = 3/3 - 1/3<br><br>
@@ -463,25 +463,53 @@ x = 2/3`,
 
 
     const questions = [
-      {
-        category: "fraction",
-        question: "Beräkna 1/2 +  1/2 och svara i enklaste form",
-        answer: "1",
-        tips: ["När du adderar bråktal med samma nämnare, behåller du nämnaren och adderar täljarna.",
-          
-          "Vad får du om du adderar täljarna och behåller samma nämnare?"
-        ],
-        specificTips: {
-          "1/8": "Kom ihåg att nämnarna inte adderas. Vad gör du med täljarna? Försök igen.",
-          "2/2": "Bra jobbat! Försök att förkorta bråket för att få det i enklaste form.",
-          "1/4": "Kom ihåg att nämnarna inte adderas när du adderar bråk. Tänk på att täljarna adderas, men nämnarna förblir samma. Vad får du om du adderar täljarna och behåller samma nämnare?",
-          "2/4": "Tänk på att bara addera täljarna när bråken har samma nämnare.",
-          "1/3": "Kom ihåg att nämnarna inte adderas. Vad gör du med täljarna? Försök igen.",
-          "1/5": "Kom ihåg att nämnarna inte adderas. Vad gör du med täljarna? Försök igen.",
-        },
-        explanation: "Lösning: <br><br>"+ "1/2 + 1/2 = (1+1)/2= 2/2 = 1.<br><br>"+
-        "Du adderar täljarna (1+1=2) och behåller nämnaren (2)."
+
+    {
+  category: "fraction",
+  question: "Beräkna 1/3 + 1/2 och svara i bråkform.",
+  answer: "5/6",
+  tips: [
+    "När du adderar bråk med olika nämnare måste du först hitta en gemensam nämnare.",
+    "Vilket är minsta gemensamma nämnare för 3 och 2?"
+  ],
+  specificTips: {
+    "2/5": "Kom ihåg att du inte kan addera nämnarna direkt.<br>" +
+           "Försök hitta en gemensam nämnare först och gör om båda bråken.",
+
+    "1/5": "Det verkar som att du trodde att om täljarna är 1, kan man addera nämnarna direkt.<br>" +
+       "<span style='color: red;'>MEN</span> även om täljarna är 1 måste du alltid hitta en <span style='color: red;'>gemensam nämnare</span> innan du kan addera bråken.<br>"  +
+       "När du har hittat gemensam nämnare, <span style='color: red;'>adderar du täljarna och behåller samma nämnare</span>.<br>" +
+       "Vilken är minsta gemensamma nämnare för 3 och 2? Försök igen!",
+
+    "2/6": "Det verkar som om du har försökt hitta en gemensam nämnare, bra!<br>" +
+           "Men kolla täljarna noggrant, adderade du dem rätt?",
+
+    "1/6": "Det verkar som att du blandat ihop reglerna. Du kan inte bara ta 3 × 2 och behålla 1 när du adderar bråk.<br>"+
+"För att addera bråk måste du hitta <span style='color: red;'>minsta gemensam nämnare</span> för 3 och 2.<br>"+
+"När du har den gemensamma nämnaren kan du förlänga både täljare och nämnare för <span class='fraction'><span class='top'>1</span><span class='bottom'>2</span></span> och <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span>så att de får samma nämnare.<br>"+
+"Sedan adderar du täljarna och behåller samma nämnare.<br>",
+
+    "5/12": "Dubbelkolla vilken gemensam nämnare du använder.<br>" +
+            "Är 12 verkligen det minsta gemensamma talet för 3 och 2?",
+
+    "10/12": "Dubbelkolla vilken gemensam nämnare du använder.<br>" +
+            "Är 12 verkligen det minsta gemensamma talet för 3 och 2? Försök igen!",
+
+    "2/3": "Det verkar som att du kanske har adderat nämnarna också.<br>" +
+           "Tänk på att bara addera täljarna efter att bråken har samma nämnare."
+  },
+  explanation: "Lösning:<br><br>" +
+               "För att addera 1/3 och 1/2 måste vi först hitta en gemensam nämnare.<br>" +
+               "Minsta gemensamma nämnare för 3 och 2 är 6.<br><br>" +
+               "Vi skriver om bråken:<br>" +
+               "1/3 = 2/6 (multiplicera både täljare och nämnare med 2)<br>" +
+               "1/2 = 3/6 (multiplicera både täljare och nämnare med 3)<br><br>" +
+               "Nu kan vi addera:<br>" +
+               "2/6 + 3/6 = 5/6.<br><br>" +
+               "Svaret är 5/6."
       },
+
+     
       {
         category: "fraction",
         question: "Beräkna 2/3 + 1/2 och svara i bråkform",
@@ -490,11 +518,22 @@ x = 2/3`,
           "Hitta gemensamma nämnare för 3 och 2."
         ],
         specificTips: {
-          "3/5": "Kom ihåg att när du adderar bråken måste du hitta en gemensam nämnare. Nämnarna adderas inte direkt. Försök hitta en gemensam nämnare för 3 och 5 och addera sedan täljarna. ",
-          "3/6": "Kolla noga, det är addition, inte multiplikation. Du verkar ha blandat ihop det. Tänk på att för att addera bråk behöver de ha samma nämnare. Vad skulle hända om du gör om både 2/3 och 1/2 till bråk med samma nämnare innan du lägger ihop dem?",
-          "1/2": "Kolla noga, det är addition, inte multiplikation. Du verkar ha blandat ihop det. Tänk på att för att addera bråk behöver de ha samma nämnare. Vad skulle hända om du gör om både 2/3 och 1/2 till bråk med samma nämnare innan du lägger ihop dem?",
+          "3/5": "OBS! Tänk på hur du adderar bråk!<br>" +
+           "När du adderar bråk måste du först hitta en <span style='color: red;'>gemensam nämnare</span>. Du kan inte addera täljarna (de övre talen) och nämnarna (de nedre talen) direkt.<br>" +
+           "Vad är en gemensam nämnare för 3 och 2?<br>" +
+           "Omvandla sedan båda bråken så att de har samma nämnare och addera bara täljarna, inte nämnarna.",
+           
+          "3/6":  "Kolla noga, det är addition, inte multiplikation.<br>" +
+        "Tänk på att för att addera bråk behöver de ha samma nämnare.<br>" +
+        "Vad skulle hända om du gör om både <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> och <span class='fraction'><span class='top'>1</span><span class='bottom'>2</span></span> till bråk med samma nämnare innan du lägger ihop dem?",
+
+"1/2":  "Kolla noga, det är addition, inte multiplikation.<br>" +
+        "Tänk på att för att addera bråk behöver de ha samma nämnare.<br>" +
+        "Vad skulle hända om du gör om både <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> och <span class='fraction'><span class='top'>1</span><span class='bottom'>2</span></span> till bråk med samma nämnare innan du lägger ihop dem?",
+
+  },
           
-        },
+  
         explanation:[
         "Lösning: <br>"+
         "För att kunna addera, måste bråken ha samma nämnare.<br>"+
@@ -516,32 +555,55 @@ x = 2/3`,
           "Tänk på att 3 är samma sak som 21/7. Vad får du om du adderar?."
         ],
         specificTips: {
-          "5/7": "Kom ihåg att 3 är ett heltal och kan skrivas som 3/1. "+
-          "När du adderar bråket 3/1 med 2/7, måste du hitta en gemensam nämnare. Försök igen med rätt gemensam nämnare och lägg ihop täljarna.",
-          "2/7": "Du verkar ha blandat ihop addition och multiplikation. När du ser 3 + 2/7, tänk på att du inte ska multiplicera 3 med 2/7. Istället, omvandlar du 3 till ett bråk med samma nämnare som 2/7. Vad får du om du skriver om 3 som ett bråk med nämnaren 7 och sedan adderar det med 2/7 ?",
-          "6/7": "Kom ihåg att du inte ska multiplicera 3 med 2/7. Istället ska du skriva 3 som ett bråk med nämnaren 7 och sedan addera bråken. Försök att hitta en gemensam nämnare och addera täljarna korrekt!",
-          "6/21":"Kom ihåg att du inte ska multiplicera 3 med 2/7. Istället ska du skriva 3 som ett bråk med nämnaren 7, och sedan addera bråken. Försök att hitta en gemensam nämnare och addera täljarna korrekt!",
-          
-        },
-        explanation: [
-        "Lösning: <br>"+
-        "3 + 2/7 = 21/7 + 2/7 = 23/7 <br>"+
-        "Du gör om 3 till sjundedelar (3 = 21/7) och adderar täljarna."
-        ]
+          "5/7": "Kom ihåg att 3 är <span style='color: red;'>ett heltal</span> och för att kunna addera det med ett bråk som <span class='fraction'><span class='top'>2</span><span class='bottom'>7</span></span> måste du först skriva om 3 som ett bråk.<br>" +
+         "För att göra detta, kan du skriva 3 som t.ex. <span class='fraction'><span class='top'>3</span><span class='bottom'>1</span></span><br>" +
+         "Tänk sedan på vilken gemensam nämnare du kan använda för <span class='fraction'><span class='top'>3</span><span class='bottom'>1</span></span> och  <span class='fraction'><span class='top'>2</span><span class='bottom'>7</span></span>. När du har samma nämnare, kan du addera täljarna.",
+
+
+           "5/10": "Kom ihåg att du inte kan addera 3 med 2 och 3 med 7 direkt. När du har ett heltal som 3, kan du skriva om det som ett bråk.<br>" +
+            "För att kunna addera dessa bråk måste du hitta den minsta gemensamma nämnaren.<br>" +
+            "Steg 1: Försök att skriva om 3 som ett bråk, t.ex. <span class='fraction'><span class='top'>3</span><span class='bottom'>1</span></span>, och tänk på vilken gemensam nämnare du kan använda med 2/7.<br>" +
+            "Steg 2: Vad är den minsta gemensamma nämnaren för 1 och 7? Vad kan du multiplicera både täljare och nämnare med för att få samma nämnare?",
+    
+    "2/7": "Du verkar ha blandat ihop addition och multiplikation.<br>" + 
+           "När du ser 3 + 2/7, tänk på att 3 är ett heltal och behöver omvandlas till ett bråk.<br>" +
+           "Skriv om 3 som ett bråk med nämnaren 7 och lägg sedan ihop täljarna.",
+    
+    "6/7": "Kom ihåg att du inte ska multiplicera 3 med 2.<br>" + 
+         "Istället ska du omvandla 3 till ett bråk, t.ex. <span class='fraction'><span class='top'>3</span><span class='bottom'>1</span></span>, och sedan hitta en gemensam nämnare med 2/7.<br>" +
+         "När du har samma nämnare, kan du addera täljarna. Försök att hitta rätt gemensam nämnare och addera täljarna korrekt!",
+    
+    "6/21": "Kom ihåg att du inte ska multiplicera 3 med <span class='fraction'><span class='top'>2</span><span class='bottom'>7</span></span>.<br>" +
+            "Istället ska du omvandla 3 till ett bråk, t.ex. <span class='fraction'><span class='top'>3</span><span class='bottom'>1</span></span>, och sedan hitta en gemensam nämnare med 2/7.<br>" +
+         "När du har samma nämnare, kan du addera täljarna. Försök att hitta rätt gemensam nämnare och addera täljarna korrekt!",
+  },
+    
+  explanation: [
+  "Lösning: <br>" +
+  "För att addera 3 och 2/7, måste vi först skriva om 3 som ett bråk.<br>" +
+  "Eftersom 3 är ett heltal kan vi skriva det som 3/1.<br>" +
+  "Nu måste vi hitta en gemensam nämnare mellan 3/1 och 2/7. Den minsta gemensamma nämnaren är 7.<br>" +
+  "För att få samma nämnare som 2/7, multiplicerar vi både täljaren och nämnaren i 3/1 med 7. Då får vi 21/7.<br>" +
+  "Nu ser vi att vi har 21/7 och 2/7, så vi kan addera täljarna: 21 + 2 = 23.<br>" +
+  "Slutligen får vi resultatet 23/7.<br>"
+]
+
       },
       
       { category: "fraction",
-        question: "Beräkna 1/7+ 1 och svara i bråkform.",
+        question: "Beräkna 1/7 + 1 och svara i bråkform.",
         answer: "8/7",
         tips: [
           "Vad händer om du gör om 1 till sjundedelar? Försök igen.",
           "Tänk på att 1 är samma sak som 7/7. Försök igen!."
         ],
         specificTips: {
-          "2/7": "Kom ihåg att du inte kan addera 1 + 1 direkt när du jobbar med bråk. Du måste först skriva om 1 som ett bråk med samma nämnare som 1/7. Försök att skriva 1 som 7/7 och addera sedan täljarna.",
-          "2/8": "Hur kan vi skriva heltalet 1 som ett bråk med samma nämnare som 1/7?. Försök igen!",
-          "1/4": "Hur kan vi skriva heltalet 1 som ett bråk med samma nämnare som 1/7?. Försök igen!",
-          "1/8": "Kom ihåg att du inte kan addera 7 med 1 direkt, eftersom 7 är nämnaren för det ena bråket och 1 är ett heltal. Skriv om 1 som ett bråk med samma nämnare som 1/7 innan du kan addera täljarna. Försök igen!",
+          "2/7": "Kom ihåg att du inte kan addera 1 + 1 direkt när du jobbar med bråk.<br>"+
+          "Du måste först skriva om 1 som ett bråk med samma nämnare som <span class='fraction'><span class='top'>1</span><span class='bottom'>7</span></span>. Försök att skriva 1 som <span class='fraction'><span class='top'>7</span><span class='bottom'>7</span></span> och addera sedan täljarna.",
+          "2/8": "Hur kan vi skriva heltalet 1 som ett bråk med samma nämnare som <span class='fraction'><span class='top'>1</span><span class='bottom'>7</span></span>?. Försök igen!",
+          "1/4": "Hur kan vi skriva heltalet 1 som ett bråk med samma nämnare som <span class='fraction'><span class='top'>1</span><span class='bottom'>7</span></span>?. Försök igen!",
+          "1/8": "Kom ihåg att du inte kan addera 7 med 1 direkt, eftersom 7 är nämnaren för det ena bråket och 1 är ett heltal.<br>"+ 
+          "Skriv om 1 som ett bråk med samma nämnare som <span class='fraction'><span class='top'>1</span><span class='bottom'>7</span></span> innan du kan addera täljarna. Försök igen!",
           
         },
         explanation: [
@@ -576,8 +638,29 @@ x = 2/3`,
         ]
       },
 
+      {
+        category: "fraction",
+        question: "Beräkna 1/2 +  1/2 och svara i enklaste form",
+        answer: "1",
+        tips: ["När du adderar bråktal med samma nämnare, behåller du nämnaren och adderar täljarna.",
+          
+          "Vad får du om du adderar täljarna och behåller samma nämnare?"
+        ],
+        specificTips: {
+          "1/8": "Kom ihåg att nämnarna inte adderas. Vad gör du med täljarna? Försök igen.",
+          "2/2": "Bra jobbat! Försök att förkorta bråket för att få det i enklaste form.",
+          "1/4": "Kom ihåg att nämnarna inte adderas när du adderar bråk. Tänk på att täljarna adderas, men nämnarna förblir samma. Vad får du om du adderar täljarna och behåller samma nämnare?",
+          "2/4": "Tänk på att bara addera täljarna när bråken har samma nämnare.",
+          "1/3": "Kom ihåg att nämnarna inte adderas. Vad gör du med täljarna? Försök igen.",
+          "1/5": "Kom ihåg att nämnarna inte adderas. Vad gör du med täljarna? Försök igen.",
+        },
+        explanation: "Lösning: <br><br>"+ "1/2 + 1/2 = (1+1)/2= 2/2 = 1.<br><br>"+
+        "Du adderar täljarna (1+1=2) och behåller nämnaren (2)."
+      },
 
-      //Subtraction
+
+
+     ///////////////Subtraction
       {
         category: "subtraction",
         question: "Beräkna 2/5 - 1/5 och svara i bråkform.",
@@ -595,6 +678,153 @@ x = 2/3`,
         "2/5 - 1/5 = 1/5. Eftersom nämnarna är lika, subtraherar vi bara täljarna."
         ]
       },
+      
+      {
+        category: "subtraction",
+  question: "Beräkna 7/6 - 1/3 och svara i bråkform",
+  answer: "5/6",
+  tips: [
+    "Hitta gemensamma nämnare för 6 och 3."
+  ],
+  specificTips: {
+
+    "6/3": "Du har subtraherat bråken på fel sätt. Kom ihåg att du <span style='color: red;'>inte</span> kan subtrahera täljarna direkt utan att ha samma nämnare.<br>" +
+        "Vid addition och subtraktion av bråk <span style='color: red;'>behåller du alltid samma nämnare</span>.<br>" +
+        "Steg 1: Hitta en gemensam nämnare för bråken innan du subtraherar.<br>" +
+        "Vad är den gemensamma nämnaren för 6 och 3?<br>" +
+        "Steg 2: Omvandla <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> till ett bråk med samma nämnare som  <span class='fraction'><span class='top'>7</span><span class='bottom'>6</span></span> och subtrahera sedan täljarna.<br>" +
+        "Kom ihåg att behålla samma nämnare. Försök igen!",
+
+     "2": "Du har subtraherat bråken på fel sätt. Kom ihåg att du <span style='color: red;'>inte</span> kan subtrahera täljarna direkt utan att ha samma nämnare.<br>" +
+        "Vid addition och subtraktion av bråk behåller du alltid samma nämnare.<br>" +
+        "Steg 1: Hitta en gemensam nämnare för bråken innan du subtraherar.<br>" +
+        "Vad är den gemensamma nämnaren för 6 och 3?<br>" +
+        "Steg 2: Omvandla <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> till ett bråk med samma nämnare som  <span class='fraction'><span class='top'>7</span><span class='bottom'>6</span></span> och subtrahera sedan täljarna.<br>" +
+        "Kom ihåg att behålla samma nämnare. Försök igen!",
+
+    "6/6": "Det verkar som att du har missat att <span style='color: red;'>multiplicera både täljaren och nämnaren</span> för <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> för att få samma nämnare som <span class='fraction'><span class='top'>7</span><span class='bottom'>6</span></span>.<br>" +
+        "När du ska subtrahera bråk, måste bråken ha samma nämnare.<br>" +
+        "För att omvandla <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> till ett bråk med samma nämnare som <span class='fraction'><span class='top'>7</span><span class='bottom'>6</span></span>, måste du multiplicera både täljaren och nämnaren av <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> med 2, så att du får <span class='fraction'><span class='top'>2</span><span class='bottom'>6</span></span>.<br>" +
+        "Steg 1: Skriv om <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> <br>" +
+        "Steg 2: Subtrahera sedan täljarna och behåll samma nämnare (6).<br>" +
+        "Försök igen!",  
+
+    "1": "Det verkar som att du har missat att <span style='color: red;'>multiplicera både täljaren och nämnaren</span> för <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> för att få samma nämnare som <span class='fraction'><span class='top'>7</span><span class='bottom'>6</span></span>.<br>" +
+        "När du ska subtrahera bråk, måste bråken ha samma nämnare.<br>" +
+        "För att omvandla <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> till ett bråk med samma nämnare som <span class='fraction'><span class='top'>7</span><span class='bottom'>6</span></span>, måste du multiplicera både täljaren och nämnaren av <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> med 2, så att du får <span class='fraction'><span class='top'>2</span><span class='bottom'>6</span></span>.<br>" +
+        "Steg 1: Skriv om <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> <br>" +
+        "Steg 2: Subtrahera sedan täljarna och behåll samma nämnare (6).<br>" +
+        "Försök igen!",  
+
+
+    "3/6": "Kom ihåg att när du subtraherar bråk måste de ha samma nämnare.<br>" +
+           "Försök att hitta den minsta gemensamma nämnaren för 6 och 3.<br>" +
+           "Omvandla sedan båda bråken så att de har samma nämnare och subtrahera täljarna.",
+
+    "2/6": "Kolla noga! Tänk på att du ska omvandla 1/3 till ett bråk med nämnaren 6 och sedan subtrahera täljarna.<br>" +
+           "Försök att hitta rätt gemensam nämnare och subtrahera korrekt!",
+
+    "7/3": "Tänk på att 7/6 och 1/3 inte har samma nämnare än så länge. Försök att skriva om 1/3 som ett bråk med nämnaren 6.<br>" +
+           "Försök att hitta rätt gemensam nämnare och subtrahera täljarna korrekt!"
+  },
+
+  explanation: [
+    "Lösning: <br>" +
+    "För att subtrahera, måste bråken ha samma nämnare.<br>" +
+    "Vi hittar en gemensam nämnare för 6 och 3. Det minsta gemensamma talet är 6.<br>" +
+    "Nu skriver vi om bråken så att båda har nämnaren 6.<br>" +
+    "7/6 = 7/6 (det är redan rätt, så det behövs ingen ändring).<br>" +
+    "1/3 = 2/6 (vi multiplicerar både täljaren och nämnaren med 2).<br><br>" +
+    "Nu kan vi subtrahera: 7/6 - 2/6 = 5/6.<br><br>"
+
+        ]
+      },
+
+    
+      {
+        category: "subtraction",
+        question: "Beräkna 2 - 1/3 och svara i bråkform.",
+        answer: "5/3",
+        tips: ["Se till att bråken har samma nämnare innan du subtraherar!",
+            
+          "Vad händer om du gör om 2 till tredelar?",
+          "Tänk på att 2 är samma sak som 6/3. Försök igen!"
+        ],
+        specificTips: {
+          "1/3": "Det verkar som att du subtraherat täljarna direkt och behållit nämnaren, alltså <span class='fraction'><span class='top'>(2-1)</span><span class='bottom'>3</span></span>.<br>" +
+       "Tänk på att 2 måste skrivas om som ett bråk innan du kan subtrahera.<br>" +
+       "Skriv om 2 som ett bråk med nämnaren 3 först, så att båda bråken har samma nämnare.<br>",
+
+       "2/6":  "Det verkar som att du multiplicerat 2 med 1/3 istället för att subtrahera.<br>" +
+       "Tänk på att det står minus (-) inte gånger (×)<br>" +
+       "För att subtrahera ett heltal och ett bråk måste du först skriva om heltalet som <span style='color: red;'>ett bråk med samma nämnare</span>.<br>" +
+       "Hur kan du skriva om 2 så att det får nämnaren 3?",
+
+
+        },
+        explanation: [
+          "Lösning: <br><br>" +
+  "För att subtrahera ett heltal och ett bråk måste vi först skriva om heltalet som ett bråk.<br><br>" +
+  "Steg 1: Skriv om 2 som ett bråk med nämnare 3:<br>" +
+  "2 = 6/3 (vi multiplicerar både täljare och nämnare: 2 × 3 = 6)<br><br>" +
+  "Steg 2: Nu subtraherar vi bråken:<br>" +
+  "6/3 - 1/3 = (6 - 1)/3 = 5/3<br><br>" +
+  "Svar: 5/3"
+        ]
+      },
+
+
+
+      {
+        category: "subtraction",
+        question: "Beräkna 16/7 - 2 och svara i bråkform.",
+        answer: "2/7",
+        tips: [
+          "Vad händer om du gör om 2 till sjundedelar?",
+          "Tänk på att 2 kan skrivas som ett bråk med nämnaren 7, t.ex. 2 = 14/7.",
+          "Gör båda till bråk med samma nämnare innan du räknar."
+        ],
+        specificTips: {
+          "14/7": "När du subtraherar bråk måste de ha samma nämnare! Försök igen!",
+         },
+         explanation:     "Lösning: <br><br>" +
+    "För att subtrahera 16/7 - 2, måste vi först skriva om 2 som ett bråk med nämnaren 7:<br>" +
+    "2 = 14/7.<br><br>" +
+    "Steg 1: Skriv om uttrycket:<br>" +
+    "16/7 - 14/7.<br><br>" +
+    "Steg 2: Subtrahera täljarna:<br>" +
+    "(16 - 14) / 7 = 2/7.<br><br>" +
+    "Svar: 2/7"
+      },
+
+      {
+        category: "subtraction",
+        question: "Beräkna 3/6 - 1/3 och svara i bråkform.",
+        answer: "1/6",
+        tips: ["Se till att bråken har samma nämnare innan du subtraherar!",
+          "Vad händer om du gör om 1/3 till sjättedelar?",
+          "Tänk på att 1/3 är samma sak som 2/6. Försök igen!"
+        ],
+        specificTips: {
+         "2/6": "Det verkar som om du har förlängt <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> korrekt till <span class='fraction'><span class='top'>2</span><span class='bottom'>6</span></span>, men glömt att utföra själva subtraktionen.<br>" +
+           "Kom ihåg: <span class='fraction'><span class='top'>3</span><span class='bottom'>6</span></span> - <span class='fraction'><span class='top'>2</span><span class='bottom'>6</span></span>= <span class='fraction'><span class='top'>1</span><span class='bottom'>6</span></span><br>" +
+           "Subtrahera täljarna och behåll nämnaren!",
+    "2/3": "Det ser ut som att du försökte subtrahera utan att först hitta en gemensam nämnare.<br>" +
+           "För att subtrahera bråk måste de ha samma nämnare.<br>" +
+           "Gör om <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> till <span class='fraction'><span class='top'>2</span><span class='bottom'>6</span></span> och subtrahera täljarna.<br>" +
+           "Försök igen!",
+        },
+        explanation: [
+        "Lösning: <br><br>" +
+    "Steg 1: Hitta en gemensam nämnare.<br>" +
+    "Vi gör om 1/3 till ett bråk med nämnaren 6:<br>" +
+    "1/3 = 2/6.<br><br>" +
+    "Steg 2: Subtrahera bråken:<br>" +
+    "3/6 - 2/6 = (3 - 2)/6 = 1/6.<br><br>" +
+    "Svar: 1/6."
+        ]
+      },
+
       {
         category: "subtraction",
         question: "Beräkna 2/4 - 1/2" ,
@@ -611,57 +841,6 @@ x = 2/3`,
         ]
       },
 
-      {
-        category: "subtraction",
-        question: "Beräkna 3/6 - 1/3 och svara i bråkform.",
-        answer: "1/6",
-        tips: ["Se till att bråken har samma nämnare innan du subtraherar!",
-          "Vad händer om du gör om 1/3 till sjättedelar?",
-          "Tänk på att 1/3 är samma sak som 2/6. Försök igen!"
-        ],
-        specificTips: {
-          "2/6": "Det verkar som om du bara förlängde nämnaren för 1/3 till 6, men du måste också multiplicera täljaren med 2. Försök igen!",
-          "2/3": "Tänk på att du inte kan subtrahera bråk direkt om de har olika nämnare.<br>"+
-          "Du behöver först hitta en gemensam nämnare, gärna den minsta gemensamma nämnaren, så att båda bråken får samma nämnare.<br>" + 
-          "När nämnarna är lika, drar du bara täljarna från varandra och behåller nämnaren."
-        },
-        explanation: [
-        "Lösning: <br>"+
-        "1/3 = 2/6 → 3/6 - 2/6 = 1/6."
-        ]
-      },
-      {
-        category: "subtraction",
-        question: "Beräkna 1/2 - 1/5 och svara i bråkform.",
-        answer: "3/10",
-        tips: ["Se till att bråken har samma nämnare innan du subtraherar!",
-            
-            "Hitta gemensam nämnare för 2 och 5.",
-        ],
-        specificTips: {
-          "0/-3": "Se till att bråken har samma nämnare innan du subtraherar!",
-          "1/-3": "Kom ihåg att du inte kan subtrahera nämnarna direkt, även om täljaren är densamma. Tänk på att för att subtrahera bråk måste vi få samma nämnare först och sedan subtrahera täljarna. Försök igen!",
-          "1/3": "Kom ihåg att du inte kan subtrahera nämnarna direkt, även om täljaren är densamma. Tänk på att för att subtrahera bråk måste vi få samma nämnare först och sedan subtrahera täljarna. Försök igen!",
-        },
-        explanation: [
-          "Lösning: <br>"+
-        "1/2 - 1/5 = 5/10 - 2/10 = (5-2)/10= 3/10. <br>",
-        ]
-      },
-      {
-        category: "subtraction",
-        question: "Beräkna 16/7 - 2 och svara i bråkform.",
-        answer: "2/7",
-        tips: [
-          "Vad händer om du gör om 2 till sjundedelar?",
-          "Gör båda till bråk med samma nämnare innan du räknar."
-        ],
-        specificTips: {
-          "14/7": "När du subtraherar bråk måste de ha samma nämnare! Försök igen!",
-         },
-         explanation: "16/7 - 2 = 16/7 - 14/7 = 2/7. Du gör om 2 till sjundedelar (2 = 14/7) och subtraherar täljarna."
-      },
-
 
       // Division
       {
@@ -673,17 +852,71 @@ x = 2/3`,
           "Hur många tredjedelar får plats i en elftedel?"
         ],
         specificTips: {
-          "1/33": "Du har multiplicerat de två bråken direkt istället för att dividera.",
-          "33": "Vänd bara på det andra bråket, inte båda!",
-          "14/33": "Kom ihåg att division av bråk inte är samma sak som addition!"
+          "1/33": "Du har multiplicerat de två bråken direkt istället för att dividera.<br>"+ 
+          "Försök att invertera det andra bråket (1/3) och multiplicera istället. Alltså, 1/11 x 3/1. Tänk på att division av bråk innebär att du <span style='color: red;'>byter plats på det andra bråket</span> och multiplicerar istället.",
+    "33": "Vänd bara på det andra bråket, inte båda! Tänk på att divisionen innebär att du ska multiplicera med det inverterade bråket.",
+    "14/33": "Kom ihåg att division av bråk inte är samma sak som addition! Se till att du inverterar det andra bråket och multiplicera."
+
         },
         explanation:  [
-        "Lösning: <br>"+  
-        "1/11 ÷ 1/3 = 1/11 * 3/1 = (1*3)/(11*1)=3/11."
+        "Lösning: <br>" +  
+    "1/11 ÷ 1/3 = 1/11 * 3/1 = (1*3)/(11*1) = 3/11 <br>" +
+    "När du dividerar bråk, vänder du på det andra bråket och multiplicerar täljare med täljare samt nämnare med nämnare."
   
         ]
 
       },
+      {
+        category: "division",
+        question: "Beräkna  1 2/3 ÷ 1/5 och svara i bråkform.",
+        answer: "25/3",
+        tips: [
+          "Försök att omvandla 1 <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> till ett bråk innan du gör divisionen.",
+    "Vad händer om du skriver om 1 <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> som <span class='fraction'><span class='top'>5</span><span class='bottom'>3</span></span>?",
+          "Kom ihåg att vända på det andra bråket när du dividerar.",
+          "För att dividera bråk, multiplicera det första bråket med det inverterade andra bråket."
+        ],
+        specificTips: {
+          "5/3": "Bra jobbat! Du har omvandlat 1<span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> till ett bråk. Nu kan du fortsätta med divisionen.",
+   "5/15": "Kom ihåg att när du dividerar bråk, ska du inte dividera direkt.<br>"+
+   "Tänk istället på att du ska multiplicera med det <span style='color: red;'>omvända (inverterade) av det andra</span> bråket. Försök att invertera det andra bråket och multiplicera istället.",
+   "15/5": "Det verkar som att du har inverterat båda bråken. Kom ihåg att när du dividerar bråk, ska du endast <span style='color: red;'>invertera det andra bråket</span>(det bråk du delar med).<br>"+
+   "Försök igen och tänk på att multiplicera med det inverterade andra bråket!",
+
+        },
+        explanation:   "Lösning: <br><br>" +
+    "Steg 1: Omvandla 1 2/3 till ett bråk: 1 2/3 = 5/3.<br><br>" +
+  "Multiplicera heltalet 1 med nämnaren av bråket 3:      1 * 3 = 3<br>" +
+  "Lägg till täljaren av bråket 2 till resultatet från steg 1:     3 + 2 = 5.<br>" +
+  "Sätt resultatet 5 som täljare och behåll samma nämnare 3:      5/3<br><br>" +
+  "Nu har du omvandlat 1 2/3 till 5/3.<br><br>" +
+  "Steg 2: Nu dividerar du bråken: 5/3 ÷ 1/5 <br>" +
+  "För att dividera bråk, multiplicera det första bråket med det omvända av det andra bråket (invertera 1/5 till 5/1)<br>" +
+  "Så: 5/3 * <span style='color: red;'>5/1</span> = 25/3<br><br>" +
+  "Svar: 25/3."
+},
+
+      {
+        category: "division",
+        question: "Vad är 11/0?",
+        answer: ["inte definierat", "undefined", "ej definierat", "det går inte att dela", "går ej", "går inte", "kan ej delas"],
+        tips: [
+          "Säg att du har 11 kronor och vill dela dessa med 0 personer. Hur mycket får varje person?",
+      
+          "Försök att tänka på multiplicering för att förstå varför det inte går att dela med 0."
+        ],
+        specificTips: {
+          "0": "Tänk efter, om svaret vore 0, vad händer om du multiplicerar 0 med 0?<br>"+ 
+          "0 × 0 = 0, inte 11. Så det kan inte stämma!",
+          "11": "Tänk efter, om du tar 11 ÷ 0 och får 11 som svar, vad betyder det? Då borde 11 × 0 = 11, men det blir ju 0! Försök igen!",
+          "infinity": "Bra tanke! Det är sant att talen blir jättestora när man delar med små tal nära noll.<br>"+
+          "Men att dela med exakt noll går inte, vi säger att det är inte definierat, inte ens oändligt."
+  
+        },
+        explanation: "Att dela med 0 är inte tillåtet i matematiken. Det finns inget tal du kan multiplicera med 0 för att få 11. Enligt definitionen kan ingen division genom noll ge ett meningsfullt resultat och därför säger vi att det är <span style='color: red;'>'inte definierat'</span>.<br>"+
+        "Tänk dig att du har t.ex. 11 äpplen och du försöker dela dessa äpplen mellan 0 personer. Hur kan du dela dem när det inte finns någon att dela med? Det blir omöjligt att dela upp något utan att ha någon mottagare, så division med noll ger inget meningsfullt svar."
+      },
+
       {
         category: "division",
         question: "Beräkna 2/3 ÷ 5 och svara i bråkform.",
@@ -693,30 +926,16 @@ x = 2/3`,
           "För att dividera bråk, multiplicera det första bråket med det inverterade andra bråket."
         ],
         specificTips: {
-          "10/3": "Tänk: om du ska dela 2/3 i 5 lika delar, blir det mer eller mindre än 2/3? Försök igen!",
-          "15/2": "Det verkar som att du har gjort 5 ÷ (2/3) istället för (2/3) ÷ 5. Läs uppgiften en gång till, vad är det som ska delas, 2/3 eller 5?",
-          "17/3":"För att dividera bråk, multiplicera det första bråket med det inverterade andra bråket."
+         "10/3": "Du ska dela <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> i 5 lika delar, blir det mer eller mindre än <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> ?<br>"+
+         "Du har multiplicerat 5 med 2 istället för att dividera. Försök igen och tänk på att dividera med 5, inte multiplicera!",
+    "15/2": "Det verkar som att du har gjort 5 ÷ <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> istället för <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> ÷ 5. Läs uppgiften en gång till, vad är det som ska delas, 2/3 eller 5?",
+    "17/3": "För att dividera bråk, multiplicera det första bråket med det inverterade andra bråket."
         },
-        explanation: "1/5 ÷ 2/7 = 1/5 * 7/2 = (1*7)/(5*2)= 7/10."
+        explanation: "Lösning: <br> När vi dividerar 2/3 med 5, måste vi först omvandla divisionen till en multiplikation. För att göra detta, inverterar vi det andra bråket (5). Vi kan skriva 5 som 5/1, och då får vi: <br><br> 2/3 ÷ 5/1 = 2/3 * 1/5. <br><br> Nu multiplicerar vi täljarna och nämnarna: (2 * 1)/(3 * 5) = 2/15 <br><br> Så svaret blir 2/15."
       },
       {
         category: "division",
-        question: "Vad är 11/0?",
-        answer: ["inte definierat", "undefined", "ej definierat", "det går inte att dela", "går ej", "går inte", "kan ej delas"],
-        tips: [
-          "Tänk på vad det innebär att dela med noll – det är något speciellt som inte fungerar som vanligt.",
-          "Försök att tänka på multiplicering för att förstå varför det inte går att dela med 0."
-        ],
-        specificTips: {
-          "0": "Tänk efter, om svaret vore 0, vad händer om du multiplicerar 0 med 0?\n0 × 0 = 0, inte 11. Så det kan inte stämma!",
-          "11": "Tänk efter, om du tar 11 ÷ 0 och får 11 som svar, vad betyder det?\nDå borde 11 × 0 = 11, men det blir ju 0!",
-          "infinity": "Bra tanke! Det är sant att talen blir jättestora när man delar med små tal nära noll.\nMen att dela med exakt noll går inte, vi säger att det är inte definierat, inte ens oändligt."
-        },
-        explanation: "Att dela med 0 är inte tillåtet i matematiken –. Det finns inget tal du kan multiplicera med 0 för att få 11. Enligt definitionen kan ingen division genom noll ge ett meningsfullt resultat och därför säger vi att det är 'inte definierat'."
-      },
-      {
-        category: "division",
-        question: "Beräkna 2/ (1/13)",
+        question: "Beräkna 2 ÷ 1/13",
         answer: ["26", "26/1"],
         tips: [
           "Kom ihåg att vända på det andra bråket när du dividerar.",
@@ -727,7 +946,7 @@ x = 2/3`,
           "13/2": "Du har tänkt rätt som vände på 1/13 till 13/1. Men man kan inte göra om 2 till 1/2. Istället ska du skriva om 2 som 2/1, eftersom 2 betyder 2 hela – alltså samma sak som 2/1.",
           "1/26": "Vid division med bråk kan man inte göra om 2 till 1/2 och multiplicera med 1/13. Man ska i stället skriva om 2 som 2/1 och multiplicera med det omvända av 1/13, alltså 13/1. Försök igen!"
         },
-        explanation: "2/(1/13) = 2 * (13/1) = 26. Du vänder på det andra bråket och multiplicerar."
+        explanation: "2 ÷ (1/13) = 2 * (13/1) = 26. Du vänder på det andra bråket och multiplicerar."
       },
       {
         category: "division",
@@ -750,15 +969,23 @@ x = 2/3`,
         question: "Beräkna 2/3 * 1/5 och svara i bråkform.",
         answer: "2/15",
         tips: [
-          "Tänk på att när du multiplicerar bråk behöver du inte hitta gemensam nämnare, och du ska inte invertera något bråk.",
-          "Multiplicera bara täljare med täljare och nämnare med nämnare. a/b*c/d=(a*c)/(b*d)."
+          "Tänk på att när du multiplicerar bråk behöver du inte hitta gemensam nämnare och du ska inte invertera något bråk. Multiplicera bara täljare med täljare och nämnare med nämnare.",
+          "Multiplicera bara täljare med täljare och nämnare med nämnare."
         ],
         specificTips: {
-          "3/8": "Multiplicera täljare med täljare och nämnare med nämnare, inte addera.",
-          "10/3": "Vid multiplikation av bråk ska du inte vända något bråk.",
-          "15/2": "Det ser ut som att du har vänt på båda bråken innan du multiplicerade. Men när du multiplicerar bråk behöver du inte vända något, du multiplicerar bara täljare med täljare och nämnare med nämnare."
+          "3/8": "Det ser ut som att du har adderat i stället för att multiplicera.<br>" +
+           "Kom ihåg: Multiplicera täljarna med varandra och nämnarna med varandra.",
+
+    "10/3": "Tänk på att du inte ska vända något bråk när du multiplicerar.<br>" +
+            "Bara multiplicera täljare med täljare och nämnare med nämnare.",
+
+    "15/2": "Det verkar som att du har vänt på bråken.<br>" +
+            "Vid multiplikation behöver du bara multiplicera täljarna och nämnarna rakt av utan att vända något bråk."
         },
-        explanation: "2/3 * 1/5 = (2 * 1 )/ (3 * 5) = 2/15."
+        explanation: "Lösning: <br><br>" +
+    "När vi multiplicerar två bråk multiplicerar vi täljare med täljare och nämnare med nämnare:<br>" +
+    "2/3 × 1/5 = (2 × 1)/(3 × 5) = 2/15<br><br>" +
+    "Svar: 2/15."
       },
       
       {
@@ -780,34 +1007,49 @@ x = 2/3`,
       
       {
         category: "multiplication",
-        question: "Beräkna 1/9 * 2/5 * 3/7 och svara i bråkform.",
-        answer: "6/315", 
+        question: "Beräkna 1/9 * 2/5 * 3/7 och svara i enklaste form.",
+        answer: "2/105", 
         tips: [
-          "Kom ihåg att multiplicera täljare med täljare och nämnare med nämnare.",
+          "Kom ihåg att vid multiplikation av bråk multiplicerar du täljare med täljare och nämnare med nämnare.",
           "Tänk på att du inte behöver samma nämnare när du multiplicerar bråk."
         ],
         specificTips: {
-          "6/21": "Kom ihåg att multiplicera täljare med täljare och nämnare med nämnare, inte addera dem. Försök igen!",
-        
+         "6/21": "Kom ihåg att multiplicera täljare med täljare och nämnare med nämnare, inte addera dem. Försök igen!",
+    "6/315": "Bra jobbat! Det är rätt produkt men inte i enklaste form. Försök att förkorta det.",
+    "105/2": "Det verkar som att du har vänt bråken. Vid multiplikation vänder man inte på bråken, bara multiplicera rakt av."
+
         },
-        explanation: "1/9 * 2/5 * 3/7 = (1*2*3)/(9*5*7) = 6/315. Multiplicera täljarna och nämnarna."
+        explanation:  "Lösning: <br><br>" +
+    "Multiplicera täljarna: 1 × 2 × 3 = 6<br>" +
+    "Multiplicera nämnarna: 9 × 5 × 7 = 315<br><br>" +
+    "Så: 1/9 × 2/5 × 3/7 = 6/315<br><br>" +
+    "Förkorta bråket:<br>" +
+    "Både 6 och 315 kan delas med 3:<br>" +
+    "6/3 = 2 och 315/3 = 105.<br><br>" +
+    "Svar i enklaste form: 2/105."
       },
 
       {
         category: "multiplication",
-        question: "Beräkna 3/4 * 2/7 och svara i bråkform.",
-        answer: "6/28",
+        question: "Beräkna 3/4 * 2/7 och svara i enklaste form.",
+        answer: "3/14",
         tips: [
           "Tänk på att du inte behöver samma nämnare när du multiplicerar bråk.",
-          "Multiplicera täljare med täljare och nämnare med nämnare: 3 * 2 och 4 * 7."
+          "Multiplicera täljare med täljare och nämnare med nämnare."
         ],
         specificTips: {
           "5/11": "Kom ihåg att multiplicera täljarna med varandra och nämnarna med varandra.",
+          "6/28": "Bra jobbat! Det är rätt svar men inte i enklaste form. Försök att förkorta det.",
           "21/8": "Har du råkat vända ett bråk? Det gör man bara vid division.",
           "10/14": "Har du blandat ihop siffrorna? Multiplicera täljarna och nämnarna korrekt.",
           "28/6": "Det verkar som att du har vänt båda bråken, det ska du inte göra vid multiplikation!"
         },
-        explanation: "3/4 * 2/7 = 6/28. Multiplicera 3*2 och 4*7."
+        explanation:  "Lösning: <br><br>" +
+    "Multiplicera täljare med täljare och nämnare med nämnare:<br>" +
+    "3/4 × 2/7 = (3 × 2)/(4 × 7) = 6/28<br><br>" +
+    "Nu förkortar vi bråket:<br>" +
+    "6/2 = 3 och 28/2 = 14, så 6/28 = 3/14<br><br>" +
+    "Svar: 3/14."
       },
 
       {
@@ -833,61 +1075,85 @@ x = 2/3`,
         question: "Lös ekvationen: x + 1/3 = 6",
         answer: "17/3",
         tips: [
-          {
-            condition: (input) => input.trim() === "5" || input.trim() === "17",
-            text: "Om du multiplicerar med 3 måste du göra det på alla termer även x."
-          },
-          {
-            condition: (input) => input.trim() === "3",
-            text: "Titta noga på ekvationen igen, står det verkligen 1 delat med x, eller bara x?"
-          },
-          {
-            condition: () => true,
-            text: "Tänk på att du måste ta bort bråket 1/3 från andra sidan."
-          }
-        ],
-        specificTips: {
-          "5/3": "Du vill ta bort en tredjedel från 6. Men för att det ska gå, behöver du skriva 6 som ett bråk med samma nämnare, alltså: 6 är samma som 18/3. Försök igen."
-        },
-        explanation: "x = 6 - 1/3 = 18/3 - 1/3 = 17/3"
-      },
-      {
-        category: "equation",
-        question: "Lös ekvationen: x/2 - 3 = 5/4 och svara i bråkform",
-        answer: "17/2",
-        tips: ["För att lösa ekvationen: börja med att få x-termen ensam på ena sidan.",
-  "Lägg till 3 på båda sidor först för att bli av med -3.",
-  "När du har x/2 = något, multiplicera båda sidor med 2 för att få x."
-          
-        ],
-        specificTips: {
-        
-          "5/4": "Det ser ut som att du bara kopierade det som redan stod i ekvationen. Kom ihåg att lösa ut x steg för steg!",
-  
-  "11/4": "Du har antagligen glömt att lägga till 3 korrekt. Kom ihåg att 3 = 12/4, så 5/4 + 3 = 17/4 innan du multiplicerar med 2.",
-  
-  "17/4": "Du är nästan klar! Du har räknat rätt fram till x/2 = 17/4, men glömde multiplicera båda sidor med 2 för att få x. Försök igen!",
-  
-  "8.5": "8.5 är rätt som decimal, men uppgiften vill ha svaret i bråkform. Skriv det som 17/2.",
-  
-  "34": "Oj, det ser ut som att du kanske multiplicerat fel. Kom ihåg att när du multiplicerar 2 · (17/4), blir det 34/4 – och det förkortas till 17/2, inte 34."
-},
+          "För att lösa ekvationen: börja med att få x-termen ensam på ena sidan genom att subtrahera med <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span>.",
+    "Tänk på att du måste ta bort bråket <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> från andra sidan. För att göra det, skriv om 6 som <span class='fraction'><span class='top'>18</span><span class='bottom'>3</span></span>, så att du kan subtrahera.",
+    "Kom ihåg att när du subtraherar bråk måste de ha samma nämnare. Skriv om båda bråken till att ha nämnaren 3 och subtrahera sedan täljarna."
          
-        explanation: [
-  "Vi löser ekvationen: <b>x/2 - 3 = 5/4</b><br><br>",
+        ],
+        specificTips: {
 
-  "Steg 1: Lägg till 3 på båda sidor för att ta bort -3:<br>",
-  "x/2 - 3 + 3 = 5/4 + 3<br><br>",
-  "x/2 = 5/4 + 3<br><br>",
-  "x/2 = 5/4 + 12/4 = 17/4<br><br>",
+          "5/3": "Du vill ta bort en tredjedel från 6. Men för att det ska gå, behöver du skriva 6 som ett bråk med samma nämnare, alltså: 6 är samma som <span class='fraction'><span class='top'>18</span><span class='bottom'>3</span></span>. Försök igen.",
+        "17": "Om x = 17, då blir 17 + <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span>, vilket inte är lika med <span class='fraction'><span class='top'>18</span><span class='bottom'>3</span></span>. Man kan inte addera 17 direkt med <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span>, utan man behöver ha samma nämnare. Försök igen!",
+       "5": "Det verkar som om du har subtraherat <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> från 6 utan att skriva om 6 som ett bråk med samma nämnare. För att kunna subtrahera bråk, måste du ha samma nämnare. Försök att skriva om 6 som <span class='fraction'><span class='top'>18</span><span class='bottom'>3</span></span> istället för att bara subtrahera <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span>direkt från 6. När du har gjort det, kan du subtrahera täljarna och få rätt resultat. Försök igen!",
+       "52/3": "Om x = <span class='fraction'><span class='top'>52</span><span class='bottom'>3</span></span>, då blir <span class='fraction'><span class='top'>52</span><span class='bottom'>3</span></span> + <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> = <span class='fraction'><span class='top'>53</span><span class='bottom'>3</span></span>, vilket inte är lika med 6. Det verkar som att du har lagt ihop täljarna fel eller gjort en multiplicering när du inte behövde det.<br>"+
+       "Kom ihåg att du ska subtrahera <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> från 6, men först måste du skriva om 6 som ett bråk med samma nämnare, alltså <span class='fraction'><span class='top'>18</span><span class='bottom'>3</span></span>. Försök igen!",
+        "3": "Det verkar som om du har missat att subtrahera korrekt. Kom ihåg att när du ska isolera x, behöver du göra det på båda sidor av ekvationen, inte bara på ena sidan.",
+        },
 
-  "Steg 2: Multiplicera båda sidor med 2 för att få bort nämnaren:<br><br>",
-  "x = 2 · (17/4) = 34/4 = <b>17/2</b><br><br>",
+        explanation:  [
+  "För att lösa ekvationen <b>x + <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> = 6</b>, börja med att få x ensam genom att subtrahera <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> från båda sidor:<br><br>" +
+  
+  "Det blir:<br>" +
+  "&nbsp;&nbsp;&nbsp;&nbsp;x = 6 - <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span><br><br>" +
+  
+  "<b>Steg 1:</b><br>" +
+  "För att kunna subtrahera behöver vi skriva om 6 som ett bråk med nämnare 3:<br><br>" +
+  "&nbsp;&nbsp;&nbsp;&nbsp;6 = <span class='fraction'><span class='top'>18</span><span class='bottom'>3</span></span><br><br>" +
+  
+  "<b>Steg 2:</b><br>" +
+  "Nu kan vi subtrahera:<br><br>" +
+  "&nbsp;&nbsp;&nbsp;&nbsp;<span class='fraction'><span class='top'>18</span><span class='bottom'>3</span></span> - <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> = <span class='fraction'><span class='top'>17</span><span class='bottom'>3</span></span><br><br>" +
+  
+  "<b>Slutsats:</b><br>" +
+  "x = <b><span class='fraction'><span class='top'>17</span><span class='bottom'>3</span></span></b>."
+]
+      },
 
-  "<b>Slutsats:</b> x = <b>17/2</b>"
-],
-}, 
-       
+    
+      {
+          category: "equation",
+          question: "Lös ekvationen: x - 2/3 = 4",
+          answer: "14/3",
+          tips: [
+            {
+              condition: (input) => input.trim() === "5" || input.trim() === "13",
+              text: "Om du multiplicerar med 3 måste du göra det på alla termer även x."
+            },
+            {
+              condition: (input) => input.trim() === "6/3"|| input.trim() === "2",
+              text: "Du har tagit 4 + 2/3! Hur kan du räkna ihop det? OBS! För att kunna addera två bråk måste vi ha samma nämnare."
+            },
+            {
+      condition: (input) => input.trim() === "2" || input.trim() === "6",
+      text: "Kom ihåg att om du ska få x ensamt, måste du göra motsatsen till subtraktion, alltså addera <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> till båda sidor."
+    },
+           
+            {
+      condition: () => true,
+      text: "För att lösa ekvationen: isolera x genom att addera <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> på båda sidor."
+    }
+          ],
+          specificTips: {
+            "6/3": "Du har tagit 4 + <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span>! Hur kan du räkna ihop det? OBS! För att kunna addera två bråk måste vi ha samma nämnare.",
+            "5": "Kom ihåg att du måste multiplicera båda sidor av ekvationen med samma tal för att få x ensamt.",
+            "6": "Det verkar som att du bara adderade 2 till 4, men glömde att hantera bråket korrekt. Tänk på att <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> är ett bråk, inte ett heltal.",
+    "4": "Du glömde att ta bort -<span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span>. Kom ihåg att x ska stå ensam på ena sidan.",
+    "2": "Kanske tänkte du att du skulle subtrahera i stället för att addera? Kom ihåg att göra motsatsen för att få x ensamt."
+          },
+          explanation: "Lösning:<br><br>" +
+    "Vi ska lösa ekvationen: <b>x - <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> = 4</b><br><br>" +
+    "<b>Steg 1:</b><br>" +
+    "Addera <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> på båda sidor för att få x ensam:<br><br>" +
+    "&nbsp;&nbsp;&nbsp;&nbsp;x - <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> + <span style='color: red;'><span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span></span> = 4 + <span style='color: red;'><span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span><br><br></span>" +
+    "Då har vi: x = 4 + <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span><br><br>" +
+    "<b>Steg 2:</b><br>" +
+    "Gör om 4 till ett bråk med nämnare 3: <br><br>" +
+    "&nbsp;&nbsp;&nbsp;&nbsp;4 = <span class='fraction'><span class='top'>12</span><span class='bottom'>3</span></span><br><br>" +
+    "Så:<br><br>" +
+    "x = &nbsp;&nbsp;&nbsp;&nbsp;<span class='fraction'><span class='top'>12</span><span class='bottom'>3</span></span> + <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> = <span class='fraction'><span class='top'>14</span><span class='bottom'>3</span></span><br><br>" +
+    "<b>Slutsats:</b> x = <b><span class='fraction'><span class='top'>14</span><span class='bottom'>3</span></span></b>"
+        },
+
         {
         category: "equation",
         question: "Lös ekvationen: x/3 = 27",
@@ -910,8 +1176,63 @@ x = 2/3`,
           "24": "Du verkar ha blandat ihop division och multiplikation. Försök igen!",
           "30": "Du verkar ha adderat 3 istället för att multiplicera. Försök igen!",
         },
-        explanation: "x = 27 * 3 = 81."
+        explanation: "Lösning:<br><br>" +
+    "Vi ska lösa ekvationen: <b><span class='fraction'><span class='top'>x</span><span class='bottom'>3</span></span> = 27</b><br><br>" +
+    "<b>Steg 1:</b><br>" +
+    "x är delat med 3. För att få x ensamt, multiplicera båda sidor med 3:<br><br>" +
+    "&nbsp;&nbsp;&nbsp;&nbsp;<b><span class='fraction'><span class='top'>x</span><span class='bottom'>3</span></span> × <span style='color: red;'>3</span>= 27 × <span style='color: red;'>3</span><br><br>" +
+    "<b>Steg 2:</b><br>" +
+    "Division och multiplikation tar ut varandra på vänster sida, så vi får:<br><br>" +
+    "&nbsp;&nbsp;&nbsp;&nbsp;x = 27 × 3<br><br>" +
+    "<b>Steg 3:</b><br>" +
+    "Räkna ut 27 × 3= 81<br><br>" +
+    "<b>Svar:</b> x = <b>81</b>"
       },
+
+
+
+      
+      
+      {
+        category: "equation",
+        question: "Lös ekvationen: x/2 - 3 = 5/4 och svara i bråkform",
+        answer: "17/2",
+        tips: [ "För att lösa ekvationen, börja med att isolera x-termen på ena sidan genom att ta bort -3.",
+    "Lägg till 3 på båda sidor av ekvationen för att bli av med -3.",
+    "När du har x/2 = något, multiplicera båda sidor med 2 för att få x.",
+    "Kom ihåg att när du lägger till bråk måste du ha samma nämnare. Skriv om 3 som 12/4 för att addera till 5/4."
+          
+        ],
+        specificTips: {
+        
+          "5/4": "Det verkar som om du har kopierat det som redan stod i ekvationen. Försök att lösa ekvationen steg för steg.<br>"+
+          "Börja med att ta bort -3 genom att lägga till 3 på båda sidor.",
+    "11/4": "Kom ihåg att 3 kan skrivas som <span class='fraction'><span class='top'>12</span><span class='bottom'>4</span></span>.<br>"+
+    "Så när du adderar 3 till <span class='fraction'><span class='top'>5</span><span class='bottom'>4</span></span> blir det <span class='fraction'><span class='top'>17</span><span class='bottom'>4</span></span>. Försök igen!",
+    "17/4": "Bra jobbat! Du har löst ekvationen fram till <span class='fraction'><span class='top'>x</span><span class='bottom'>2</span></span> = <span class='fraction'><span class='top'>17</span><span class='bottom'>4</span></span>.<br>"+
+    "Nu måste du multiplicera båda sidor med 2 för att isolera x. Försök igen!",
+    "8.5": "Du har rätt svar i decimalform, men uppgiften kräver att svaret skrivs i bråkform. Skriv om 8.5 som <span class='fraction'><span class='top'>17</span><span class='bottom'>2</span></span>.",
+    "34": "Det verkar som om du kanske har multiplicerat fel. Kom ihåg att när du multiplicerar 2 med <span class='fraction'><span class='top'>17</span><span class='bottom'>4</span></span>, blir det <span class='fraction'><span class='top'>34</span><span class='bottom'>4</span></span>, och det förkortas till <span class='fraction'><span class='top'>17</span><span class='bottom'>2</span></span>. Försök igen!"
+},
+         
+        explanation: [
+        "Vi löser ekvationen: <b><span class='fraction'><span class='top'>x</span><span class='bottom'>2</span></span> - 3 = 5/4</b><br><br>"+
+    
+    "Steg 1: Lägg till 3 på båda sidor för att ta bort -3:<br>"+
+    "<span class='fraction'><span class='top'>x</span><span class='bottom'>2</span></span> - 3 <span style='color: red;'>+ 3</span> = 5/4 + <span style='color: red;'>3</span><br><br>"+
+    "<span class='fraction'><span class='top'>x</span><span class='bottom'>2</span></span> = 5/4 + 3<br><br>"+
+    "För att addera, skriv om 3 som <span class='fraction'><span class='top'>12</span><span class='bottom'>4</span></span>:<br>"+
+    "<span class='fraction'><span class='top'>x</span><span class='bottom'>2</span></span> = 5/4 + <span class='fraction'><span class='top'>12</span><span class='bottom'>4</span></span><br>"+
+    "<span class='fraction'><span class='top'>x</span><span class='bottom'>2</span></span>=<span class='fraction'><span class='top'>17</span><span class='bottom'>4</span></span><br><br>"+
+
+    "Steg 2: Multiplicera båda sidor med 2 för att ta bort nämnaren:<br><br>"+
+    "x = 2 · <span class='fraction'><span class='top'>17</span><span class='bottom'>4</span></span> = <span class='fraction'><span class='top'>34</span><span class='bottom'>4</span></span> = <b><span class='fraction'><span class='top'>17</span><span class='bottom'>2</span></span></b><br><br>"+
+
+    "<b>Slutsats:</b> x = <b><span class='fraction'><span class='top'>17</span><span class='bottom'>2</span></span></b>"
+  ]
+      
+}, 
+   
 
       {
         category: "equation",
@@ -927,13 +1248,23 @@ x = 2/3`,
     text: "Dubbelkolla stegen! Multiplicera först båda sidor med 2, sedan dela med 13."
   },
   {
-    condition: () => true,
-    text: "För att lösa ut x i 13x/2 = 52: börja med att multiplicera båda sidor med 2, sedan dividera med 13."
-  }
+      condition: (input) => input.trim() === "4" || input.trim() === "2",
+      text: "Tänk på att du först måste bli av med divisionen med 2 genom att multiplicera båda sidor med 2 innan du delar på 13."
+    },
+  {
+      condition: (input) => input.trim() === "52",
+      text: "Kom ihåg att x är multiplicerat med 13 och sedan delat på 2. Du behöver isolera x steg för steg!"
+    },
+  {
+      condition: () => true,
+      text: "För att lösa ekvationen: först multiplicera båda sidor med 2 för att bli av med nämnaren och sedan dela med 13 för att få fram x."
+    }
+  
 ],
 
 specificTips: {
-  "39": "Det ser ut som att du subtraherat 13 från 52, men det är inte det vi ska göra här. För att lösa ekvationen behöver du först multiplicera båda sidor med 2 för att få bort nämnaren.",
+  "39": "Det ser ut som att du subtraherat 13 från 52, men det är inte det vi ska göra här.<br>"+
+  "För att lösa ekvationen behöver du först multiplicera båda sidor med 2 för att få bort nämnaren.",
   
   "65": "Du verkar ha lagt till 13 till 52, men vi ska inte addera här. Tänk på att du har en division i vänsterledet (13x/2), så börja med att multiplicera båda sidor med 2.",
   
@@ -945,44 +1276,19 @@ specificTips: {
 },
 
 explanation: [
-  "Vi har ekvationen: <b>(13x) / 2 = 52</b><br><br>"+
-  "Steh 1: För att få bort nämnaren, multiplicera båda sidor med 2:<br>"+
-  "(13x) = 52 × 2 = 104<br><br>"+
-  "Steg 2: Dela båda sidor med 13 för att lösa ut x:<br>"+
-  "x = 104 ÷ 13 = <b>8</b><br><br>"+
-  "<b>Slutsats:</b> x = <b>8</b>"
+  "Lösning:<br><br>" +
+    "Vi ska lösa ekvationen: <b>13x/2 = 52</b><br><br>" +
+    "<b>Steg 1:</b><br>" +
+    "Bli av med nämnaren 2 genom att multiplicera båda sidor med 2:<br><br>" +
+    "&nbsp;&nbsp;&nbsp;&nbsp;(13x/2) × 2 = 52 × 2<br><br>" +
+    "&nbsp;&nbsp;&nbsp;&nbsp;13x = 104<br><br>" +
+    "<b>Steg 2:</b><br>" +
+    "Nu dela båda sidor med 13 för att isolera x:<br><br>" +
+    "&nbsp;&nbsp;&nbsp;&nbsp;13x ÷ 13 = 104 ÷ 13<br><br>" +
+    "&nbsp;&nbsp;&nbsp;&nbsp;x = 8<br><br>" +
+    "<b>Slutsats:</b> x = <b>8</b>"
 ]
       },
-
-
-      {
-          category: "equation",
-          question: "Lös ekvationen: x-2/3 = 4",
-          answer: "14/3",
-          tips: [
-            {
-              condition: (input) => input.trim() === "5" || input.trim() === "13",
-              text: "Om du multiplicerar med 3 måste du göra det på alla termer även x."
-            },
-            {
-              condition: (input) => input.trim() === "6/3"|| input.trim() === "2",
-              text: "Du har tagit 4 + 2/3! Hur kan du räkna ihop det? OBS! För att kunna addera två bråk måste vi ha samma nämnare."
-            },
-            {
-              condition: (input) => input.trim() === "6/3"|| input.trim() === "11/3",
-              text: "Du har tänkt rätt, men "
-            },
-            {
-              condition: () => true,
-              text: "Vad kan du göra för att få x ensam?"
-            }
-          ],
-          specificTips: {
-            "5": "Kom ihåg att du måste multiplicera båda sidor av ekvationen med samma tal för att få x ensamt."
-          },
-          explanation: "x = 3 * 2 = 6."
-        },
-
 
 
 
@@ -992,13 +1298,24 @@ explanation: [
         question: "Vilket bråktal är störst? 3/5 eller 2/3?",
         answer: "2/3",
         tips: [
-          "För att avgöra vilken bit som är störst, kan vi jämföra bråken genom att göra om dem till gemensamma nämnare eller jämföra deras decimalvärden.",
+          "För att avgöra vilket bråk som är störst, kan du antingen skriva om båda bråken med en gemensam nämnare eller omvandla dem till decimalform och jämföra.",
+    "Kom ihåg: när nämnarna är lika kan du enkelt jämföra täljarna."
         ],
 
         specificTips: {
-            "3/5": "Det ser ut som att du har tittat på täljarna (3 och 2). Men för att jämföra bråk måste du ta hänsyn till både täljare och nämnare. Försök igen!"
+            "3/5": "Det verkar som att du bara tittat på täljarna (3 och 2), men när du jämför bråk måste du också tänka på nämnarna.<br>"+
+            "Ett större tal i täljaren betyder inte alltid ett större bråk om nämnarna är olika. Prova att hitta en gemensam nämnare och jämför igen!",
+    "0.6": "Bra att du tänkte i decimalform! 3/5 = 0,6 och 2/3 ≈ 0,666... Så 2/3 är faktiskt större. Var noga med decimalernas värde!",
           },
-        explanation: "Minsta gemensamma nämnare för 3/5 och 2/3 är 15. \n3/5 = 9/15 och 2/3 = 10/15. \nDärför är 2/3 störst."
+        explanation:  "För att jämföra bråken <span class='fraction'><span class='top'>3</span><span class='bottom'>5</span></span> och <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span>, behöver vi först hitta en gemensam nämnare.<br><br>"+
+  "Minsta gemensamma nämnare för 5 och 3 är 15.<br><br>"+
+  "Vi förlänger båda bråken så att nämnaren blir 15:<br><br>"+
+  "För <span class='fraction'><span class='top'>3</span><span class='bottom'>5</span></span> multiplicerar vi både täljare och nämnare med <span style='color: red;'>3</span>:<br>"+
+  "<span class='fraction'><span class='top'>3 × 3</span><span class='bottom'>5 × 3</span></span> = <span class='fraction'><span class='top'>9</span><span class='bottom'>15</span></span><br><br>"+
+  "För <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> multiplicerar vi både täljare och nämnare med <span style='color: red;'>5</span>:<br>"+
+  "<span class='fraction'><span class='top'>2 × 5</span><span class='bottom'>3 × 5</span></span> = <span class='fraction'><span class='top'>10</span><span class='bottom'>15</span></span><br><br>"+
+  "Nu jämför vi <span class='fraction'><span class='top'>9</span><span class='bottom'>15</span></span> och <span class='fraction'><span class='top'>10</span><span class='bottom'>15</span></span><br>"+
+  "Eftersom 10/15 är större än 9/15, är <b>2/3 större än 3/5</b>."
       },
 
 
@@ -1007,11 +1324,11 @@ explanation: [
         question: "Vilket bråktal är störst? 4 5/6 eller 4/3?",
         answer: "4 5/6",
         tips: [
-          "När ett av talen är i blandad form, som 4 5/6, är det bra att först göra om det till ett bråk eller decimaltal. Då blir det lättare att jämföra.",
+          "När ett av talen är i blandad form, som 4 <span class='fraction'><span class='top'>5</span><span class='bottom'>6</span></span>, är det bra att först göra om det till ett bråk eller decimaltal. Då blir det lättare att jämföra.",
   
         ],
         specificTips: {
-            "4/3": "Titta noga på vad 4 5/6 betyder, det är ett blandat tal: 4 hela + 5/6. 4/3 är mindre än 2, medan 4 5/6 är nästan 5. Fundera på vilken som är störst då!"
+            "4/3": "Titta noga på vad 4<span class='fraction'><span class='top'>5</span><span class='bottom'>6</span></span> betyder. Det är ett blandat tal: 4 hela plus <span class='fraction'><span class='top'>5</span><span class='bottom'>6</span></span>, vilket nästan blir 5. Däremot är <span class='fraction'><span class='top'>4</span><span class='bottom'>3</span></span> mindre än 2. Fundera på vilken som är störst då!",
           },
         explanation:  [
   "Lösning: <br>"+
@@ -1019,9 +1336,11 @@ explanation: [
   "Vi jämför två tal: det blandade talet <b>4 5/6</b> och bråket <b>4/3</b>.<br>"+
   "<br>"+
   "Steg 1. Börja med att göra om <b>4 5/6</b> till ett bråk:<br>"+
-  "&nbsp;&nbsp;&nbsp;&nbsp;4 5/6 = (4 × 6 + 5)/6 = 29/6<br>"+
-  "<br>"+
+  "Ett blandat tal består av ett heltal och ett bråk. För att omvandla det till ett bråk multiplicerar vi heltalet (4) med nämnaren (6) och adderar täljaren (5):<br>"+
+  "4 × 6 + 5 = 29<br>"+
+  "Täljaren blir alltså 29 och nämnaren behåller vi som 6: &nbsp;&nbsp;&nbsp;&nbsp;4 5/6 = 29/6 <br>"+
   "Steg 2. Nu jämför vi <b>29/6</b> och <b>4/3</b>. Vi gör om dem till samma nämnare för att kunna jämföra:<br>"+
+  "För bråket <b><span class='fraction'><span class='top'>4</span><span class='bottom'>3</span></span></b> multiplicerar vi både täljare och nämnare med 2:<br>"+
   "&nbsp;&nbsp;&nbsp;&nbsp;4/3 = (4 × 2)/(3 × 2) = 8/6<br>"+
   "<br>"+
   "Steg 3. Nu ser vi att:<br>"+
@@ -1037,14 +1356,14 @@ explanation: [
         answer: "7/12",
         tips: [
           "För att avgöra vilken bit som är störst, kan vi jämföra bråken genom att göra om dem till gemensamma nämnare eller jämföra deras decimalvärden.",
-          "Tänk på bråken som delar av en tårta: 5/10 = hälften, 3/8 = mindre än hälften, 7/12 = mer än hälften"
+          "Tänk på bråken som delar av en tårta: <span class='fraction'><span class='top'>5</span><span class='bottom'>10</span></span>= hälften,  <span class='fraction'><span class='top'>3</span><span class='bottom'>8</span></span>= mindre än hälften,  <span class='fraction'><span class='top'>7</span><span class='bottom'>12</span></span>= mer än hälften"
         ],
         specificTips: {
-  "5/10": "Du valde 5/10, vilket är hälften. Det är ett bra försök, men titta noga på de andra alternativen! Finns det kanske ett bråk som är mer än hälften? Testa att jämföra dem med decimaler eller hitta en gemensam nämnare. Försök igen!",
+  "5/10": "Du valde <span class='fraction'><span class='top'>5</span><span class='bottom'>10</span></span>, vilket är hälften. Det är ett bra försök, men titta noga på de andra alternativen! Finns det kanske ett bråk som är mer än hälften? Testa att jämföra dem med decimaler eller hitta en gemensam nämnare. Försök igen!",
   
-  "3/8": "Det ser ut som att du valde 3/8. Kom ihåg att 3/8 är mindre än hälften. Finns det kanske ett alternativ som ger dig en större del av tårtan? Prova att räkna ut ungefär hur mycket varje bråk är i decimalform!",
+  "3/8": "Det ser ut som att du valde <span class='fraction'><span class='top'>3</span><span class='bottom'>8</span></span>. Kom ihåg att <span class='fraction'><span class='top'>3</span><span class='bottom'>8</span></span> är mindre än hälften. Finns det kanske ett alternativ som ger dig en större del av tårtan? Prova att räkna ut ungefär hur mycket varje bråk är i decimalform!",
 
-  "5/12": "Hmm, 5/12 var inte ett av de alternativ som fanns i frågan. Läs gärna uppgiften en gång till – och kika efter 5/10, 3/8 och 7/12!"
+  "5/12": "Hmm, 5/12 var inte ett av de alternativ som fanns i frågan. Läs gärna uppgiften en gång till och kika efter 5/10, 3/8 och 7/12!"
 },
 explanation: [
   "Vi ska ta reda på vilken tårtbit som är störst. Alla bråk visar hur stor del av en hel tårta du får. <br><br>"+
@@ -1078,9 +1397,9 @@ explanation: [
           "Tänk på bråken som delar av en pizza: 4/8 = hälften, 1/15 = väldigt liten bit, 2/3 = mer än hälften, 1/4 = ganska liten"
         ],
         specificTips: {
-  "4/8": "Det verkar som att du valde 4/8 eftersom det är en halv och det känns som ganska mycket. Men tänk på att 2/3 är mer än en halv. Prova att jämföra dem som decimaler eller med gemensam nämnare. Försök igen!",
-  "1/4": "Bra försök! 1/4 är en fjärdedel av pizzan, men det är mycket mindre än både 4/8 (en halv) och 2/3. Testa att jämföra som decimaler eller gör om dem till gemensamma nämnare!",
-  "1/15": "Oj, 1/15 är en väldigt liten bit, bara en liten skärva av pizzan. Fundera på vilket bråk som faktiskt ger mest av en hel pizza."
+  "4/8": "Det verkar som att du valde <span class='fraction'><span class='top'>4</span><span class='bottom'>8</span></span> eftersom det är en halv och det känns som ganska mycket. Men tänk på att <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span> är mer än en halv. Prova att jämföra dem som decimaler eller med gemensam nämnare. Försök igen!",
+  "1/4": "Bra försök! <span class='fraction'><span class='top'>1</span><span class='bottom'>4</span></span> är en fjärdedel av pizzan, men det är mycket mindre än både <span class='fraction'><span class='top'>4</span><span class='bottom'>8</span></span> (en halv) och <span class='fraction'><span class='top'>2</span><span class='bottom'>3</span></span>. Testa att jämföra som decimaler eller gör om dem till gemensamma nämnare!",
+  "1/15": "Oj, <span class='fraction'><span class='top'>1</span><span class='bottom'>15</span></span> är en väldigt liten bit, bara en liten skärva av pizzan. Fundera på vilket bråk som faktiskt ger mest av en hel pizza. Prova att jämföra dem som decimaler eller med gemensam nämnare."
 },
         explanation:  [
   "Vi ska ta reda på vilken pizzabit som är störst. Vi har fyra bråk att jämföra: <b>4/8, 1/15, 2/3 och 1/4</b>.<br><br>",
@@ -1152,20 +1471,29 @@ explanation: [
 
       {
         category: "word problem",
-        question: "Beräkna två sjundedelar av fem sjättedelar. Svara i bråkform.",
+        question: "Beräkna två sjundedelar av fem sjättedelar. Svara i enklaste form.",
         answer: "5/21",
         specificTips: {
           "12/35": "Det verkar som att du har delat 2/7 med 5/6 i stället för att multiplicera dem. Kom ihåg: när det står 'av' i ett matematiskt sammanhang betyder det att du ska multiplicera, inte dividera. Försök igen!",
   
-  "42/10": "Tänk på att när du multiplicerar två bråktal så multiplicerar du täljare med täljare och nämnare med nämnare. Här verkar det som om du kanske multiplicerat fel håll.",
+  "42/10": "Kom ihåg att när du multiplicerar två bråktal ska du multiplicera täljare med täljare och nämnare med nämnare.<br>" +
+         "Här verkar det som att du kanske råkat vända på båda bråken och sedan multiplicerat.<br>" +
+         "Dubbelkolla: du ska inte invertera bråken när du multiplicerar, bara vid division.",
 
-  "47/42": "Det ser ut som att du har adderat 2/7 och 5/6 i stället för att multiplicera dem. Kom ihåg att 'av' betyder multiplikation, inte addition.",
+  "47/42": "Det ser ut som att du har adderat 2/7 och 5/6 i stället för att multiplicera dem.<br>" +
+             "Kom ihåg att 'av' betyder multiplikation, inte addition.",
 
-  "10/42": "Du har gjort själva multiplikationen rätt, toppen! Men glöm inte att alltid förkorta bråket om det går. 10/42 kan förkortas till 5/21.",
 
-  "5/13": "Dubbelkolla vad du multiplicerat. 7 × 6 ska bli 42 i nämnaren, inte 13. Gå tillbaka och räkna nämnarna igen.",
+  "10/42": "Du har gjort själva multiplikationen rätt, bra jobbat!<br>" +
+         "Men tänk på att alltid förkorta bråket om det går.<br>" +
+         "Kan du hitta en gemensam faktor för 10 och 42?",
 
-  "2/35": "Det verkar som att något gått snett i multiplikationen. Kontrollera att du multiplicerar täljare med täljare (2 × 5) och nämnare med nämnare (7 × 6)."
+  "5/13": "Dubbelkolla vad du multiplicerat.<br>" +
+            "7 × 6 ska bli 42 i nämnaren, inte 13.<br>" +
+            "Gå tillbaka och räkna nämnarna igen.",
+
+  "2/35": "Det verkar som att något gått snett i multiplikationen.<br>" +
+            "Kontrollera att du multiplicerar täljare med täljare (2 × 5) och nämnare med nämnare (7 × 6)."
         },
         tips: [
           "När du ser ordet 'av' i en bråkuppgift, betyder det att du ska multiplicera.",
@@ -1173,10 +1501,10 @@ explanation: [
   "Glöm inte att förkorta bråket om det går efter att du multiplicerat!"
         ],
         explanation: [
-  "Vi ska räkna ut <b>två sjundedelar av fem sjättedelar</b>. Det betyder att vi multiplicerar bråken:<br><br>",
-  "<b>2/7 × 5/6 = (2 × 5) / (7 × 6) = 10/42</b><br>",
-  "Nu förkortar vi bråket:<br>",
-  "<b>10/42 = 5/21</b> (båda kan delas med 2)<br><br>",
+  "Vi ska räkna ut <b>två sjundedelar av fem sjättedelar</b>. Det betyder att vi multiplicerar bråken:<br><br>"+
+  "<b>2/7 × 5/6 = (2 × 5)/(7 × 6) = 10/42</b><br>"+
+  "Nu förkortar vi bråket:<br>"+
+  "<b>10/42 = 5/21</b> (båda kan delas med 2)<br><br>"+
   "<b>Slutsats:</b> Svaret är <b>5/21</b>."
 ],
       },
@@ -1190,13 +1518,24 @@ explanation: [
           "Tänk att alla elever på skolan är en hel kaka. Hälften av kakan ska delas mellan 5 bussar. Hur mycket kaka får varje buss?"
         ],
         specificTips: {
-          "1/2": "Du verkar ha glömt att dela hälften av eleverna på 5 bussar. Försök igen!",
-          "5/10": "Försök att tänka på att hälften av eleverna ska delas på 5 bussar. Hur mycket får varje buss?",
-          "2/5":"Det verkar som att du har råkat vända på båda talen när du skulle dividera. När man delar 1/2 ​ med 5, så räcker det att man vänder på det andra talet , alltså 5. Försök igen!",
-          "5/2": "Det ser ut som att du har multiplicerat 1/2 * 5 stället för att dela. Men i uppgiften skulle du ta hälften av eleverna och fördela dem på 5 bussar. Försök igen!"
+          "1/2": "Du verkar ha tagit <span class='fraction'><span class='top'>1</span><span class='bottom'>2</span></span> av eleverna, men glömt att dela dem på 5 bussar.<br>"+
+          "Kom ihåg att du ska dela <span class='fraction'><span class='top'>1</span><span class='bottom'>2</span></span> med 5. Försök igen!",
+    
+    "5/10": "Nästan rätt tanke! Men du ska dela <span class='fraction'><span class='top'>1</span><span class='bottom'>2</span></span> på 5 bussar, inte bara skriva <span class='fraction'><span class='top'>5</span><span class='bottom'>10</span></span><br>"+
+    "Tänk på division: <span class='fraction'><span class='top'>1</span><span class='bottom'>2</span></span> ÷ 5.",
+    
+    "2/5": "Det verkar som att du har vänt på talen fel. När du delar ett bråk med ett heltal (som 5), multiplicerar du istället med <span class='fraction'><span class='top'>1</span><span class='bottom'>5</span></span>: <span class='fraction'><span class='top'>1</span><span class='bottom'>2</span></span> × <span class='fraction'><span class='top'>1</span><span class='bottom'>5</span></span> = <span class='fraction'><span class='top'>1</span><span class='bottom'>10</span></span>. Prova igen!",
+    
+    "5/2": "Det ser ut som att du råkat multiplicera <span class='fraction'><span class='top'>1</span><span class='bottom'>2</span></span> × 5 istället för att dela <span class='fraction'><span class='top'>1</span><span class='bottom'>2</span></span> med 5. Kom ihåg: vi vill fördela hälften av eleverna på 5 bussar, inte fler! Försök igen."
 
         },
-        explanation: "Hälften av eleverna ska gå → 1/2. De ska delas på 5 bussar → (1/2)/5 = 1/10."
+        explanation: "Hälften av eleverna motsvarar <span class='fraction'><span class='top'>1</span><span class='bottom'>2</span></span>.<br><br>" +
+    "Denna hälft ska delas på 5 bussar, vilket är samma sak som att dividera:<br>" +
+    "<span class='fraction'><span class='top'>1</span><span class='bottom'>2</span></span> ÷ 5<br><br>" +
+    "Att dela med 5 är samma sak som att multiplicera med <span class='fraction'><span class='top'>1</span><span class='bottom'>5</span></span>:<br>" +
+    "<span class='fraction'><span class='top'>1</span><span class='bottom'>2</span></span> × <span class='fraction'><span class='top'>1</span><span class='bottom'>5</span></span> = <span class='fraction'><span class='top'>1</span><span class='bottom'>10</span></span><br><br>" +
+    "Alltså kommer <b>varje buss ha <span class='fraction'><span class='top'>1</span><span class='bottom'>10</span></span> av skolans elever</b>."
+
       },
       {
         category: "word problem",
@@ -1217,11 +1556,11 @@ explanation: [
   "6/8": "Bra försök – men 6/8 förenklas till 3/4. Det är mängden som finns kvar, inte vad hon ger bort. Kom ihåg: vi söker hälften av 3/4. Försök igen!"
   },
   explanation: [
-    "Lisa har en hel paj från början."+
-    "Hon äter upp 1/4 av pajen, så 3/4 finns kvar."+
-    "Hon vill spara hälften av det som finns kvar och ge bort den andra hälften."+
-    "Vi ska alltså räkna ut hälften av 3/4."+
-    "3/4 × 1/2 = 3/8."+
+    "Lisa har en hel paj från början.<br><br>"+
+    "Hon äter upp 1/4 av pajen, så 3/4 finns kvar.<br><br>"+
+    "Hon vill spara hälften av det som finns kvar och ge bort den andra hälften.<br><br>"+
+    "Vi ska alltså räkna ut hälften av 3/4.<br><br>"+
+    "3/4 × 1/2 = 3/8<br><br>"+
     "Alltså ger Lisa bort 3/8 av hela pajen."
   ]
       },
@@ -1232,7 +1571,24 @@ explanation: [
         tips: [
           "Tänk att skolan är som en stor kaka. En tredjedel av kakan ska delas mellan 3 barn. Hur mycket kaka får varje barn?"
         ],
-        explanation: "1/3 av eleverna deltar → delas i 3 grupper: 1/3 ÷ 3 = 1/9."
+        explanation: [
+  "Vi vet att <b>en tredjedel</b> av skolans elever ska vara med i teatern.<br><br>" +
+
+  "Det betyder att vi börjar med <span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> av alla elever.<br><br>" +
+
+  "<b>Steg 1:</b><br>" +
+  "Denna tredjedel ska delas i 3 lika stora grupper. Att dela betyder att vi dividerar:<br><br>" +
+  "&nbsp;&nbsp;&nbsp;&nbsp;<span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> ÷ 3<br><br>" +
+
+  "<b>Steg 2:</b><br>" +
+  "När vi dividerar ett bråk med ett heltal, multiplicerar vi nämnaren:<br><br>" +
+  "&nbsp;&nbsp;&nbsp;&nbsp;<span class='fraction'><span class='top'>1</span><span class='bottom'>3</span></span> ÷ 3 = <span class='fraction'><span class='top'>1</span><span class='bottom'>9</span></span><br><br>" +
+
+  "<b>Slutsats:</b><br>" +
+  "I varje grupp är det <b><span class='fraction'><span class='top'>1</span><span class='bottom'>9</span></span></b> av skolans elever."
+]
+
+
       },
       {
         category: "word problem",
@@ -1241,7 +1597,23 @@ explanation: [
         tips: [
           "Föreställ dig att skolan är en stor tårta. En fjärdedel av tårtan delas upp i två delar, hur stor är varje bit?"
         ],
-        explanation: "1/4 av eleverna deltar → delas i 2 lag: 1/4 ÷ 2 = 1/8."
+        explanation: [
+  "Vi vet att <b>en fjärdedel</b> av skolans elever ska vara med i stafetten.<br><br>" +
+
+  "Det betyder att vi börjar med <span class='fraction'><span class='top'>1</span><span class='bottom'>4</span></span> av alla elever.<br><br>" +
+
+  "<b>Steg 1:</b><br>" +
+  "Denna fjärdedel ska delas in i 2 lika stora lag. Att dela betyder att vi dividerar:<br><br>" +
+  "&nbsp;&nbsp;&nbsp;&nbsp;<span class='fraction'><span class='top'>1</span><span class='bottom'>4</span></span> ÷ 2<br><br>" +
+
+  "<b>Steg 2:</b><br>" +
+  "När vi dividerar ett bråk med ett heltal, multiplicerar vi nämnaren med det talet:<br><br>" +
+  "&nbsp;&nbsp;&nbsp;&nbsp;<span class='fraction'><span class='top'>1</span><span class='bottom'>4</span></span> ÷ 2 = " +
+  "<span class='fraction'><span class='top'>1</span><span class='bottom'>8</span></span><br><br>" +
+
+  "<b>Slutsats:</b><br>" +
+  "I varje lag är det <b><span class='fraction'><span class='top'>1</span><span class='bottom'>8</span></span></b> av skolans elever."
+]
       }
     ];
 
