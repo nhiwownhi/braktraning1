@@ -2358,23 +2358,26 @@ function showTopic(topic) {
     intro: `
       <h3>📌 Introduktion till bråk</h3>
        <h4><strong>Vad är ett bråktal?</strong></h4>
-      <p>Ett bråk består av en täljare (överst) och en nämnare (nederst). Bråktalet visar hur många delar du har av en hel.</p>
+      <p>Ett bråk består av en täljare (överst) och en nämnare (nederst).</p>
+      <p>Täljaren anger hur många delar vi har, medan nämnaren anger hur många lika stora delar helheten är uppdelad i.</p>
       <img src="brak1.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
-       <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
-      <p>Exempel: Tänk dig att vi har en tårta och delar upp den i fyra stycken lika stora bitar. Varje del av tårtan utgör då en fjärdedel av hela tårtan. Vi kan skriva en fjärdedel så här: <strong>1/4</strong>.</p>
+      <p>Exempel: Visualisering av <strong>1/6</strong>.</p>
+       <img src="brak17.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+       <p>Exempel: Visualisering av <strong>6/6</strong>.</p>
+       <img src="brak16.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
       <h4><strong>Bråktal i enklaste form</strong></h4>
-      <p>När vi anger bråk som svar i en uppgift, vill vi ofta ange svaret i enklaste form. Det man då menar är att man vill att bråket ska bestå av så små heltal som möjligt. Detta får vi genom att förkorta täljaren och nämnaren med största möjliga tal med egenskapen att det ger resultatet att täljaren och nämnaren är heltal.
-            <img src="brak.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
-                   <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
+      <p>Det står ofta i uppgiften att man ska ange svaret i enklaste form. Det betyder att om svaret innehåller ett bråk, ska vi försöka göra det så enkelt som möjligt.</p>
+      <p>Exempel: Om vi har bråktalet <strong>8/12</strong>, så kan vi förkorta det till <strong>2/3</strong>.</p>
+      <p>Både 8 och 12 kan delas med 4, så vi förkortar bråket: 8/12 = (8 ÷ 4)/(12 ÷ 4) = 2/3</p>
+            <img src="brak18.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+                   
                     <h4><strong>Blandad form</strong></h4>
-      <p>Om vi skriver ett bråktal på blandad form så skriver man hur många hela bråket motsvarar följt av resten av andelarna.</p>
-            <img src="brak12.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
-                   <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
-  <p>Detta läser du som ”två hela och tre femtedelar”. Tvåan kallas för heltalsdel och tre femtedelar kallas för bråkdel.</p>
-  <p> Innebörden av de två hela är att de representerar 5/10 och vi har alltså att:</p>
-   <img src="brak13.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
-                   <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
-  
+      <p>När man skriver ett bråktal i blandad form, berättar man först hur många hela bitar det finns. Sedan skriver man det som är kvar som ett bråk.</p>
+            <img src="brak19.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+                   <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Exempel: 9/4 skrivs i blandad form som: 2 1/4 </p>
+  <p>Tvåan kallas för heltalsdel och en fjärdedel kallas för bråkdel.</p>
+   <img src="brak20.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+
 
 
 
@@ -2387,7 +2390,9 @@ function showTopic(topic) {
        <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
        <h5><strong>Addition med olika nämnare</strong></h5>
 
-      <p>För att kunna addera bråktal med varandra som har olika nämnare så förlängs eller förkortas bråktalen först. Detta för att få samma nämnare. Sedan adderas täljarna med varandra. </p>
+      <p>När vi ska addera bråktal som har olika nämnare, behöver vi först se till att bråken har samma nämnare. För att göra det, förlänger eller förkortar vi bråken så att nämnarna blir lika.</p>
+      <p>När bråken har gemensam nämnare, kan vi enkelt lägga ihop täljarna. Nämnaren behåller vi som den är.</p>
+      <p>Exempel:</p>
        <img src="brak3.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
        <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Källa: <em>eddler.se</em></p>
 
@@ -2396,12 +2401,14 @@ function showTopic(topic) {
     sub: `
       <h3>➖ Subtraktion av bråk</h3>
       <h4><strong>Subtraktion med samma nämnare</strong></h4>
-      <p>På samma sätt som vi gjorde när vi adderade bråktal som har gemensamma nämnare kan vi göra om vi vill subtrahera.</p>
+      <p>Precis som när vi adderar bråktal med samma nämnare, gör vi på liknande sätt när vi subtraherar.</p>
+      <p>Subtrahera täljarna och behåll nämnaren.</p>
        <img src="brak4.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
-       <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
        <h5><strong>Subtraktion med olika nämnare</strong></h5>
        
-      <p>För att kunna subtrahera bråktal med varandra som har olika nämnare så förlängs eller förkortas bråktalen först. Detta för att få samma nämnare. Sedan subtraheras täljarna med varandra. </p>
+      <p>När vi ska subtrahera bråktal som har olika nämnare, måste vi först göra så att bråken får samma nämnare. </p>
+      <p>Det gör vi genom att förlänga eller förkorta bråken så att nämnarna blir lika.</p>
+      <p>När bråken har gemensam nämnare, kan vi enkelt subtrahera täljarna. Nämnaren behåller vi som den är.</p>
        <p>Exempel:<p> <img src="brak5.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
 
     `,
@@ -2411,7 +2418,7 @@ function showTopic(topic) {
             <p>Multiplicera täljare med täljare, nämnare med nämnare:</p>
        <img src="brak8.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
        <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
-       <p>Exempel: Vi börjar med att skriva om bråken på gemensamt bråkstreck, som ett mellansteg innan vi utför multiplikationen.<p> <img src="brak9.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+       <p>Exempel: <p> <img src="brak9.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
         
     `,
 
@@ -2419,14 +2426,15 @@ function showTopic(topic) {
     div: `
       <h3>➗ Division av bråk</h3>
       <h4><strong>Regel för att dividera bråk</strong></h4>
-      <p>Här multipliceras det första bråkets täljare med det andra bråkets nämnare och resultatet (produkten) placeras i täljaren. Sedan multipliceras även det första bråkets nämnare med det andra bråkets täljare och produkten placeras i nämnaren.</p>
+      <p>För att dividera två bråk vänder man på det andra bråket (tar det omvänt) och multiplicerar sedan bråken med varandra.</p>
+      <p>Det innebär att man multiplicerar täljaren i det första bråket med nämnaren i det andra, och nämnaren i det första bråket med täljaren i det andra.</p>
        <img src="brak6.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
        <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
        <h5><strong>Dividera bråk med heltal</strong></h5>
        
-      <p>När du delar ett heltal med ett bråk eller att bråk med ett heltal så skriver du först om heltalet till bråkform. Exempelvis: </p>
-       <p>Exempel:<p> <img src="brak7.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
-        <p style="font-size: 0.8em; color: gray; margin-top: -10px;">Bildkälla: <em>eddler.se</em></p>
+      <p>När du ska dividera ett heltal med ett bråk eller ett bråk med ett heltal, börjar du med att skriva om heltalet som ett bråk. Till exempel: </p>
+       <p>Exempel:<p> <img src="brak21.png" alt="Exempel på bråktal" style="max-width: 100%; height: auto; margin: 10px 0;">
+      
 
     
     `
